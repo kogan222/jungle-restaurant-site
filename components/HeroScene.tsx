@@ -373,9 +373,7 @@ function DustParticles({ count = 500 }: { count?: number }) {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          array={positions}
-          count={count}
-          itemSize={3}
+          args={[positions, 3]}
         />
       </bufferGeometry>
       <pointsMaterial
@@ -450,9 +448,7 @@ function Fireflies({ count = 22 }: { count?: number }) {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          array={positions}
-          count={count}
-          itemSize={3}
+          args={[positions, 3]}
         />
       </bufferGeometry>
       <pointsMaterial
@@ -521,7 +517,7 @@ function CameraRig({ mouseRef }: { mouseRef: React.RefObject<THREE.Vector2> }) {
 
     /* GSAP cinematic intro: camera drifts from far-back to rest */
     camera.position.set(0, 0.5, 11);
-    camera.fov = 82;
+    (camera as THREE.PerspectiveCamera).fov = 82;
     camera.updateProjectionMatrix();
 
     const proxy = { z: 11, fov: 82, y: 0.5 };
