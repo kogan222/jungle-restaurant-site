@@ -52,8 +52,8 @@ export default function Home() {
           <VineDivider />
         </div>
 
-        {/* Experience */}
-        <VibeSection />
+        {/* Atmosphere video */}
+        <VideoSection />
 
         {/* Food highlights */}
         <FoodHighlights />
@@ -67,8 +67,8 @@ export default function Home() {
         {/* Gallery */}
         <GallerySection />
 
-        {/* Atmosphere video */}
-        <VideoSection />
+        {/* Experience */}
+        <VibeSection />
 
         {/* Social proof */}
         <TripAdvisorSection />
