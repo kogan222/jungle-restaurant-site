@@ -13,6 +13,7 @@ import JungleAmbience from "@/components/JungleAmbience";
 import FallingLeaves from "@/components/FallingLeaves";
 import ScrollAtmosphere from "@/components/ScrollAtmosphere";
 import { VineDivider } from "@/components/JungleVines";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 export default function Home() {
   return (
@@ -79,6 +80,9 @@ export default function Home() {
 
       {/* ── Landmark: footer ── */}
       <Footer />
+
+      {/* Floating WhatsApp CTA — mobile only, fades in after scroll */}
+      <WhatsAppFloat />
     </>
   );
 }

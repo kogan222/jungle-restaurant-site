@@ -5,11 +5,10 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
-        disallow: ["/api/", "/_next/"],
+        allow:     "/",
+        disallow:  ["/_next/", "/api/"],
       },
     ],
     sitemap: "https://thejunglewey.com/sitemap.xml",
-    host:    "https://thejunglewey.com",
   };
 }
