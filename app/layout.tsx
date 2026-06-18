@@ -32,13 +32,13 @@ export const metadata: Metadata = {
 
   /* ── Title ─────────────────────────────────────────── */
   title: {
-    default:  "The Jungle Wey | Tropical Outdoor Restaurant in Mahahual",
+    default:  "The Jungle Wey | Restaurant & Bar in Mahahual, Mexico",
     template: "%s | The Jungle Wey",
   },
 
   /* ── Description ────────────────────────────────────── */
   description:
-    "A hidden tropical garden restaurant in Mahahual, Quintana Roo. Wild ingredients, botanical drinks & pure jungle vibes — 100% outdoor dining, zero rules. Reserve your table via WhatsApp.",
+    "Experience fresh seafood, handcrafted cocktails, and a unique jungle atmosphere at The Jungle Wey in Mahahual, Mexico.",
 
   /* ── Keywords (local SEO) ───────────────────────────── */
   keywords: [
@@ -69,16 +69,16 @@ export const metadata: Metadata = {
     type:        "website",
     url:         SITE_URL,
     siteName:    SITE_NAME,
-    title:       "The Jungle Wey — Eat Wild. Drink Fresh. Feel The Jungle.",
+    title:       "The Jungle Wey | Restaurant & Bar in Mahahual, Mexico",
     description:
-      "A hidden tropical garden in Mahahual where wild ingredients meet world flavors. Botanical drinks, jungle bites & zero rules. 100% outdoor.",
+      "Experience fresh seafood, handcrafted cocktails, and a unique jungle atmosphere at The Jungle Wey in Mahahual, Mexico.",
     locale:      "en_US",
     images: [
       {
         url:    OG_IMAGE,
         width:  1200,
         height: 630,
-        alt:    "The Jungle Wey — tropical outdoor restaurant in Mahahual, Mexico",
+        alt:    "The Jungle Wey — Restaurant & Bar in Mahahual, Mexico",
       },
     ],
   },
@@ -88,9 +88,9 @@ export const metadata: Metadata = {
     card:        "summary_large_image",
     site:        "@thejunglewey",
     creator:     "@thejunglewey",
-    title:       "The Jungle Wey — Eat Wild. Drink Fresh. Feel The Jungle.",
+    title:       "The Jungle Wey | Restaurant & Bar in Mahahual, Mexico",
     description:
-      "A hidden tropical garden in Mahahual. Wild food, botanical drinks & zero rules. Book via WhatsApp.",
+      "Experience fresh seafood, handcrafted cocktails, and a unique jungle atmosphere at The Jungle Wey in Mahahual, Mexico.",
     images: [OG_IMAGE],
   },
 
