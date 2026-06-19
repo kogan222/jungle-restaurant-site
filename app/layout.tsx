@@ -25,11 +25,11 @@ const SITE_URL  = "https://thejunglewey.com";
 const SITE_NAME = "The Jungle Wey";
 const OG_IMAGE  = `${SITE_URL}/images/og-cover.jpg`;
 
-const TITLE       = "The Jungle Wey | Restaurant & Bar in Mahahual, Mexico";
+const TITLE       = "The Jungle Wey | Jungle Restaurant & Cocktail Bar in Mahahual";
 const DESCRIPTION =
-  "Discover The Jungle Wey in Mahahual, Mexico. Fresh Mexican cuisine, botanical cocktails, jungle atmosphere and unforgettable dining experiences near the Caribbean coast.";
+  "Discover The Jungle Wey in Mahahual, Mexico — fresh Mexican cuisine, botanical cocktails, tropical jungle atmosphere, and unforgettable dining near the Caribbean coast. Reserve your table today.";
 const OG_DESC =
-  "Fresh Mexican cuisine, botanical cocktails and a unique jungle dining experience in Mahahual.";
+  "Fresh Mexican cuisine, botanical cocktails and a unique jungle dining experience near the Caribbean coast in Mahahual.";
 
 /* ═══════════════════════════════════════════════════════
    METADATA — Next.js App Router Metadata API
@@ -48,15 +48,18 @@ export const metadata: Metadata = {
 
   /* ── Keywords ───────────────────────────────────────── */
   keywords: [
-    "restaurant Mahahual",
+    "Mahahual restaurant",
+    "best restaurant in Mahahual",
+    "jungle restaurant Mexico",
+    "cocktails Mahahual",
+    "Mexican food Mahahual",
     "restaurante Mahahual",
-    "best restaurant Mahahual",
     "outdoor dining Mahahual",
     "seafood restaurant Mahahual",
     "tropical restaurant Quintana Roo",
     "best restaurant Costa Maya",
-    "jungle restaurant Mexico",
     "The Jungle Wey",
+    "cocktail bar Mahahual",
     "craft cocktails Mahahual",
     "botanical drinks Mahahual",
     "restaurant near cruise terminal Mahahual",
@@ -88,7 +91,7 @@ export const metadata: Metadata = {
         url:    OG_IMAGE,
         width:  1200,
         height: 630,
-        alt:    "The Jungle Wey — Restaurant & Bar in Mahahual, Mexico",
+        alt:    "The Jungle Wey — Jungle Restaurant & Cocktail Bar in Mahahual, Mexico",
       },
     ],
   },
