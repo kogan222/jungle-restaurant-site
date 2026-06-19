@@ -30,8 +30,21 @@
   --atmo-moon:     0;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Remove iOS grey tap flash on every element ── */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* ── Smooth scroll — only when motion is allowed ── */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* ── Eliminate 300ms tap delay on all interactive elements ── */
+a, button, [role="button"], input, label, select, summary {
+  touch-action: manipulation;
+  cursor: pointer;
+}
 
 body {
   background-color: var(--jungle-dark);
@@ -512,6 +525,18 @@ body {
   .leaf-float-4{ animation-duration: 7s; }
   /* Reduce firefly count via opacity */
   .fireflies-mobile-reduce:nth-child(n+12) { display: none; }
+
+  /* Hide the two heavy blur-filtered bottom FgLeafs (blur 16–20px on animating divs) */
+  .mobile-hide { display: none !important; }
+
+  /* Trim falling leaves — render only the first 12 on mobile */
+  .falling-leaf-outer:nth-child(n+13) { display: none; }
+
+  /* Reduce glass backdrop-blur intensity — looks the same on small screens, runs faster */
+  .glass       { backdrop-filter: blur(8px);  -webkit-backdrop-filter: blur(8px); }
+  .glass-warm  { backdrop-filter: blur(8px);  -webkit-backdrop-filter: blur(8px); }
+  .glass-dark  { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .glass-card  { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 }
 
 /* Respect reduced motion preference */
@@ -532,6 +557,12 @@ body {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+  /* Stop all falling-leaf animations */
+  .falling-leaf-outer,
+  .falling-leaf-outer * {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 

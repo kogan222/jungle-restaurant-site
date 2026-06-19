@@ -82,18 +82,21 @@ export default function FallingLeaves({ count = 22 }: { count?: number }) {
       {leaves.map((leaf) => (
         <div
           key={leaf.id}
+          /* falling-leaf-outer — targeted by globals.css to trim count on mobile
+             and stop all animations when prefers-reduced-motion is set */
+          className="falling-leaf-outer"
           style={{
             position: "absolute",
             top: "-8vh",
             left: `${leaf.x}%`,
-            /* Outer div handles horizontal drift only */
+            /* Outer div: horizontal drift only — no willChange here;
+               the inner div owns the compositor layer */
             animation: `leafWindDrift ${leaf.driftDuration}s ease-in-out ${leaf.delay}s infinite alternate`,
-            willChange: "transform",
           }}
         >
           <div
             style={{
-              /* Inner div handles vertical fall + rotation */
+              /* Inner div: vertical fall + opacity — one promoted layer per leaf */
               animation: `leafFallDown ${leaf.fallDuration}s linear ${leaf.delay}s infinite`,
               willChange: "transform, opacity",
             }}
@@ -105,7 +108,9 @@ export default function FallingLeaves({ count = 22 }: { count?: number }) {
               fill="none"
               style={{
                 opacity: leaf.opacity,
-                filter: `drop-shadow(0 2px 4px rgba(0,0,0,0.25))`,
+                /* Removed drop-shadow — filter on a rotating SVG forces CPU repaint
+                   every frame (no GPU compositing path for filter+transform together
+                   in many mobile browsers). Leaves read fine without the shadow. */
                 animation: `leafRotateFall ${leaf.fallDuration}s linear ${leaf.delay}s infinite`,
               }}
             >

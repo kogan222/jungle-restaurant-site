@@ -50,6 +50,9 @@ function LiquidBtn({
   const fill = useRef<HTMLSpanElement>(null);
 
   const onMove = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Magnetic + liquid fill effect only for fine-pointer (mouse/trackpad) devices.
+    // On touch devices this fires after the tap sequence and adds latency — skip it.
+    if (!window.matchMedia("(pointer: fine)").matches) return;
     const el = ref.current, gr = fill.current;
     if (!el || !gr) return;
     const r  = el.getBoundingClientRect();
@@ -80,9 +83,9 @@ function LiquidBtn({
           boxShadow: "0 8px 40px rgba(232,86,42,0.48), 0 0 0 1px rgba(255,255,255,0.10) inset",
           color: "white",
         } : {
-          background: "rgba(255,255,255,0.045)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+          background: "rgba(255,255,255,0.06)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
           border: "1px solid rgba(255,255,255,0.15)",
           color: "rgba(255,255,255,0.85)",
           boxShadow: "0 4px 28px rgba(0,0,0,0.28)",
@@ -249,9 +252,10 @@ export default function Hero() {
 
       {/* Foreground leaves — 3 blur depths */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 24 }} aria-hidden="true">
-        {/* Far blurred (depth of field) */}
-        <FgLeaf anim="leaf-sway"   className="w-56 md:w-80"   style={{ bottom:"-35px", left:"-55px", opacity: 0.60 }}  blur={20} />
-        <FgLeaf anim="leaf-sway-2" className="w-48 md:w-72"   style={{ bottom:"-25px", right:"-50px", opacity: 0.55 }} blur={16} flip />
+        {/* Far blurred (depth of field) — hidden on mobile: filter:blur on animated divs
+            is CPU-repainted every frame; not visible on small screens anyway */}
+        <FgLeaf anim="leaf-sway"   className="mobile-hide w-80"   style={{ bottom:"-35px", left:"-55px", opacity: 0.60 }}  blur={20} />
+        <FgLeaf anim="leaf-sway-2" className="mobile-hide w-72"   style={{ bottom:"-25px", right:"-50px", opacity: 0.55 }} blur={16} flip />
         {/* Mid sharp */}
         <FgLeaf anim="leaf-float"  className="w-44 md:w-72"   style={{ top:"7vh", left:"-42px", opacity: 0.82 }}       blur={3} />
         <MonsteraLeaf anim="leaf-float-2" className="w-52 md:w-80" style={{ top:"4vh", right:"-52px", opacity: 0.70 }} blur={1.5} />

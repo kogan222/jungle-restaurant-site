@@ -6,7 +6,7 @@ import { useLanguage } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
 
 /* ── Premium language toggle — minimal, elegant ─────────── */
-function LangToggle() {
+function LangToggle({ large = false }: { large?: boolean }) {
   const { lang, setLang } = useLanguage();
 
   return (
@@ -18,19 +18,24 @@ function LangToggle() {
         padding: "3px",
       }}
     >
-      {(["en", "es"] as Lang[]).map((l, i) => {
+      {(["en", "es"] as Lang[]).map((l) => {
         const active = lang === l;
         return (
           <button
             key={l}
             onClick={() => setLang(l)}
-            className="relative px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase rounded-full transition-all duration-300"
+            /* transition only color+bg — not all properties */
+            className="relative font-semibold uppercase rounded-full transition-[color,background-color] duration-200"
             style={{
-              color:      active ? "#0a1a0a" : "rgba(255,255,255,0.40)",
-              background: active ? "rgba(255,255,255,0.92)" : "transparent",
+              padding:       large ? "0.55rem 1.2rem" : "0.28rem 0.75rem",
+              minHeight:     large ? 44 : undefined,
+              fontSize:      "0.72rem",
               letterSpacing: "0.1em",
+              color:         active ? "#0a1a0a" : "rgba(255,255,255,0.40)",
+              background:    active ? "rgba(255,255,255,0.92)" : "transparent",
             }}
             aria-label={`Switch to ${l === "en" ? "English" : "Spanish"}`}
+            aria-pressed={active}
           >
             {l.toUpperCase()}
           </button>
@@ -73,7 +78,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 inset-x-0 z-50 transition-[background,backdrop-filter,border-color,box-shadow] duration-300 ${
         scrolled ? "shadow-[0_4px_40px_rgba(0,0,0,0.5)]" : "bg-transparent"
       }`}
       style={
@@ -132,7 +137,7 @@ export default function Navbar() {
             href={WHATSAPP_RESERVE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative overflow-hidden ml-1 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-all duration-300 hover:scale-105 group"
+            className="relative overflow-hidden ml-1 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-[transform,box-shadow] duration-200 hover:scale-105 group"
             style={{
               background:  "linear-gradient(135deg, #e8562a, #cc4420)",
               boxShadow:   "0 4px 20px rgba(232,86,42,0.35)",
@@ -143,39 +148,54 @@ export default function Navbar() {
           </a>
         </nav>
 
-        {/* Hamburger */}
+        {/* Hamburger — 44×44 minimum touch target */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          aria-label="Toggle menu"
+          className="md:hidden flex items-center justify-center"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          style={{ minWidth: 44, minHeight: 44 }}
         >
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className="block h-0.5 rounded-full bg-white transition-all duration-300"
-              style={{
-                width:     i === 1 ? (open ? 0 : 16) : 24,
-                opacity:   i === 1 && open ? 0 : 1,
-                transform: i === 0
-                  ? open ? "rotate(45deg) translateY(8px)"  : "none"
-                  : i === 2
-                  ? open ? "rotate(-45deg) translateY(-8px)" : "none"
-                  : "none",
-              }}
-            />
-          ))}
+          <div className="flex flex-col gap-1.5">
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                className="block h-0.5 rounded-full bg-white"
+                style={{
+                  width:     i === 1 ? (open ? 0 : 16) : 24,
+                  opacity:   i === 1 && open ? 0 : 1,
+                  transform: i === 0
+                    ? open ? "rotate(45deg) translateY(8px)"  : "none"
+                    : i === 2
+                    ? open ? "rotate(-45deg) translateY(-8px)" : "none"
+                    : "none",
+                  /* Only transition the specific properties being animated */
+                  transition: "width 200ms ease, opacity 150ms ease, transform 220ms cubic-bezier(0.4,0,0.2,1)",
+                }}
+              />
+            ))}
+          </div>
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — absolute so it doesn't push layout; GPU-only opacity+transform */}
       <div
-        className="md:hidden overflow-hidden transition-all duration-500"
+        className="md:hidden absolute inset-x-0 top-full"
+        aria-hidden={!open}
         style={{
-          maxHeight:     open ? 560 : 0,
-          opacity:       open ? 1 : 0,
-          background:    "rgba(10,26,10,0.96)",
-          backdropFilter:"blur(20px)",
-          borderBottom:  open ? "1px solid rgba(61,138,61,0.15)" : "none",
+          background:           "rgba(10,26,10,0.97)",
+          backdropFilter:       "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom:         "1px solid rgba(61,138,61,0.15)",
+          /* Only animate GPU-composited properties — no layout triggers */
+          opacity:              open ? 1 : 0,
+          transform:            open ? "translateY(0)" : "translateY(-6px)",
+          pointerEvents:        open ? "auto" : "none",
+          visibility:           open ? "visible" : "hidden",
+          transition: open
+            ? "opacity 250ms cubic-bezier(0.4,0,0.2,1), transform 250ms cubic-bezier(0.4,0,0.2,1)"
+            : "opacity 200ms ease, transform 200ms ease, visibility 0s 200ms",
+          willChange: "opacity, transform",
         }}
       >
         <nav className="flex flex-col px-6 py-5 gap-1">
@@ -184,15 +204,16 @@ export default function Navbar() {
               key={l.key}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="text-white/80 hover:text-[#62a062] text-base font-medium py-3 border-b border-white/5 transition-colors last:border-0"
+              className="flex items-center text-white/80 hover:text-[#62a062] text-base font-medium border-b border-white/5 transition-colors duration-150 last:border-0"
+              style={{ minHeight: 52, paddingBlock: "0.75rem" }}
             >
               {l.label}
             </a>
           ))}
 
-          {/* Language toggle — centered in mobile drawer */}
+          {/* Language toggle — centered in mobile drawer, larger touch targets */}
           <div className="flex justify-center py-4 border-b border-white/5">
-            <LangToggle />
+            <LangToggle large />
           </div>
 
           <a
@@ -200,8 +221,11 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="mt-3 text-white text-center py-3.5 rounded-full font-semibold text-sm"
-            style={{ background: "linear-gradient(135deg, #e8562a, #cc4420)" }}
+            className="mt-3 text-white text-center rounded-full font-semibold text-sm flex items-center justify-center gap-2"
+            style={{
+              background: "linear-gradient(135deg, #e8562a, #cc4420)",
+              minHeight: 52,
+            }}
           >
             &#128172; {t.nav.reserveMobile}
           </a>
