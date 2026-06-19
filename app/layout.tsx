@@ -116,10 +116,20 @@ export const metadata: Metadata = {
     },
   },
 
-  /* ── Icons (only reference files that actually exist) ── */
+  /* ── Icons ─────────────────────────────────────────────
+     favicon.ico lives in app/ (auto-detected by Next.js).
+     PNG icons live in public/ (referenced explicitly below).
+  ── */
   icons: {
-    icon:  [{ url: "/favicon.ico" }],
+    icon: [
+      { url: "/favicon.ico",       type: "image/x-icon"           },
+      { url: "/icon-32x32.png",    type: "image/png", sizes: "32x32"   },
+      { url: "/icon-192x192.png",  type: "image/png", sizes: "192x192" },
+    ],
     shortcut: "/favicon.ico",
+    apple:  [
+      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
+    ],
   },
 
   /* ── Verification (uncomment when deploying) ────────── */

@@ -14,9 +14,15 @@ export default function manifest(): MetadataRoute.Manifest {
     lang:             "en",
     icons: [
       {
-        src:     "/images/og-cover.jpg",
-        sizes:   "any",
-        type:    "image/jpeg",
+        src:     "/icon-192x192.png",
+        sizes:   "192x192",
+        type:    "image/png",
+        purpose: "maskable",
+      },
+      {
+        src:     "/icon-32x32.png",
+        sizes:   "32x32",
+        type:    "image/png",
         purpose: "any",
       },
     ],
