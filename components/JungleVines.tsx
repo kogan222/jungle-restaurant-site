@@ -62,7 +62,7 @@ export function VineDivider({ flip = false }: { flip?: boolean }) {
           const y = 45 + i * 8;
           return (
             <g key={i} className="gentle-pulse" style={{ animationDelay: `${i * 0.5}s` }}>
-              <circle cx={x} cy={y} r="4" fill="rgba(232,86,42,0.5)" />
+              <circle cx={x} cy={y} r="4" fill="rgba(240,78,48,0.5)" />
               <circle cx={x} cy={y} r="2" fill="rgba(244,115,74,0.8)" />
             </g>
           );
@@ -133,7 +133,7 @@ export function SideVine({ side = "left", height = 400 }: { side?: "left" | "rig
             cx={25 + i * 5}
             cy={height * frac + 20}
             r="3"
-            fill="rgba(232,86,42,0.4)"
+            fill="rgba(240,78,48,0.4)"
             className="gentle-pulse"
             style={{ animationDelay: `${i * 0.7}s` }}
           />
@@ -235,8 +235,8 @@ export function CornerBranch({ corner = "tl" }: { corner?: "tl" | "tr" | "bl" | 
         ))}
 
         {/* Small berry */}
-        <circle cx="190" cy="56" r="4" fill="rgba(232,86,42,0.5)" className="gentle-pulse" />
-        <circle cx="65" cy="122" r="3" fill="rgba(232,86,42,0.4)" className="gentle-pulse" style={{ animationDelay: "1s" }} />
+        <circle cx="190" cy="56" r="4" fill="rgba(240,78,48,0.5)" className="gentle-pulse" />
+        <circle cx="65" cy="122" r="3" fill="rgba(240,78,48,0.4)" className="gentle-pulse" style={{ animationDelay: "1s" }} />
       </svg>
     </div>
   );

@@ -13,14 +13,14 @@ const DRINKS = [
   { emoji: "&#127821;", img: "",                                       name: "Un Suerito con Estilo", desc: "Pineapple, cucumber, turmeric & mint",                       price: "$90",  type: "Botanical", typeColor: "#2d6e2d" },
   { emoji: "&#129362;", img: "/images/drink-red-berry.jpg",           name: "Pa' la Calors",         desc: "Blended red berries & oranges with mint",                    price: "$90",  type: "Botanical", typeColor: "#2d6e2d" },
   { emoji: "&#129381;", img: "/images/drink-pink-topdown.jpg",        name: "Pink Coco Crush",       desc: "Coconut cream, guava, grenadine & lime",                     price: "$90",  type: "Botanical", typeColor: "#2d6e2d", featured: true },
-  { emoji: "&#127865;", img: "/images/drink-matcha-cocktail.jpg",     name: "Mix Tropical",          desc: "OJ, passion fruit, pineapple, basil & mint",                 price: "$90",  type: "Botanical", typeColor: "#2d6e2d" },
-  { emoji: "&#127861;", img: "",                                       name: "Matcha Latte",          desc: "Ceremonial matcha with frothed milk",                        price: "$60",  type: "Coffee",    typeColor: "#a67035" },
-  { emoji: "&#11088;",  img: "",                                       name: "Leche Dorada",          desc: "Turmeric, cinnamon, ginger & black pepper",                  price: "$60",  type: "Coffee",    typeColor: "#a67035" },
-  { emoji: "&#127867;", img: "/images/drink-mezcal-flight.jpg",       name: "Mezcal Flight",         desc: "Espadín, jabalí, tepeztate & coyote — served on a wood board", price: "$180", type: "Mezcal",    typeColor: "#c8a855", featured: true },
-  { emoji: "&#128128;", img: "/images/drink-levanta-muertos.jpg",     name: "Levanta Muertos",       desc: "Spicy Ojo Rojo, clamato, shrimp skewer & worm salt",         price: "$80",  type: "Chelas",    typeColor: "#e8562a" },
-  { emoji: "&#127866;", img: "",                                       name: "Panteón Craft Beer",    desc: "Made in Mahahual — ask for today's brew",                    price: "$120", type: "Chelas",    typeColor: "#d4b483" },
-  { emoji: "&#9749;",   img: "/images/drink-espresso-martini.jpg",    name: "Espresso Martini",      desc: "Vodka, espresso, coffee liqueur — silky, bold, unforgettable", price: "$130", type: "Cocktails", typeColor: "#6a4a2a", featured: true },
-  { emoji: "&#127817;", img: "/images/drink-mezcalito-zen.jpg",       name: "Mezcalito Zen",         desc: "Mezcal, cucumber, lime & chili rim — smoky meets fresh",     price: "$110", type: "Cocktails", typeColor: "#5a9a5a" },
+  { emoji: "&#127865;", img: "/images/drink-matcha-cocktail.jpg",     name: "El Hipster Spritz",     desc: "Matcha tea, sparkling water, Cointreau & prosecco",          price: "$180", type: "Cocktails", typeColor: "#5a9a5a" },
+  { emoji: "&#127861;", img: "",                                       name: "Matcha Latte",          desc: "Ceremonial matcha with frothed milk",                        price: "$60",  type: "Coffee",    typeColor: "#9a6538" },
+  { emoji: "&#11088;",  img: "",                                       name: "Leche Dorada",          desc: "Turmeric, cinnamon, ginger & black pepper",                  price: "$60",  type: "Coffee",    typeColor: "#9a6538" },
+  { emoji: "&#127867;", img: "/images/drink-mezcal-flight.jpg",       name: "Mezcal Tasting",        desc: "Jabalí, Tepeztate, Coyote & young Espadín — with orange & worm salt", price: "$240", type: "Mezcal",    typeColor: "#ce8b4d", featured: true },
+  { emoji: "&#128128;", img: "/images/drink-levanta-muertos.jpg",     name: "Levanta Muertos",       desc: "Spicy Ojo Rojo, clamato, shrimp skewer & worm salt",         price: "$80",  type: "Chelas",    typeColor: "#f04e30" },
+  { emoji: "&#127866;", img: "",                                       name: "Panteón Craft Beer",    desc: "Made in Mahahual — ask for today's brew",                    price: "$120", type: "Chelas",    typeColor: "#ce8b4d" },
+  { emoji: "&#9749;",   img: "/images/drink-espresso-martini.jpg",    name: "Espresso Martini",      desc: "Vodka, espresso, coffee liqueur — silky, bold, unforgettable", price: "$170", type: "Cocktails", typeColor: "#6a4a2a", featured: true },
+  { emoji: "&#127817;", img: "/images/drink-mezcalito-zen.jpg",       name: "Mezcalito Zen",         desc: "Mezcal, matcha & sencha tea, lime & ginger — smoky meets fresh", price: "$180", type: "Mezcal",    typeColor: "#5a9a5a" },
 ];
 
 export default function DrinksSection() {
@@ -82,18 +82,18 @@ export default function DrinksSection() {
         {/* Header */}
         <div className="text-center mb-14">
           <div className="reveal flex items-center justify-center gap-3 mb-5">
-            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #e8562a, transparent)" }} />
+            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #f04e30, transparent)" }} />
             <span className="text-[#62a062] text-xs tracking-[0.3em] uppercase font-medium">
               {t.drinks.eyebrow}
             </span>
-            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #e8562a, transparent)" }} />
+            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #f04e30, transparent)" }} />
           </div>
-          <h2 className="reveal font-playfair text-white font-black leading-tight mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+          <h2 className="reveal font-display text-white font-black leading-tight mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
             {t.drinks.headlineA}<span className="gradient-text">{t.drinks.headlineB}</span>
           </h2>
           <p className="reveal text-white/40 text-base max-w-lg mx-auto leading-relaxed">
             {t.drinks.sub}
-            <em className="not-italic text-[#d4b483]"> {t.drinks.subAccent}</em>
+            <em className="not-italic text-[#ce8b4d]"> {t.drinks.subAccent}</em>
           </p>
         </div>
 
@@ -107,10 +107,10 @@ export default function DrinksSection() {
         {/* CTA */}
         <div className="reveal text-center mt-14">
           <a
-            href="#menu"
+            href="/menu"
             className="group inline-flex items-center gap-3 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 text-sm"
             style={{
-              background: "linear-gradient(135deg, rgba(10,26,10,0.9), rgba(30,70,30,0.8))",
+              background: "linear-gradient(135deg, rgba(10,26,10,0.9), rgba(29,57,39,0.8))",
               border: "1px solid rgba(61,138,61,0.25)",
               backdropFilter: "blur(12px)",
               boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
@@ -201,7 +201,7 @@ function DrinkCard({ drink, index, mustTryLabel, typeLabel }: { drink: typeof DR
             )}
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2 mb-1">
-                <h3 className="font-playfair font-bold text-white text-base leading-tight">{drink.name}</h3>
+                <h3 className="font-display font-bold text-white text-base leading-tight">{drink.name}</h3>
                 <span className="font-bold text-sm flex-shrink-0" style={{ color: drink.typeColor }}>{drink.price}</span>
               </div>
               <p className="text-white/42 text-xs leading-relaxed mb-2">{drink.desc}</p>

@@ -12,6 +12,7 @@ export const es: T = {
     drinks:        "Bebidas",
     gallery:       "Galería",
     findUs:        "Encuéntranos",
+    tribe:         "Jungle Tribe",
     reserve:       "Reservar Ahora",
     reserveMobile: "Reservar por WhatsApp",
   },
@@ -65,9 +66,10 @@ export const es: T = {
 
   food: {
     eyebrow:    "Platos de Firma",
-    headlineA:  "Comida por la que ",
-    headlineB:  "Vale Luchar",
+    headlineA:  "Puro Antojo, ",
+    headlineB:  "Bien Hecho",
     cta:        "Ver menú completo →",
+    cardCta:    "Verlo en el menú",
     tags: {
       fanFav:    "Favorito del Público",
       mustTry:   "Imperdible",
@@ -94,7 +96,28 @@ export const es: T = {
       legendary:  "Legendario",
       bestseller: "El Más Vendido",
       mostOrdered:"El Más Pedido",
+      glutenFree: "Sin Gluten",
+      forTwo:     "Para Dos",
     },
+    viewFullCta: "Ver el Menú Completo",
+  },
+
+  menuPage: {
+    eyebrow:      "Puro antojo bien hecho",
+    headlineA:    "El Menú de ",
+    headlineB:    "la Selva",
+    sub:          "Dos momentos, una selva. Brunch hasta las 3, cena hasta el cierre — siempre fresco, siempre salvaje.",
+    breakfast:    "Desayuno",
+    dinner:       "Cena",
+    nowServing:   "Sirviendo ahora",
+    servedDaily:  "Todos los días",
+    food:         "Comida",
+    drinks:       "Bebidas",
+    spirits:      "Destilados & Co.",
+    spiritsNote:  "Destilados por copa",
+    orderCta:     "Ordena o reserva por WhatsApp",
+    backHome:     "Volver al inicio",
+    disclaimer:   "Precios en pesos mexicanos (MXN) • Menú sujeto a cambios de temporada • Si tienes alguna alergia, avísale a tu mesero",
   },
 
   drinks: {
@@ -183,6 +206,22 @@ export const es: T = {
       Friday:    "Viernes",
       Saturday:  "Sábado",
       Sunday:    "Domingo",
+    },
+  },
+
+  tribe: {
+    eyebrow:     "Únete a la tribu, comparte el flow",
+    headlineA:   "La Tribu de ",
+    headlineB:   "la Selva",
+    sub:         "Sé el primero en enterarte de las noches de música en vivo, menús secretos y eventos de la selva. Regístrate y vuélvete parte de la familia.",
+    formTitle:   "Formulario de registro Jungle Tribe",
+    fallbackTitle: "El formulario está tomando una siesta",
+    fallbackBody:  "El registro abre pronto. Mientras tanto, escríbenos por WhatsApp y te sumamos a la tribu personalmente.",
+    fallbackCta:   "Unirme por WhatsApp",
+    perks: {
+      p1: { title: "Entérate Primero", body: "Música en vivo, cenas pop-up y noches especiales — directo a ti." },
+      p2: { title: "Mimos de la Tribu", body: "Degustaciones exclusivas y sorpresitas de El Wey." },
+      p3: { title: "Cero Spam",         body: "Solo lo bueno, solo cuando importa. Lo prometemos." },
     },
   },
 

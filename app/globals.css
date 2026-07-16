@@ -5,19 +5,27 @@
    ============================================ */
 
 :root {
-  /* Brand palette */
+  /* ── Official brand palette — Lineamientos de Marca p.10 ── */
+  --brand-verde:   #1D3927;  /* Pantone 553 C  */
+  --brand-mostaza: #ce8b4d;  /* Pantone 722 C  */
+  --brand-celeste: #bed0d1;  /* Pantone 5455 C */
+  --brand-naranja: #f04e30;  /* Pantone 171 C  */
+  --brand-marron:  #351916;  /* Pantone 4975 C */
+  --brand-negro:   #231F20;
+
+  /* Atmosphere shades derived from brand verde (dark jungle theme) */
   --jungle-dark:   #020d0e;
-  --jungle-deep:   #0a1e0a;
-  --jungle-mid:    #1e461e;
+  --jungle-deep:   #0e2216;
+  --jungle-mid:    #1D3927;
   --jungle-bright: #3d8a3d;
   --jungle-light:  #6dbe6d;
-  --coral:         #e8562a;
-  --coral-light:   #f4734a;
-  --wood:          #a67035;
-  --wood-light:    #c49050;
+  --coral:         #f04e30;
+  --coral-light:   #f56a4a;
+  --wood:          #9a6538;
+  --wood-light:    #ce8b4d;
   --sand:          #faf6ef;
-  --gold:          #c8a855;
-  --moonlight:     #b8d8f8;
+  --gold:          #ce8b4d;
+  --moonlight:     #bed0d1;
   --bio-green:     #64ffd8;
 
   /* Scroll atmosphere — updated by ScrollAtmosphere.tsx */
@@ -49,13 +57,20 @@ a, button, [role="button"], input, label, select, summary {
 body {
   background-color: var(--jungle-dark);
   color: var(--sand);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-poppins), system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* Font utilities */
-.font-playfair { font-family: var(--font-playfair), Georgia, serif; }
-.font-inter    { font-family: var(--font-inter), system-ui, sans-serif; }
+/* Font utilities — brand typography */
+.font-display {
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
+  letter-spacing: 0.015em;
+}
+.font-poppins { font-family: var(--font-poppins), system-ui, sans-serif; }
+
+/* Hide horizontal scrollbars on chip rows while keeping scrollability */
+.scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
@@ -324,13 +339,13 @@ body {
   border: 1px solid rgba(61,138,61,0.2);
 }
 .glass-warm {
-  background: rgba(166,112,53,0.12);
+  background: rgba(154,101,56,0.12);
   backdrop-filter: blur(16px) saturate(1.3);
   -webkit-backdrop-filter: blur(16px) saturate(1.3);
-  border: 1px solid rgba(212,180,131,0.2);
+  border: 1px solid rgba(206,139,77,0.2);
 }
 .glass-card {
-  background: linear-gradient(135deg, rgba(14,36,14,0.85) 0%, rgba(30,70,30,0.7) 100%);
+  background: linear-gradient(135deg, rgba(14,36,14,0.85) 0%, rgba(29,57,39,0.7) 100%);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
   border: 1px solid rgba(98,160,98,0.18);
@@ -342,7 +357,7 @@ body {
    ============================================ */
 
 .gradient-text {
-  background: linear-gradient(135deg, #e8562a 0%, #f4734a 40%, #d4b483 100%);
+  background: linear-gradient(135deg, #f04e30 0%, #f56a4a 40%, #ce8b4d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -354,7 +369,7 @@ body {
   background-clip: text;
 }
 .gradient-text-gold {
-  background: linear-gradient(135deg, #a67035 0%, #d4b483 50%, #c49050 100%);
+  background: linear-gradient(135deg, #9a6538 0%, #ce8b4d 50%, #e0ab72 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -375,7 +390,7 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(98,160,98,0.3), rgba(232,86,42,0.15), rgba(98,160,98,0.1));
+  background: linear-gradient(135deg, rgba(98,160,98,0.3), rgba(240,78,48,0.15), rgba(98,160,98,0.1));
   opacity: 0;
   transition: opacity 0.4s ease;
   z-index: 0;
@@ -408,7 +423,7 @@ body {
 }
 .photo-warm-grade::after {
   background: linear-gradient(160deg,
-    rgba(166,112,53,0.15) 0%,
+    rgba(154,101,56,0.15) 0%,
     rgba(10,26,10,0.2) 50%,
     rgba(10,26,10,0.7) 100%
   );
@@ -436,7 +451,7 @@ body {
 .shimmer {
   background: linear-gradient(90deg,
     transparent 0%,
-    rgba(212,180,131,0.15) 50%,
+    rgba(206,139,77,0.15) 50%,
     transparent 100%
   );
   background-size: 200% 100%;
@@ -638,8 +653,8 @@ body {
 }
 
 .moonlight-text {
-  color: rgba(184,216,248,0.88);
-  text-shadow: 0 0 40px rgba(184,216,248,0.3);
+  color: rgba(190,208,209,0.88);
+  text-shadow: 0 0 40px rgba(190,208,209,0.3);
 }
 
 /* Firefly ambient (CSS supplement) */
@@ -681,7 +696,7 @@ section {
   inset: 0;
   background: radial-gradient(
     ellipse 50% 40% at 15% 5%,
-    rgba(184,216,248,calc(var(--atmo-moon,0) * 0.06)) 0%,
+    rgba(190,208,209,calc(var(--atmo-moon,0) * 0.06)) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -711,7 +726,7 @@ section {
     90deg,
     transparent 0%,
     rgba(109,190,109,0.15) 25%,
-    rgba(200,168,85,0.20) 50%,
+    rgba(206,139,77,0.20) 50%,
     rgba(109,190,109,0.15) 75%,
     transparent 100%
   );
@@ -723,7 +738,7 @@ section {
    ============================================ */
 
 .gradient-text {
-  background: linear-gradient(135deg, #f06030 0%, #f4734a 40%, #d4a855 100%);
+  background: linear-gradient(135deg, #f04e30 0%, #f56a4a 40%, #ce8b4d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -735,7 +750,7 @@ section {
   background-clip: text;
 }
 .gradient-text-gold {
-  background: linear-gradient(135deg, #a67035 0%, #c8a855 55%, #e0c880 100%);
+  background: linear-gradient(135deg, #9a6538 0%, #ce8b4d 55%, #e0ab72 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

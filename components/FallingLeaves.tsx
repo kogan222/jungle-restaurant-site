@@ -22,13 +22,13 @@ const LEAF_SHAPES = [
 ];
 
 const LEAF_COLORS = [
-  "#1e461e", "#245824", "#2d6e2d", "#3d8a3d",
-  "#183a18", "#1a4a1a", "#a67035", "#8a5a28",
+  "#1d3927", "#245824", "#2d6e2d", "#3d8a3d",
+  "#183a18", "#1a4a1a", "#9a6538", "#8a5a28",
   "#62a062", "#4a8a4a",
 ];
 
 const VEIN_COLORS = [
-  "#2d6e2d", "#3d8a3d", "#4a9a4a", "#c49050", "#7ab07a",
+  "#2d6e2d", "#3d8a3d", "#4a9a4a", "#e0ab72", "#7ab07a",
 ];
 
 type LeafConfig = {

@@ -41,7 +41,7 @@ function TreeLayer({ layer, index }: { layer: LayerConfig; index: number }) {
     ["#050e05", "#0a1a0a"],
     ["#0a1a0a", "#0c1f0c"],
     ["#0c1f0c", "#183018"],
-    ["#183018", "#1e461e"],
+    ["#183018", "#1d3927"],
     ["#0a0f0a", "#080d08"],
   ];
   const [fill1, fill2] = fills[index];

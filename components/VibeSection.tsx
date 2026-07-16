@@ -11,9 +11,9 @@ import AtmosphereCanvas from "./AtmosphereCanvas";
 
 const PILLAR_META = [
   { icon: "&#127807;", accent: "#2d6e2d", key: "p1" as const },
-  { icon: "&#128293;", accent: "#e8562a", key: "p2" as const },
+  { icon: "&#128293;", accent: "#f04e30", key: "p2" as const },
   { icon: "&#127865;", accent: "#62a062", key: "p3" as const },
-  { icon: "&#10024;",  accent: "#d4b483", key: "p4" as const },
+  { icon: "&#10024;",  accent: "#ce8b4d", key: "p4" as const },
 ];
 
 export default function VibeSection() {
@@ -58,7 +58,7 @@ export default function VibeSection() {
       <div className="absolute inset-0 pointer-events-none" style={{
         background: `
           radial-gradient(ellipse 700px 500px at 85% 40%, rgba(45,110,45,0.12) 0%, transparent 70%),
-          radial-gradient(ellipse 500px 700px at 10% 70%, rgba(30,70,30,0.15) 0%, transparent 70%)
+          radial-gradient(ellipse 500px 700px at 10% 70%, rgba(29,57,39,0.15) 0%, transparent 70%)
         `,
       }} />
 
@@ -73,10 +73,10 @@ export default function VibeSection() {
           {/* Text */}
           <div>
             <div className="reveal flex items-center gap-3 mb-6">
-              <span className="h-px w-14" style={{ background: "linear-gradient(90deg, #e8562a, transparent)" }} />
+              <span className="h-px w-14" style={{ background: "linear-gradient(90deg, #f04e30, transparent)" }} />
               <span className="text-[#62a062] text-xs tracking-[0.3em] uppercase font-medium">{t.vibe.eyebrow}</span>
             </div>
-            <h2 className="reveal font-playfair text-white font-black leading-[1.08] mb-6" style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)" }}>
+            <h2 className="reveal font-display text-white font-black leading-[1.08] mb-6" style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)" }}>
               {t.vibe.headlineA}<br />
               {t.vibe.headlineB} <span className="gradient-text">{t.vibe.headlineC}</span>
             </h2>
@@ -86,14 +86,14 @@ export default function VibeSection() {
                 style={{
                   background: "linear-gradient(135deg, rgba(14,36,14,0.9), rgba(20,50,20,0.7))",
                   backdropFilter: "blur(16px)",
-                  borderColor: "#e8562a",
+                  borderColor: "#f04e30",
                 }}
               >
-                <span className="text-[#e8562a] text-5xl font-playfair leading-none opacity-50">&ldquo;</span>
-                <p className="font-playfair text-white/80 text-lg md:text-xl italic leading-relaxed -mt-3">
+                <span className="text-[#f04e30] text-5xl font-display leading-none opacity-50">&ldquo;</span>
+                <p className="font-display text-white/80 text-lg md:text-xl italic leading-relaxed -mt-3">
                   {t.vibe.quote}
                 </p>
-                <p className="text-[#d4b483] mt-5 text-xs font-medium tracking-[0.3em] uppercase">
+                <p className="text-[#ce8b4d] mt-5 text-xs font-medium tracking-[0.3em] uppercase">
                   {t.vibe.quoteAuthor}
                 </p>
               </div>
@@ -120,17 +120,17 @@ export default function VibeSection() {
                 />
               ) : (
                 /* SVG fallback — garden scene */
-                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, #1e461e, #0c1f0c)" }}>
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, #1d3927, #0c1f0c)" }}>
                   <svg viewBox="0 0 400 500" fill="none" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
                     <rect width="400" height="500" fill="#1a3a1a" />
                     <radialGradient id="vsun" cx="65%" cy="15%" r="50%">
-                      <stop offset="0%" stopColor="#d4b483" stopOpacity="0.45" />
+                      <stop offset="0%" stopColor="#ce8b4d" stopOpacity="0.45" />
                       <stop offset="100%" stopColor="transparent" />
                     </radialGradient>
                     <rect width="400" height="500" fill="url(#vsun)" />
                     {[40,130,250,340].map((x, i) => (
                       <g key={i}>
-                        <ellipse cx={x} cy={30 + i*15} rx={55+i*8} ry={65+i*5} fill={i%2===0?"#2d6e2d":"#1e461e"} opacity="0.88" />
+                        <ellipse cx={x} cy={30 + i*15} rx={55+i*8} ry={65+i*5} fill={i%2===0?"#2d6e2d":"#1d3927"} opacity="0.88" />
                         <rect x={x-6} y={70+i*15} width={12+i*2} height={430} rx="6" fill="#1a0f00" opacity="0.7" />
                       </g>
                     ))}
@@ -140,9 +140,9 @@ export default function VibeSection() {
                     <rect x="290" y="378" width="25" height="22" rx="3" fill="#5f9ea0" opacity="0.9" />
                     <path d="M310 230 Q340 248 370 228" stroke="#c9b07a" strokeWidth="5" fill="none" opacity="0.5" />
                     <ellipse cx="10" cy="480" rx="40" ry="25" fill="#245824" opacity="0.9" transform="rotate(-20 10 480)" />
-                    <ellipse cx="395" cy="470" rx="35" ry="22" fill="#1e461e" opacity="0.85" transform="rotate(18 395 470)" />
+                    <ellipse cx="395" cy="470" rx="35" ry="22" fill="#1d3927" opacity="0.85" transform="rotate(18 395 470)" />
                     {[0,1,2].map((i) => (
-                      <polygon key={i} points={`${230+i*25},0 ${245+i*25},0 ${340+i*40},500 ${315+i*40},500`} fill="#d4b483" opacity="0.05" />
+                      <polygon key={i} points={`${230+i*25},0 ${245+i*25},0 ${340+i*40},500 ${315+i*40},500`} fill="#ce8b4d" opacity="0.05" />
                     ))}
                   </svg>
                 </div>
@@ -153,11 +153,11 @@ export default function VibeSection() {
               }} />
               {/* Warm grade */}
               <div className="absolute inset-0" style={{
-                background: "linear-gradient(135deg, rgba(166,112,53,0.12) 0%, transparent 60%)",
+                background: "linear-gradient(135deg, rgba(154,101,56,0.12) 0%, transparent 60%)",
               }} />
               {/* Caption */}
               <div className="absolute bottom-6 left-6 right-6">
-                <p className="font-playfair text-white font-bold text-xl drop-shadow-lg">{t.vibe.photoCaption}</p>
+                <p className="font-display text-white font-bold text-xl drop-shadow-lg">{t.vibe.photoCaption}</p>
                 <p className="text-white/60 text-sm mt-1">{t.vibe.photoCaptionSub}</p>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function VibeSection() {
             {/* Floating leaf accent */}
             <div className="absolute -top-8 -right-8 w-24 h-36 leaf-float-2 pointer-events-none" style={{ opacity: 0.7 }}>
               <svg viewBox="0 0 100 150" fill="none" className="w-full h-full">
-                <path d="M50 5 C30 20,5 60,12 100 C20 130,46 145,50 140 C34 108,32 72,50 5Z" fill="#1e461e" opacity="0.9" />
+                <path d="M50 5 C30 20,5 60,12 100 C20 130,46 145,50 140 C34 108,32 72,50 5Z" fill="#1d3927" opacity="0.9" />
                 <path d="M50 5 C70 20,95 62,88 103 C80 130,54 144,50 140 C66 106,70 70,50 5Z" fill="#245824" opacity="0.85" />
               </svg>
             </div>
@@ -193,7 +193,7 @@ export default function VibeSection() {
                   style={{ background: `${p.accent}18` }}
                   dangerouslySetInnerHTML={{ __html: p.icon }}
                 />
-                <h3 className="font-playfair text-white font-bold text-xl mb-2">{titles[i]}</h3>
+                <h3 className="font-display text-white font-bold text-xl mb-2">{titles[i]}</h3>
                 <p className="text-white/45 text-sm leading-relaxed">{bodies[i]}</p>
                 <div className="mt-4 h-0.5 w-8 rounded-full" style={{ backgroundColor: p.accent }} />
               </div>
@@ -216,7 +216,7 @@ export default function VibeSection() {
             background: "linear-gradient(135deg, rgba(4,14,4,0.70) 0%, rgba(4,12,4,0.35) 50%, rgba(4,14,4,0.75) 100%)",
           }} />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 relative z-10">
-            <p className="font-playfair text-white font-black mb-2 drop-shadow-lg" style={{ fontSize: "clamp(1.5rem, 4vw, 2.8rem)" }}>
+            <p className="font-display text-white font-black mb-2 drop-shadow-lg" style={{ fontSize: "clamp(1.5rem, 4vw, 2.8rem)" }}>
               {t.vibe.bannerHead}<span className="gradient-text">{t.vibe.bannerAccent}</span>
             </p>
             <p className="text-white/65 text-sm md:text-base max-w-md">

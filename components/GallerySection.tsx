@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import { CornerBranch, SideVine } from "./JungleVines";
 import Fireflies from "./Fireflies";
+import InstagramFeed from "./InstagramFeed";
 import { useLanguage } from "@/lib/i18n";
 
 /* ================================================================
@@ -46,18 +47,18 @@ function GardenFallback({ color, index }: { color: string; index: number }) {
     <svg viewBox="0 0 500 360" fill="none" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
       <rect width="500" height="360" fill={color} />
       <radialGradient id={`sg${index}`} cx={`${lightX}%`} cy={`${lightY}%`} r="60%">
-        <stop offset="0%" stopColor="#d4b483" stopOpacity="0.45" />
+        <stop offset="0%" stopColor="#ce8b4d" stopOpacity="0.45" />
         <stop offset="100%" stopColor="transparent" stopOpacity="0" />
       </radialGradient>
       <rect width="500" height="360" fill={`url(#sg${index})`} />
       {/* Sun rays */}
       {[0,1,2].map((i) => (
-        <polygon key={i} points={`${220 + i * 30},0 ${240 + i * 30},0 ${350 + i * 50},360 ${320 + i * 50},360`} fill="#d4b483" opacity="0.06" />
+        <polygon key={i} points={`${220 + i * 30},0 ${240 + i * 30},0 ${350 + i * 50},360 ${320 + i * 50},360`} fill="#ce8b4d" opacity="0.06" />
       ))}
       {/* Canopy blobs */}
       {treeXs.map((x, i) => (
         <ellipse key={i} cx={x} cy={30 + i * 12} rx={55 + i * 6} ry={55 + i * 3}
-          fill={i % 2 === 0 ? "#2d6e2d" : "#1e461e"} opacity="0.85" />
+          fill={i % 2 === 0 ? "#2d6e2d" : "#1d3927"} opacity="0.85" />
       ))}
       {/* Trunks */}
       {treeXs.map((x, i) => (
@@ -80,7 +81,7 @@ function GardenFallback({ color, index }: { color: string; index: number }) {
         <path d={`M${300 + index * 4},${180 + index} Q330,${195 + index} ${380 + index * 4},${177 + index}`} stroke="#c9b07a" strokeWidth="4" opacity="0.5" fill="none" />
       )}
       {/* Plants */}
-      <ellipse cx="10" cy="345" rx="35" ry="22" fill="#1e461e" opacity="0.9" transform="rotate(-20 10 345)" />
+      <ellipse cx="10" cy="345" rx="35" ry="22" fill="#1d3927" opacity="0.9" transform="rotate(-20 10 345)" />
       <ellipse cx="495" cy="340" rx="32" ry="20" fill="#245824" opacity="0.85" transform="rotate(18 495 340)" />
     </svg>
   );
@@ -122,11 +123,11 @@ function PhotoCard({ photo, index, onClick }: { photo: Photo; index: number; onC
 
       {/* Warm color grade on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: "linear-gradient(135deg, rgba(166,112,53,0.12), rgba(10,26,10,0.15))" }} />
+        style={{ background: "linear-gradient(135deg, rgba(154,101,56,0.12), rgba(10,26,10,0.15))" }} />
 
       {/* Caption */}
       <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-1 group-hover:translate-y-0 transition-transform duration-400">
-        <p className="font-playfair text-white font-bold text-lg leading-tight drop-shadow-lg">
+        <p className="font-display text-white font-bold text-lg leading-tight drop-shadow-lg">
           {photo.label}
         </p>
         <p className="text-white/60 text-xs mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
@@ -212,7 +213,7 @@ function Lightbox({
           )}
           {/* Caption overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0a1a0a] to-transparent">
-            <p className="font-playfair text-white font-bold text-2xl">{photo.label}</p>
+            <p className="font-display text-white font-bold text-2xl">{photo.label}</p>
             <p className="text-white/60 text-sm mt-1">{photo.sub}</p>
             <p className="text-white/30 text-xs mt-2">{index + 1} / {total}</p>
           </div>
@@ -283,13 +284,13 @@ export default function GallerySection() {
         {/* Header */}
         <div className="text-center mb-14">
           <div className="reveal flex items-center justify-center gap-3 mb-5">
-            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #e8562a, transparent)" }} />
+            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #f04e30, transparent)" }} />
             <span className="text-[#62a062] text-xs tracking-[0.3em] uppercase font-medium">
               {t.gallery.eyebrow}
             </span>
-            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #e8562a, transparent)" }} />
+            <span className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #f04e30, transparent)" }} />
           </div>
-          <h2 className="reveal font-playfair text-white font-black leading-tight mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+          <h2 className="reveal font-display text-white font-black leading-tight mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
             {t.gallery.headlineA}<span className="gradient-text">{t.gallery.headlineB}</span>
           </h2>
           <p className="reveal text-white/45 max-w-md mx-auto text-sm leading-relaxed">
@@ -312,23 +313,9 @@ export default function GallerySection() {
           ))}
         </div>
 
-        {/* Instagram CTA */}
-        <div className="reveal text-center mt-12">
-          <a
-            href="https://instagram.com/thejunglewey"
-            className="group inline-flex items-center gap-3 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:scale-105 text-sm"
-            style={{
-              background: "linear-gradient(135deg, rgba(131,58,180,0.7), rgba(253,29,29,0.7), rgba(252,176,69,0.7))",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.15)",
-              boxShadow: "0 4px 24px rgba(253,29,29,0.25)",
-            }}
-          >
-            <span className="text-xl">&#128247;</span>
-            <span>{t.gallery.instaCta}</span>
-            <span className="opacity-50 group-hover:opacity-100 transition-opacity">&rarr;</span>
-          </a>
-        </div>
+        {/* Instagram — real feed (live when NEXT_PUBLIC_INSTAGRAM_FEED_URL is set,
+            curated photos linking to the profile until then) */}
+        <InstagramFeed />
       </div>
 
       {/* Lightbox */}

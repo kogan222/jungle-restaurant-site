@@ -1,22 +1,36 @@
 ﻿"use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { WHATSAPP_RESERVE_URL } from "@/lib/contact";
 import { useLanguage } from "@/lib/i18n";
-
-const HOURS = [
-  { day: "Monday",    hours: "12:00 pm – 10:00 pm" },
-  { day: "Tuesday",   hours: "12:00 pm – 10:00 pm" },
-  { day: "Wednesday", hours: "12:00 pm – 10:00 pm" },
-  { day: "Thursday",  hours: "12:00 pm – 11:00 pm" },
-  { day: "Friday",    hours: "12:00 pm – 11:00 pm" },
-  { day: "Saturday",  hours: "11:00 am – 11:00 pm" },
-  { day: "Sunday",    hours: "11:00 am – 10:00 pm" },
-];
+import {
+  HOURS as FALLBACK_HOURS,
+  formatHours,
+  type DayHours,
+  type GoogleBusinessData,
+} from "@/lib/business-info";
 
 export default function ContactSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
+
+  /* Hours: static fallback, upgraded from the Google Business
+     Profile via /api/google-business when the API is configured. */
+  const [hours, setHours] = useState<DayHours[]>(FALLBACK_HOURS);
+  const [google, setGoogle] = useState<GoogleBusinessData | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/google-business")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: GoogleBusinessData | null) => {
+        if (cancelled || !data) return;
+        if (data.hours?.length === 7) setHours(data.hours);
+        if (data.source === "google") setGoogle(data);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,13 +61,13 @@ export default function ContactSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="reveal flex items-center justify-center gap-3 mb-5">
-            <span className="h-px w-12 bg-[#e8562a]" />
+            <span className="h-px w-12 bg-[#f04e30]" />
             <span className="text-[#2d6e2d] text-sm tracking-[0.2em] uppercase font-medium">
               {t.contact.eyebrow}
             </span>
-            <span className="h-px w-12 bg-[#e8562a]" />
+            <span className="h-px w-12 bg-[#f04e30]" />
           </div>
-          <h2 className="reveal font-playfair text-[#0c1f0c] font-black leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+          <h2 className="reveal font-display text-[#0c1f0c] font-black leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
             {t.contact.headlineA}<span className="gradient-text">{t.contact.headlineB}</span>
           </h2>
           <p className="reveal text-[#3a2210]/60 text-lg mt-4 max-w-md mx-auto leading-relaxed">
@@ -69,11 +83,11 @@ export default function ContactSection() {
             {/* Address */}
             <div className="reveal glass-dark rounded-2xl p-6 md:p-8">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#e8562a]/20 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                <div className="w-12 h-12 bg-[#f04e30]/20 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
                   &#128205;
                 </div>
                 <div>
-                  <h3 className="font-playfair text-white font-bold text-xl mb-1">{t.contact.addressTitle}</h3>
+                  <h3 className="font-display text-white font-bold text-xl mb-1">{t.contact.addressTitle}</h3>
                   <p className="text-white/60 text-sm leading-relaxed">
                     Av. Paseo del Puerto 1127<br />
                     Mahahual, Quintana Roo<br />
@@ -95,10 +109,10 @@ export default function ContactSection() {
             <div className="reveal glass-dark rounded-2xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-5">
                 <span className="text-2xl">&#128336;</span>
-                <h3 className="font-playfair text-white font-bold text-xl">{t.contact.hoursTitle}</h3>
+                <h3 className="font-display text-white font-bold text-xl">{t.contact.hoursTitle}</h3>
               </div>
               <div className="flex flex-col gap-2.5">
-                {HOURS.map((h) => {
+                {hours.map((h) => {
                   const today = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][new Date().getDay()];
                   const isToday = h.day === today;
                   return (
@@ -111,14 +125,22 @@ export default function ContactSection() {
                       <span>
                         {t.contact.days[h.day as keyof typeof t.contact.days]}
                         {isToday && (
-                          <span className="text-xs text-[#e8562a] ml-2 font-normal">{t.contact.today}</span>
+                          <span className="text-xs text-[#f04e30] ml-2 font-normal">{t.contact.today}</span>
                         )}
                       </span>
-                      <span>{h.hours}</span>
+                      <span>{formatHours(h)}</span>
                     </div>
                   );
                 })}
               </div>
+              {/* Live Google rating — only rendered when the Places API is configured */}
+              {google?.rating && (
+                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/10 text-sm text-white/60">
+                  <span aria-hidden="true" style={{ color: "#ce8b4d" }}>★</span>
+                  <span className="font-semibold text-white/80">{google.rating.toFixed(1)}</span>
+                  <span>· {google.totalRatings} Google reviews</span>
+                </div>
+              )}
             </div>
 
             {/* Social / Contact buttons */}
@@ -176,13 +198,13 @@ export default function ContactSection() {
                 <rect x="0" y="300" width="100" height="100" fill="#1a4a5a" opacity="0.6" />
                 <rect x="0" y="300" width="600" height="100" fill="#1a4a5a" opacity="0.2" />
                 {/* Map pin */}
-                <circle cx="230" cy="240" r="28" fill="#e8562a" opacity="0.2" />
-                <circle cx="230" cy="240" r="20" fill="#e8562a" opacity="0.9" />
+                <circle cx="230" cy="240" r="28" fill="#f04e30" opacity="0.2" />
+                <circle cx="230" cy="240" r="20" fill="#f04e30" opacity="0.9" />
                 <circle cx="230" cy="240" r="10" fill="white" opacity="0.9" />
-                <line x1="230" y1="260" x2="230" y2="278" stroke="#e8562a" strokeWidth="3" />
+                <line x1="230" y1="260" x2="230" y2="278" stroke="#f04e30" strokeWidth="3" />
                 {/* Label */}
-                <rect x="148" y="202" width="142" height="28" rx="4" fill="#e8562a" opacity="0.9" />
-                <text x="219" y="221" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="Inter, sans-serif">The Jungle Wey</text>
+                <rect x="148" y="202" width="142" height="28" rx="4" fill="#f04e30" opacity="0.9" />
+                <text x="219" y="221" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="Poppins, sans-serif">The Jungle Wey</text>
               </svg>
 
               {/* Open Maps CTA */}
@@ -201,11 +223,11 @@ export default function ContactSection() {
             {/* Walk-ins card */}
             <div
               className="rounded-2xl p-6 flex items-center gap-4"
-              style={{ background: "linear-gradient(135deg, #0c1f0c, #1e461e)" }}
+              style={{ background: "linear-gradient(135deg, #0c1f0c, #1d3927)" }}
             >
               <span className="text-5xl">&#127807;</span>
               <div>
-                <p className="font-playfair text-white font-bold text-lg">{t.contact.walkinsTitle}</p>
+                <p className="font-display text-white font-bold text-lg">{t.contact.walkinsTitle}</p>
                 <p className="text-white/55 text-sm mt-1 leading-relaxed">
                   {t.contact.walkinsSub}
                 </p>

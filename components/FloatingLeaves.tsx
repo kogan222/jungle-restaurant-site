@@ -8,7 +8,7 @@ export default function FloatingLeaves() {
         <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M100 10 C60 30, 10 80, 20 150 C30 200, 80 215, 100 210 C80 170, 75 130, 100 10Z"
-            fill="#1e461e"
+            fill="#1d3927"
             opacity="0.9"
           />
           <path
@@ -37,7 +37,7 @@ export default function FloatingLeaves() {
             d="M120 20 C60 45, 25 110, 40 165 C55 210, 100 228, 120 225
                C100 198, 95 170, 100 148 C75 142, 65 126, 72 108 C78 90, 98 88, 100 102
                C103 80, 112 52, 120 20Z"
-            fill="#1e461e"
+            fill="#1d3927"
             opacity="0.9"
           />
           {/* holes */}
@@ -58,7 +58,7 @@ export default function FloatingLeaves() {
       <div className="absolute bottom-10 -left-10 w-40 h-64 opacity-50 leaf-float-4 z-10">
         <svg viewBox="0 0 160 280" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M80 270 Q70 200 30 160 Q10 140 5 110 Q20 125 40 140 Q60 155 70 170 Q75 140 60 110 Q45 80 50 50 Q65 80 75 115 Q80 90 72 55 Q85 80 88 115 Q95 90 92 55 Q105 82 100 118 Q110 95 115 65 Q118 100 108 135 Q120 115 135 100 Q125 128 110 148 Q130 135 148 130 Q130 155 112 165 Q130 165 148 160 Q128 185 108 188 Q80 200 80 270Z"
-            fill="#1e461e" opacity="0.8" />
+            fill="#1d3927" opacity="0.8" />
         </svg>
       </div>
     </div>

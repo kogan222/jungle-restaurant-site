@@ -133,7 +133,7 @@ export default function TripAdvisorSection() {
               {/* Score */}
               <div className="text-center md:text-left">
                 <div
-                  className="font-playfair font-black leading-none"
+                  className="font-display font-black leading-none"
                   style={{
                     fontSize: "clamp(3.5rem, 8vw, 5.5rem)",
                     color: "#00af87",
@@ -166,7 +166,7 @@ export default function TripAdvisorSection() {
             {/* Right — text + features + CTA */}
             <div className="flex-1">
               <h2
-                className="font-playfair font-black text-white leading-tight mb-3"
+                className="font-display font-black text-white leading-tight mb-3"
                 style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.5rem)" }}
               >
                 {t.tripadvisor.headlineA}<span style={{ color: "#00af87" }}>{t.tripadvisor.excellent}</span><br />
@@ -266,7 +266,7 @@ export default function TripAdvisorSection() {
           >
             <span
               className="w-10 h-10 rounded-full flex items-center justify-center text-lg transition-colors group-hover:bg-white/10"
-              style={{ background: "rgba(232,86,42,0.10)", border: "1px solid rgba(232,86,42,0.20)" }}
+              style={{ background: "rgba(240,78,48,0.10)", border: "1px solid rgba(240,78,48,0.20)" }}
             >
               &#128205;
             </span>

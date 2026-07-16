@@ -10,6 +10,7 @@ export const en = {
     drinks:        "Drinks",
     gallery:       "Gallery",
     findUs:        "Find Us",
+    tribe:         "Jungle Tribe",
     reserve:       "Reserve Now",
     reserveMobile: "Reserve via WhatsApp",
   },
@@ -63,8 +64,9 @@ export const en = {
 
   food: {
     eyebrow:    "Signature Dishes",
-    headlineA:  "Food Worth ",
-    headlineB:  "Fighting For",
+    headlineA:  "Cravings Done ",
+    headlineB:  "the Jungle Wey",
+    cardCta:    "See it on the menu",
     cta:        "See full menu →",
     tags: {
       fanFav:    "Fan Favourite",
@@ -92,7 +94,28 @@ export const en = {
       legendary: "Legendary",
       bestseller:"Bestseller",
       mostOrdered:"Most Ordered",
+      glutenFree:"Gluten Free",
+      forTwo:    "For Two",
     },
+    viewFullCta: "View the Full Menu",
+  },
+
+  menuPage: {
+    eyebrow:      "Puro antojo bien hecho",
+    headlineA:    "The Jungle ",
+    headlineB:    "Menu",
+    sub:          "Two moments, one jungle. Breakfast until 3, dinner until close — always fresh, always wild.",
+    breakfast:    "Breakfast",
+    dinner:       "Dinner",
+    nowServing:   "Now serving",
+    servedDaily:  "Served daily",
+    food:         "Food",
+    drinks:       "Drinks",
+    spirits:      "Destilados & Co.",
+    spiritsNote:  "Spirits by the glass",
+    orderCta:     "Order or reserve via WhatsApp",
+    backHome:     "Back to home",
+    disclaimer:   "Prices in Mexican pesos (MXN) • Menu subject to seasonal changes • If you have any allergies, please let your server know",
   },
 
   drinks: {
@@ -181,6 +204,22 @@ export const en = {
       Friday:    "Friday",
       Saturday:  "Saturday",
       Sunday:    "Sunday",
+    },
+  },
+
+  tribe: {
+    eyebrow:     "Join the tribe, share the flow",
+    headlineA:   "The Jungle ",
+    headlineB:   "Tribe",
+    sub:         "Be the first to hear about live music nights, secret menus, and jungle happenings. Sign up and become part of the family.",
+    formTitle:   "Jungle Tribe registration form",
+    fallbackTitle: "The form is taking a siesta",
+    fallbackBody:  "Registration opens soon. Meanwhile, say hi on WhatsApp and we'll add you to the tribe personally.",
+    fallbackCta:   "Join via WhatsApp",
+    perks: {
+      p1: { title: "First to Know",   body: "Live music, pop-up dinners, and special nights — straight to you." },
+      p2: { title: "Tribe Treats",    body: "Members-only tastings and little surprises from El Wey." },
+      p3: { title: "Zero Spam",       body: "Only the good stuff, only when it matters. Promise." },
     },
   },
 

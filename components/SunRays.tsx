@@ -21,12 +21,12 @@ export default function SunRays({
       >
         <defs>
           <radialGradient id="rayGrad" cx="60%" cy="0%" r="80%" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#d4b483" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="#d4b483" stopOpacity="0" />
+            <stop offset="0%" stopColor="#ce8b4d" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#ce8b4d" stopOpacity="0" />
           </radialGradient>
           <linearGradient id="rayLinear" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#d4b483" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#d4b483" stopOpacity="0" />
+            <stop offset="0%" stopColor="#ce8b4d" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#ce8b4d" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -66,7 +66,7 @@ export default function SunRays({
             cx={mote.cx}
             cy={mote.cy}
             r={mote.r}
-            fill="#d4b483"
+            fill="#ce8b4d"
             opacity={0.35}
             className="gentle-pulse"
             style={{ animationDelay: `${i * 0.4}s` }}

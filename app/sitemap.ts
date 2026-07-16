@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 
 /*
-  Single-page app — only the root URL is a real crawlable page.
-  Hash anchors (#menu, #drinks, etc.) are NOT separate URLs;
-  Google ignores the fragment portion anyway.
+  Public, indexable pages only.
+  /book, /stories and /events are intentionally excluded — they are
+  hidden future pages (noindex) until the client launches them.
 */
 const BASE_URL = "https://thejunglewey.com";
 
@@ -14,6 +14,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified:    new Date(),
       changeFrequency: "weekly",
       priority:        1.0,
+    },
+    {
+      url:             `${BASE_URL}/menu`,
+      lastModified:    new Date(),
+      changeFrequency: "weekly",
+      priority:        0.9,
+    },
+    {
+      url:             `${BASE_URL}/tribe`,
+      lastModified:    new Date(),
+      changeFrequency: "monthly",
+      priority:        0.6,
     },
   ];
 }

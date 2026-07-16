@@ -97,14 +97,14 @@ export default function VideoSection() {
       >
         <div className="text-center px-6">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <span className="h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(200,168,85,0.6))" }} />
-            <span className="text-[#c8a855]/60 text-xs tracking-[0.45em] uppercase">
+            <span className="h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(206,139,77,0.6))" }} />
+            <span className="text-[#ce8b4d]/60 text-xs tracking-[0.45em] uppercase">
               {t.video.eyebrow}
             </span>
-            <span className="h-px w-16" style={{ background: "linear-gradient(90deg, rgba(200,168,85,0.6), transparent)" }} />
+            <span className="h-px w-16" style={{ background: "linear-gradient(90deg, rgba(206,139,77,0.6), transparent)" }} />
           </div>
           <p
-            className="font-playfair font-black text-white drop-shadow-2xl"
+            className="font-display font-black text-white drop-shadow-2xl"
             style={{
               fontSize: "clamp(2rem, 6vw, 4.5rem)",
               lineHeight: 1.1,

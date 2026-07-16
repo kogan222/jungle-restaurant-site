@@ -6,20 +6,21 @@ import { SideVine } from "./JungleVines";
 import { useTilt } from "./useTilt";
 import { useLanguage } from "@/lib/i18n";
 
+/* Real signature dishes — names and recipes from the client's PM menu (Marzo 26) */
 const HIGHLIGHTS = [
   {
     emoji: "&#127967;",
     img: "/images/food-fish.jpg",
     name: "God Save the Queen",
-    desc: "Crispy fish with fries and house tartar sauce. Our most beloved plate.",
+    desc: "Fish sticks served with french fries and house tartar sauce. Our most beloved plate.",
     tagKey: "fanFav" as const,
-    accent: "#e8562a",
+    accent: "#f04e30",
   },
   {
     emoji: "&#127805;",
     img: "/images/food-shrimp-tacos.jpg",
-    name: "Tacos de Camarón",
-    desc: "Grilled shrimp on blue corn tortillas with avocado cream and lime.",
+    name: "Los Señores Tacos — Sea",
+    desc: "Garlic shrimp on a bed of guacamole, on handmade blue corn tortillas.",
     tagKey: "mustTry" as const,
     accent: "#3d8a3d",
   },
@@ -34,8 +35,8 @@ const HIGHLIGHTS = [
   {
     emoji: "&#129361;",
     img: "/images/food-greek-salad.jpg",
-    name: "The Salad Bowl",
-    desc: "Cucumber ribbons, sprouts, olives, cherry tomatoes & house vinaigrette.",
+    name: "Greek Salad",
+    desc: "Mixed greens, black olives, goat cheese spheres, cherry tomatoes & walnuts.",
     tagKey: "nemboFit" as const,
     accent: "#3d8a3d",
   },
@@ -43,9 +44,9 @@ const HIGHLIGHTS = [
     emoji: "&#127839;",
     img: "/images/food-burger.jpg",
     name: "La Trufada",
-    desc: "Angus beef, truffle mayo, crispy onion & camote fries on homemade bread.",
+    desc: "Angus beef, truffle mayo, mushrooms, manchego cheese & crispy onion.",
     tagKey: "premium" as const,
-    accent: "#d4b483",
+    accent: "#ce8b4d",
   },
   {
     emoji: "&#129364;",
@@ -53,7 +54,7 @@ const HIGHLIGHTS = [
     name: "Rollos Vietnamitas",
     desc: "Fresh rice paper rolls with avocado, mint & spicy orange dipping sauce.",
     tagKey: "queRollo" as const,
-    accent: "#e8562a",
+    accent: "#f04e30",
   },
 ];
 
@@ -89,7 +90,7 @@ export default function FoodHighlights() {
       {/* Spiral decoration */}
       <div className="absolute top-10 left-10 opacity-10 spiral-spin w-16 h-16 pointer-events-none">
         <svg viewBox="0 0 64 64" fill="none">
-          <path d="M32 6 C44 6 54 16 54 32 C54 44 44 54 32 54 C20 54 12 44 12 32 C12 24 18 18 26 18 C34 18 38 24 38 32 C38 38 34 42 32 42" stroke="#e8562a" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <path d="M32 6 C44 6 54 16 54 32 C54 44 44 54 32 54 C20 54 12 44 12 32 C12 24 18 18 26 18 C34 18 38 24 38 32 C38 38 34 42 32 42" stroke="#f04e30" strokeWidth="2" fill="none" strokeLinecap="round" />
         </svg>
       </div>
 
@@ -98,10 +99,10 @@ export default function FoodHighlights() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-12">
           <div>
             <div className="reveal flex items-center gap-3 mb-5">
-              <span className="h-px w-14" style={{ background: "linear-gradient(90deg, #e8562a, transparent)" }} />
+              <span className="h-px w-14" style={{ background: "linear-gradient(90deg, #f04e30, transparent)" }} />
               <span className="text-[#62a062] text-xs tracking-[0.3em] uppercase font-medium">{t.food.eyebrow}</span>
             </div>
-            <h2 className="reveal font-playfair text-white font-black leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+            <h2 className="reveal font-display text-white font-black leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
               {t.food.headlineA}
               <span className="gradient-text">{t.food.headlineB}</span>
             </h2>
@@ -118,7 +119,7 @@ export default function FoodHighlights() {
         {/* Bento grid — varied sizes for visual interest */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {HIGHLIGHTS.map((item, i) => (
-            <HighlightCard key={item.name} item={item} index={i} featured={i === 0 || i === 5} tagLabel={t.food.tags[item.tagKey]} />
+            <HighlightCard key={item.name} item={item} index={i} featured={i === 0 || i === 5} tagLabel={t.food.tags[item.tagKey]} cardCta={t.food.cardCta} />
           ))}
         </div>
       </div>
@@ -126,14 +127,16 @@ export default function FoodHighlights() {
   );
 }
 
-function HighlightCard({ item, index, featured, tagLabel }: { item: typeof HIGHLIGHTS[0]; index: number; featured: boolean; tagLabel: string }) {
+function HighlightCard({ item, index, featured, tagLabel, cardCta }: { item: typeof HIGHLIGHTS[0]; index: number; featured: boolean; tagLabel: string; cardCta: string }) {
   const [hovered, setHovered] = useState(false);
   const [imgError, setImgError] = useState(false);
   const { ref: tiltRef, onMouseMove, onMouseLeave: tiltLeave } = useTilt(9);
 
   return (
-    <div
-      className={`reveal menu-card-jungle relative rounded-2xl overflow-hidden cursor-pointer ${featured ? "sm:col-span-1" : ""}`}
+    <a
+      href="/menu"
+      aria-label={`${item.name} — ${cardCta}`}
+      className={`reveal menu-card-jungle relative rounded-2xl overflow-hidden cursor-pointer block ${featured ? "sm:col-span-1" : ""}`}
       style={{ transitionDelay: `${index * 0.08}s` }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); tiltLeave(); }}
@@ -206,7 +209,7 @@ function HighlightCard({ item, index, featured, tagLabel }: { item: typeof HIGHL
 
         {/* Content */}
         <div className="p-5">
-          <h3 className="font-playfair font-bold text-white text-xl leading-tight mb-2">{item.name}</h3>
+          <h3 className="font-display text-white text-2xl leading-tight mb-2">{item.name}</h3>
           <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
           {/* Show tag here only when no image */}
           {(imgError || !item.img) && (
@@ -217,6 +220,20 @@ function HighlightCard({ item, index, featured, tagLabel }: { item: typeof HIGHL
               {tagLabel}
             </span>
           )}
+          {/* Card action — every card leads somewhere meaningful */}
+          <span
+            className="mt-3 flex items-center gap-1.5 text-xs font-semibold transition-colors duration-300"
+            style={{ color: hovered ? item.accent : "rgba(255,255,255,0.35)" }}
+          >
+            {cardCta}
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-300 inline-block"
+              style={{ transform: hovered ? "translateX(4px)" : "none" }}
+            >
+              &rarr;
+            </span>
+          </span>
         </div>
 
         {/* Hover glow */}
@@ -225,6 +242,6 @@ function HighlightCard({ item, index, featured, tagLabel }: { item: typeof HIGHL
           style={{ background: `radial-gradient(circle, ${item.accent}30, transparent 70%)`, opacity: hovered ? 1 : 0 }}
         />
       </div>
-    </div>
+    </a>
   );
 }

@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { WHATSAPP_RESERVE_URL, INSTAGRAM } from "@/lib/contact";
 import { useLanguage } from "@/lib/i18n";
 
@@ -10,9 +11,16 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex flex-col items-center md:items-start gap-2">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl" aria-hidden="true">&#127807;</span>
-              <span className="font-playfair text-white font-bold text-xl">
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/logo-elwey-white.png"
+                alt=""
+                aria-hidden="true"
+                width={26}
+                height={38}
+                className="h-9 w-auto"
+              />
+              <span className="font-display text-white text-2xl">
                 The Jungle Wey
               </span>
             </div>
@@ -23,11 +31,12 @@ export default function Footer() {
 
           <nav className="flex flex-wrap justify-center gap-6">
             {[
-              { label: t.nav.menu,    href: "#menu" },
-              { label: t.nav.vibe,    href: "#vibe" },
-              { label: t.nav.drinks,  href: "#drinks" },
-              { label: t.nav.gallery, href: "#gallery" },
-              { label: t.nav.findUs,  href: "#contact" },
+              { label: t.nav.menu,    href: "/menu" },
+              { label: t.nav.vibe,    href: "/#vibe" },
+              { label: t.nav.drinks,  href: "/#drinks" },
+              { label: t.nav.gallery, href: "/#gallery" },
+              { label: t.nav.findUs,  href: "/#contact" },
+              { label: t.nav.tribe,   href: "/tribe" },
             ].map((l) => (
               <a
                 key={l.label}

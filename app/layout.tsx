@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Mouse_Memoirs, Poppins } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
+import { HOURS } from "@/lib/business-info";
 
-const playfair = Playfair_Display({
+/* Brand Manual typography (Lineamientos de Marca, p.11):
+   Mouse Memoirs — headlines & short highlighted phrases.
+   Poppins — subtitles (Bold) and running text (Regular). */
+const mouseMemoirs = Mouse_Memoirs({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "900"],
-  style: ["normal", "italic"],
-  variable: "--font-playfair",
+  weight: "400",
+  variable: "--font-display",
   display: "swap",
 });
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -186,32 +189,14 @@ const jsonLd = {
         latitude:   18.7074,
         longitude:  -87.7063,
       },
-      openingHoursSpecification: [
-        {
-          "@type":    "OpeningHoursSpecification",
-          dayOfWeek:  ["Monday", "Tuesday", "Wednesday"],
-          opens:      "12:00",
-          closes:     "22:00",
-        },
-        {
-          "@type":    "OpeningHoursSpecification",
-          dayOfWeek:  ["Thursday", "Friday"],
-          opens:      "12:00",
-          closes:     "23:00",
-        },
-        {
-          "@type":    "OpeningHoursSpecification",
-          dayOfWeek:  "Saturday",
-          opens:      "11:00",
-          closes:     "23:00",
-        },
-        {
-          "@type":    "OpeningHoursSpecification",
-          dayOfWeek:  "Sunday",
-          opens:      "11:00",
-          closes:     "22:00",
-        },
-      ],
+      /* Hours come from lib/business-info.ts — single source of truth
+         shared with the Contact section and /api/google-business. */
+      openingHoursSpecification: HOURS.map((h) => ({
+        "@type":   "OpeningHoursSpecification",
+        dayOfWeek: h.day,
+        opens:     h.opens,
+        closes:    h.closes,
+      })),
       amenityFeature: [
         { "@type": "LocationFeatureSpecification", name: "Outdoor Seating",      value: true },
         { "@type": "LocationFeatureSpecification", name: "Live Music",            value: true },
@@ -312,7 +297,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="en" className={`${mouseMemoirs.variable} ${poppins.variable}`}>
       <head>
         {/* Preconnect — reduces font load latency */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

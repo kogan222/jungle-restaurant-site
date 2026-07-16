@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 /* ── Butterfly ────────────────────────────────────────────── */
 function Butterfly({
-  x, y, delay = 0, size = 1, color = "#e8562a",
+  x, y, delay = 0, size = 1, color = "#f04e30",
 }: { x: string; y: string; delay?: number; size?: number; color?: string; }) {
   return (
     <div
@@ -146,7 +146,7 @@ function Gecko({ x, y }: { x: string; y: string }) {
         {/* Tail */}
         <path d="M7 9 C4 10, 2 9, 0 10" stroke="#2d6e2d" strokeWidth="3" fill="none" strokeLinecap="round" />
         {/* Eyes */}
-        <circle cx="32" cy="7" r="1.5" fill="#d4b483" />
+        <circle cx="32" cy="7" r="1.5" fill="#ce8b4d" />
         <ellipse cx="32" cy="7" rx="0.5" ry="1.2" fill="#0a1a0a" />
         {/* Legs */}
         <path d="M12 9 L9 14" stroke="#2d6e2d" strokeWidth="1.5" strokeLinecap="round" />
@@ -213,7 +213,7 @@ export default function JungleCreatures({ section = "hero" }: { section?: string
         <DistantMonkey x="82%" y="28%" delay={1.8} />
         <DistantMonkey x="61%" y="18%" delay={0.9} />
         {/* Butterflies near CTA */}
-        <Butterfly x="72%" y="58%" delay={0}   size={1.1} color="#e8562a" />
+        <Butterfly x="72%" y="58%" delay={0}   size={1.1} color="#f04e30" />
         <Butterfly x="18%" y="65%" delay={2.5} size={0.8} color="#62a062" />
         {/* Tiny gecko on a branch */}
         <Gecko x="78%" y="35%" />
@@ -223,7 +223,7 @@ export default function JungleCreatures({ section = "hero" }: { section?: string
   if (section === "vibe") {
     return (
       <>
-        <Butterfly x="85%" y="20%" delay={1}   size={0.9} color="#d4b483" />
+        <Butterfly x="85%" y="20%" delay={1}   size={0.9} color="#ce8b4d" />
         <Butterfly x="5%"  y="45%" delay={3.2} size={0.8} color="#62a062" />
         <TreeFrog x="90%" y="35%" />
         <DistantMonkey x="12%" y="15%" delay={0.5} />

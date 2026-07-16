@@ -106,7 +106,7 @@ function VinePath({
           const leafW = 14 + (li % 3) * 4;
           const leafH = 10 + (li % 3) * 3;
           const angle = -25 * dir + (li % 2) * 10;
-          const leafColor = li % 3 === 0 ? "#1e461e" : li % 3 === 1 ? "#2d6e2d" : "#245824";
+          const leafColor = li % 3 === 0 ? "#1d3927" : li % 3 === 1 ? "#2d6e2d" : "#245824";
 
           return (
             <g
@@ -151,7 +151,7 @@ function VinePath({
                   cx={pt.x + dir * (8 + leafW * 1.1)}
                   cy={pt.y + 2}
                   r="2.5"
-                  fill="rgba(232,86,42,0.55)"
+                  fill="rgba(240,78,48,0.55)"
                 />
               )}
             </g>

@@ -80,7 +80,7 @@ function LiquidBtn({
         willChange: "transform",
         ...(primary ? {
           background: "linear-gradient(145deg, #f06030 0%, #c43018 100%)",
-          boxShadow: "0 8px 40px rgba(232,86,42,0.48), 0 0 0 1px rgba(255,255,255,0.10) inset",
+          boxShadow: "0 8px 40px rgba(240,78,48,0.48), 0 0 0 1px rgba(255,255,255,0.10) inset",
           color: "white",
         } : {
           background: "rgba(255,255,255,0.06)",
@@ -282,8 +282,8 @@ export default function Hero() {
           {/* Eyebrow */}
           <div className="cr-eyebrow cr-item flex items-center gap-3 mb-8">
             <span className="h-px w-16"
-              style={{ background: "linear-gradient(90deg, rgba(200,168,85,0.90), rgba(200,168,85,0))" }} />
-            <span className="text-[#c8a855]/60"
+              style={{ background: "linear-gradient(90deg, rgba(206,139,77,0.90), rgba(206,139,77,0))" }} />
+            <span className="text-[#ce8b4d]/60"
               style={{ fontSize: "0.68rem", letterSpacing: "0.42em", textTransform: "uppercase" }}>
               {t.hero.eyebrow}
             </span>
@@ -291,7 +291,7 @@ export default function Hero() {
 
           {/* Headline — clip-up reveal, one line at a time */}
           <h1
-            className="font-playfair font-black text-white"
+            className="font-display font-black text-white"
             style={{
               fontSize: "clamp(3.4rem, 10.5vw, 8rem)",
               lineHeight: 1.005,
@@ -331,7 +331,7 @@ export default function Hero() {
               textShadow: "0 2px 28px rgba(0,0,0,0.85)",
             }}>
             {t.hero.sub}{" "}
-            <em className="not-italic" style={{ color: "#c8a855" }}>
+            <em className="not-italic" style={{ color: "#ce8b4d" }}>
               {t.hero.subAccent}
             </em>
           </p>
@@ -351,7 +351,7 @@ export default function Hero() {
             ].map((s) => (
               <div key={s.l} className="flex flex-col">
                 <span
-                  className="font-playfair font-black gradient-text-green leading-none"
+                  className="font-display font-black gradient-text-green leading-none"
                   style={{ fontSize: "clamp(1.85rem, 3.3vw, 2.4rem)", textShadow: "0 0 50px rgba(109,190,109,0.28)" }}
                 >
                   {s.v}

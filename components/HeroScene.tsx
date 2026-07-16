@@ -106,7 +106,7 @@ function SceneLighting() {
       {/* Sun — warm amber, top-right */}
       <directionalLight
         ref={sunRef}
-        color="#d4a855"
+        color="#ce8b4d"
         intensity={0.22}
         position={[8, 10, -2]}
       />
@@ -378,7 +378,7 @@ function DustParticles({ count = 500 }: { count?: number }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.018}
-        color="#c8a855"
+        color="#ce8b4d"
         transparent
         opacity={0.35}
         sizeAttenuation

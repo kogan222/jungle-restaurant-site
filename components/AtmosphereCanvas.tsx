@@ -43,7 +43,7 @@ function sr(seed: number): number {
 
 function initParticles(count: number, w: number, h: number): Particle[] {
   const colors = [
-    "rgba(212,180,131,", /* warm gold dust */
+    "rgba(206,139,77,", /* warm gold dust */
     "rgba(180,220,130,", /* jungle green spore */
     "rgba(255,240,200,", /* bright mote */
     "rgba(200,220,180,", /* cool green */
@@ -103,7 +103,7 @@ export default function AtmosphereCanvas({
   const startTime = useRef(Date.now());
 
   const rayColors: Record<string, [string, string]> = {
-    warm:   ["rgba(212,180,131,", "rgba(255,220,160,"],
+    warm:   ["rgba(206,139,77,", "rgba(255,220,160,"],
     cool:   ["rgba(140,200,180,", "rgba(180,230,210,"],
     golden: ["rgba(255,200,80,",  "rgba(255,230,120,"],
   };

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { WHATSAPP_RESERVE_URL } from "@/lib/contact";
 import { useLanguage } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
@@ -48,16 +50,19 @@ function LangToggle({ large = false }: { large?: boolean }) {
 /* ── Navbar ─────────────────────────────────────────────── */
 export default function Navbar() {
   const { t } = useLanguage();
+  const pathname = usePathname();
+  const onMenuPage = pathname === "/menu";
   const [scrolled,       setScrolled]       = useState(false);
   const [open,           setOpen]           = useState(false);
   const [activeSection,  setActiveSection]  = useState("hero");
 
+  /* Route-aware links: work from the homepage and from sub-pages */
   const links = [
-    { key: "menu",    label: t.nav.menu,    href: "#menu"    },
-    { key: "vibe",    label: t.nav.vibe,    href: "#vibe"    },
-    { key: "drinks",  label: t.nav.drinks,  href: "#drinks"  },
-    { key: "gallery", label: t.nav.gallery, href: "#gallery" },
-    { key: "contact", label: t.nav.findUs,  href: "#contact" },
+    { key: "menu",    label: t.nav.menu,    href: "/menu"     },
+    { key: "vibe",    label: t.nav.vibe,    href: "/#vibe"    },
+    { key: "drinks",  label: t.nav.drinks,  href: "/#drinks"  },
+    { key: "gallery", label: t.nav.gallery, href: "/#gallery" },
+    { key: "contact", label: t.nav.findUs,  href: "/#contact" },
   ];
 
   useEffect(() => {
@@ -94,15 +99,17 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-20">
 
-        {/* Logo */}
-        <a href="#hero" className="flex items-center gap-2.5 group flex-shrink-0">
-          <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-lg"
-            style={{ background: "rgba(45,110,45,0.25)", border: "1px solid rgba(61,138,61,0.3)" }}
-          >
-            &#127807;
-          </div>
-          <span className="font-playfair font-bold text-white text-lg tracking-wide group-hover:text-[#62a062] transition-colors duration-300">
+        {/* Logo — official "El Wey" mascot (Brand Manual single-color version) */}
+        <a href="/" className="flex items-center gap-2.5 group flex-shrink-0">
+          <Image
+            src="/images/logo-elwey-white.png"
+            alt="The Jungle Wey — El Wey mascot"
+            width={30}
+            height={44}
+            priority
+            className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+          />
+          <span className="font-display text-white text-2xl tracking-wide group-hover:text-[#62a062] transition-colors duration-300">
             The Jungle Wey
           </span>
         </a>
@@ -110,7 +117,7 @@ export default function Navbar() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
           {links.map((l) => {
-            const isActive = activeSection === l.key;
+            const isActive = l.key === "menu" ? onMenuPage : !onMenuPage && activeSection === l.key;
             return (
               <a
                 key={l.key}
@@ -122,7 +129,7 @@ export default function Navbar() {
                 {isActive && (
                   <span
                     className="absolute -bottom-1 left-0 right-0 h-px rounded-full"
-                    style={{ background: "#e8562a" }}
+                    style={{ background: "#f04e30" }}
                   />
                 )}
               </a>
@@ -139,8 +146,8 @@ export default function Navbar() {
             rel="noopener noreferrer"
             className="relative overflow-hidden ml-1 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-[transform,box-shadow] duration-200 hover:scale-105 group"
             style={{
-              background:  "linear-gradient(135deg, #e8562a, #cc4420)",
-              boxShadow:   "0 4px 20px rgba(232,86,42,0.35)",
+              background:  "linear-gradient(135deg, #f04e30, #d43e22)",
+              boxShadow:   "0 4px 20px rgba(240,78,48,0.35)",
             }}
           >
             <span className="relative z-10">{t.nav.reserve}</span>
@@ -223,7 +230,7 @@ export default function Navbar() {
             onClick={() => setOpen(false)}
             className="mt-3 text-white text-center rounded-full font-semibold text-sm flex items-center justify-center gap-2"
             style={{
-              background: "linear-gradient(135deg, #e8562a, #cc4420)",
+              background: "linear-gradient(135deg, #f04e30, #d43e22)",
               minHeight: 52,
             }}
           >
