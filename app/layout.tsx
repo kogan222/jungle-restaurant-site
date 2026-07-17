@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Mouse_Memoirs, Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
 import { HOURS } from "@/lib/business-info";
@@ -340,6 +341,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-full">
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
