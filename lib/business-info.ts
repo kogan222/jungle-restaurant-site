@@ -12,22 +12,26 @@
 
 export type DayHours = {
   day: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
-  opens: string;   // 24 h "HH:MM"
-  closes: string;
+  opens?: string;   // 24 h "HH:MM" — absent when closed
+  closes?: string;
+  closed?: boolean;
 };
 
+/* Current hours per the Google Business / WhatsApp Business profile
+   (updated 2026-07-17): open daily 08:00–23:00, closed on Mondays. */
 export const HOURS: DayHours[] = [
-  { day: "Monday",    opens: "12:00", closes: "22:00" },
-  { day: "Tuesday",   opens: "12:00", closes: "22:00" },
-  { day: "Wednesday", opens: "12:00", closes: "22:00" },
-  { day: "Thursday",  opens: "12:00", closes: "23:00" },
-  { day: "Friday",    opens: "12:00", closes: "23:00" },
-  { day: "Saturday",  opens: "11:00", closes: "23:00" },
-  { day: "Sunday",    opens: "11:00", closes: "22:00" },
+  { day: "Monday",    closed: true },
+  { day: "Tuesday",   opens: "08:00", closes: "23:00" },
+  { day: "Wednesday", opens: "08:00", closes: "23:00" },
+  { day: "Thursday",  opens: "08:00", closes: "23:00" },
+  { day: "Friday",    opens: "08:00", closes: "23:00" },
+  { day: "Saturday",  opens: "08:00", closes: "23:00" },
+  { day: "Sunday",    opens: "08:00", closes: "23:00" },
 ];
 
-/** "12:00 pm – 10:00 pm" style label for display */
-export function formatHours(h: DayHours): string {
+/** "8:00 am – 11:00 pm" style label for display; null when closed */
+export function formatHours(h: DayHours): string | null {
+  if (h.closed || !h.opens || !h.closes) return null;
   const fmt = (t: string) => {
     const [hh, mm] = t.split(":").map(Number);
     const am = hh < 12;

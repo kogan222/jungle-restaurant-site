@@ -188,6 +188,7 @@ export const en = {
     addressTitle:  "Address",
     hoursTitle:    "Hours",
     today:         "Today",
+    closed:        "Closed",
     openMaps:      "Open in Maps →",
     waTitle:       "WhatsApp",
     waDesc:        "Reserve a table",

@@ -190,6 +190,7 @@ export const es: T = {
     addressTitle:  "Dirección",
     hoursTitle:    "Horarios",
     today:         "Hoy",
+    closed:        "Cerrado",
     openMaps:      "Abrir en Maps →",
     waTitle:       "WhatsApp",
     waDesc:        "Reservar una mesa",

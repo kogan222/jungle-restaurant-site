@@ -45,19 +45,28 @@ export async function GET() {
     if (!res.ok) throw new Error(`Places API ${res.status}`);
     const data = await res.json();
 
-    const hours: DayHours[] | undefined = data.regularOpeningHours?.periods
-      ? data.regularOpeningHours.periods
-          .map((p: { open?: { day: number; hour: number; minute: number }; close?: { day: number; hour: number; minute: number } }) => {
-            if (!p.open || !p.close) return null;
-            const pad = (n: number) => String(n).padStart(2, "0");
-            return {
-              day: DAY_NAMES[p.open.day],
-              opens: `${pad(p.open.hour)}:${pad(p.open.minute)}`,
-              closes: `${pad(p.close.hour)}:${pad(p.close.minute)}`,
-            };
-          })
-          .filter(Boolean)
-      : undefined;
+    /* Build a full 7-day week: days without a Google period are closed days. */
+    let hours: DayHours[] | undefined;
+    if (data.regularOpeningHours?.periods) {
+      const pad = (n: number) => String(n).padStart(2, "0");
+      const byDay = new Map<string, DayHours>();
+      for (const p of data.regularOpeningHours.periods as {
+        open?: { day: number; hour: number; minute: number };
+        close?: { day: number; hour: number; minute: number };
+      }[]) {
+        if (!p.open || !p.close) continue;
+        byDay.set(DAY_NAMES[p.open.day], {
+          day: DAY_NAMES[p.open.day],
+          opens: `${pad(p.open.hour)}:${pad(p.open.minute)}`,
+          closes: `${pad(p.close.hour)}:${pad(p.close.minute)}`,
+        });
+      }
+      /* Week ordered Monday-first, matching the fallback and the UI */
+      const week: DayHours["day"][] = [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",
+      ];
+      hours = week.map((day) => byDay.get(day) ?? { day, closed: true });
+    }
 
     const payload: GoogleBusinessData = {
       source: "google",

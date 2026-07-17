@@ -128,7 +128,9 @@ export default function ContactSection() {
                           <span className="text-xs text-[#f04e30] ml-2 font-normal">{t.contact.today}</span>
                         )}
                       </span>
-                      <span>{formatHours(h)}</span>
+                      <span className={h.closed ? "text-[#f04e30]/80 font-medium" : undefined}>
+                        {formatHours(h) ?? t.contact.closed}
+                      </span>
                     </div>
                   );
                 })}

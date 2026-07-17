@@ -191,8 +191,9 @@ const jsonLd = {
         longitude:  -87.7063,
       },
       /* Hours come from lib/business-info.ts — single source of truth
-         shared with the Contact section and /api/google-business. */
-      openingHoursSpecification: HOURS.map((h) => ({
+         shared with the Contact section and /api/google-business.
+         Closed days are simply omitted (schema.org convention). */
+      openingHoursSpecification: HOURS.filter((h) => !h.closed).map((h) => ({
         "@type":   "OpeningHoursSpecification",
         dayOfWeek: h.day,
         opens:     h.opens,
