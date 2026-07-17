@@ -71,7 +71,13 @@ it is fully functional either way.
 
 ## 4. Known data discrepancies in client PDFs (flagged, chose the safer value)
 
-- **El Revuelto** (AM wraps): EN menu says $180, ES menu says $160 → used **$180**.
+_The AM food menu was replaced with the **JUN 26** cards (EN + ES) on 2026-07-17;
+the old El Revuelto discrepancy is resolved ($190 on both new cards)._
+
+- **Açaí Mi Amor** (AM, JUN 26): EN card says $140, ES card says $160 →
+  used **$160** (matches the general price-increase pattern of the new card).
+- **Fresh & Crunchy** (AM, JUN 26): EN card says $130, ES card says $140 →
+  used **$140** (same reasoning).
 - **La Smash vs Ramen del Mar** prices interleave in the PDF layout → read as
   La Smash **$199**, Ramen del Mar **$240** (consistent with Barba-Ramen $260).
 - **Havana 7 años**: AM drinks card (2025) says $180, PM card (Marzo 26) says $130
@@ -79,4 +85,4 @@ it is fully functional either way.
 - AM drinks card (2025) and PM drinks card (2026) differ on a few prices
   (e.g. Michelada, Chelita) → the site uses the **Marzo 26 card** everywhere.
 
-Please confirm these four with the restaurant.
+Please confirm these with the restaurant.

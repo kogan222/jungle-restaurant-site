@@ -32,9 +32,9 @@ function pickTeasers(cats: typeof AM_FOOD, names: string[]): MenuItem[] {
 const AM_TEASERS = [
   "Chilaquiles, wey",
   "Avocado Toast",
-  "Turkish Eggs",
+  "Chicken Crispy",
+  "Los Señores Tacos — Land",
   "Açaí Mi Amor",
-  "Crème de la Jungla",
 ];
 
 const PM_TEASERS = [
