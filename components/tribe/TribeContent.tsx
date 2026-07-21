@@ -2,25 +2,15 @@
 
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n";
-import { WHATSAPP_CHAT_URL } from "@/lib/contact";
+import TribeForm from "./TribeForm";
 
 /*
-  Jungle Tribe registration.
-  The Google Form URL comes from NEXT_PUBLIC_TRIBE_FORM_URL
-  (the client's form link was not included in the delivered assets —
-  plugging it into .env turns the embed on with zero code changes).
-  Until then a warm WhatsApp fallback keeps the page fully functional.
+  Jungle Tribe registration — native form (see TribeForm.tsx) built to
+  match the client's official Google Form field-for-field. Submission
+  storage is not wired to a backend yet; see docs/INTEGRATIONS.md §3.
 */
-const FORM_URL = process.env.NEXT_PUBLIC_TRIBE_FORM_URL;
-
 export default function TribeContent() {
   const { t } = useLanguage();
-
-  /* Google Forms accepts ?embedded=true for a chrome-less iframe */
-  const embedUrl = FORM_URL
-    ? `${FORM_URL}${FORM_URL.includes("?") ? "&" : "?"}embedded=true`
-    : null;
-
   const perks = [t.tribe.perks.p1, t.tribe.perks.p2, t.tribe.perks.p3];
 
   return (
@@ -81,53 +71,8 @@ export default function TribeContent() {
           ))}
         </div>
 
-        {/* Form embed / fallback */}
-        {embedUrl ? (
-          <div
-            className="rounded-2xl overflow-hidden"
-            style={{
-              background: "#faf6ef",
-              border: "1px solid rgba(206,139,77,0.3)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-            }}
-          >
-            <iframe
-              src={embedUrl}
-              title={t.tribe.formTitle}
-              className="w-full"
-              style={{ height: "70vh", minHeight: 640, border: 0 }}
-              loading="lazy"
-            >
-              {t.tribe.formTitle}
-            </iframe>
-          </div>
-        ) : (
-          <div
-            className="rounded-2xl p-10 text-center"
-            style={{
-              background: "linear-gradient(135deg, #1D3927, #0e2216)",
-              border: "1px solid rgba(206,139,77,0.25)",
-            }}
-          >
-            <span className="text-4xl" aria-hidden="true">🦥</span>
-            <h2 className="font-display text-3xl text-white mt-3 mb-2">{t.tribe.fallbackTitle}</h2>
-            <p className="text-white/50 text-sm max-w-md mx-auto leading-relaxed mb-7">
-              {t.tribe.fallbackBody}
-            </p>
-            <a
-              href={WHATSAPP_CHAT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-white font-semibold text-sm px-8 py-3.5 rounded-full transition-transform duration-200 hover:scale-105"
-              style={{
-                background: "linear-gradient(135deg, #25D366, #1aad54)",
-                boxShadow: "0 6px 24px rgba(37,211,102,0.35)",
-              }}
-            >
-              💬 {t.tribe.fallbackCta}
-            </a>
-          </div>
-        )}
+        {/* Native registration form — matches the client's Google Form */}
+        <TribeForm />
       </div>
     </main>
   );

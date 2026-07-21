@@ -104,10 +104,10 @@ export default function Navbar() {
           <Image
             src="/images/logo-elwey-white.png"
             alt="The Jungle Wey — El Wey mascot"
-            width={30}
-            height={44}
+            width={31}
+            height={45}
             priority
-            className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+            className="h-[45px] w-auto transition-transform duration-300 group-hover:scale-105"
           />
           <span className="font-display text-white text-2xl tracking-wide group-hover:text-[#62a062] transition-colors duration-300">
             The Jungle Wey

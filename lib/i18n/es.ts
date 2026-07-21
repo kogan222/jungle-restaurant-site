@@ -15,6 +15,7 @@ export const es: T = {
     tribe:         "Jungle Tribe",
     reserve:       "Reservar Ahora",
     reserveMobile: "Reservar por WhatsApp",
+    waFloatCta:    "Reserva • Ordena • Pregunta",
   },
 
   hero: {
@@ -166,7 +167,6 @@ export const es: T = {
     headlineB:  " por Nuestros Huéspedes",
     quote:      "\"Un paraíso tropical relajado con comida que te sorprende cada vez. Los cócteles, el ambiente, la música — aquí todo se siente diferente.\"",
     reviews:    "23 reseñas",
-    ranking:    "#23 de 102 restaurantes en Mahahual",
     cta1:       "Leer Todas las Reseñas",
     cta2:       "✒ Dejar una Reseña",
     callLabel:  "+52 983 101 1061",
@@ -184,8 +184,8 @@ export const es: T = {
 
   contact: {
     eyebrow:       "Encuéntranos",
-    headlineA:     "Ven a Encontrar ",
-    headlineB:     "Tu Selva",
+    headlineA:     "Nos Vemos en ",
+    headlineB:     "la Selva",
     sub:           "En lo profundo del jardín, bajo los árboles, pasando las hamacas — nosotros seremos los que sirvan buena comida.",
     addressTitle:  "Dirección",
     hoursTitle:    "Horarios",
@@ -210,15 +210,29 @@ export const es: T = {
     },
   },
 
+  googleReviews: {
+    title:          "Reseñas de Google",
+    outOf5:         "de 5",
+    reviewsSuffix:  "reseñas de Google",
+    comingSoonBody: "Las calificaciones y reseñas en vivo aparecerán aquí una vez conectado nuestro perfil de Google Business.",
+    cta:            "Encuéntranos en Google",
+    ctaLive:        "Ver Todas las Reseñas de Google",
+  },
+
   tribe: {
     eyebrow:     "Únete a la tribu, comparte el flow",
     headlineA:   "La Tribu de ",
     headlineB:   "la Selva",
     sub:         "Sé el primero en enterarte de las noches de música en vivo, menús secretos y eventos de la selva. Regístrate y vuélvete parte de la familia.",
-    formTitle:   "Formulario de registro Jungle Tribe",
-    fallbackTitle: "El formulario está tomando una siesta",
-    fallbackBody:  "El registro abre pronto. Mientras tanto, escríbenos por WhatsApp y te sumamos a la tribu personalmente.",
-    fallbackCta:   "Unirme por WhatsApp",
+    submit:      "Unirme a la Tribu",
+    submitting:  "Enviando…",
+    successTitle: "¡Bienvenido a la Tribu!",
+    successBody:  "Gracias por registrarte — pásate por el restaurante y te preparamos tu pulsera oficial.",
+    errorRequired:      "Este campo es obligatorio.",
+    errorPhone:         "Ingresa un teléfono válido.",
+    errorEmail:         "Ingresa un correo electrónico válido.",
+    errorTerms:         "Debes aceptar las condiciones para continuar.",
+    errorFormIncomplete:"Completa todos los campos obligatorios antes de enviar.",
     perks: {
       p1: { title: "Entérate Primero", body: "Música en vivo, cenas pop-up y noches especiales — directo a ti." },
       p2: { title: "Mimos de la Tribu", body: "Degustaciones exclusivas y sorpresitas de El Wey." },

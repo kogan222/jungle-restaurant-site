@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { WHATSAPP_RESERVE_URL, PHONE, GOOGLE_MAPS, TEL_URL } from "@/lib/contact";
+import { GOOGLE_PROFILE_SEARCH, type GoogleBusinessData } from "@/lib/business-info";
 import { useLanguage } from "@/lib/i18n";
 
 /* ════════════════════════════════════════════════════════
-   TRIPADVISOR SECTION
-   Rating: 5.0 / 5 · 23 reviews · #23 of 102 in Mahahual
+   TRIPADVISOR + GOOGLE REVIEWS SECTION
+   TripAdvisor: static rating (5.0 / 5 · 23 reviews).
+   Google: live via /api/google-business when GOOGLE_PLACES_API_KEY
+   + GOOGLE_PLACE_ID are configured (see docs/INTEGRATIONS.md);
+   otherwise a safe "find us on Google" card — never fake reviews.
    Placed between Video and Contact sections.
 ════════════════════════════════════════════════════════ */
 
@@ -65,6 +69,131 @@ function RatingBubbles({ rating = 5, size = 22 }: { rating?: number; size?: numb
           />
         );
       })}
+    </div>
+  );
+}
+
+/* Google's official multi-color "G" mark, reproduced inline — same
+   approach as the TripAdvisor owl above (a real, recognizable brand mark,
+   not an invented icon). */
+function GoogleGIcon({ size = 40 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.6 32.9 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.5 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/>
+      <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6.5 29.6 4 24 4c-7.4 0-13.8 4.1-17.1 10.2z"/>
+      <path fill="#4CAF50" d="M24 44c5.5 0 10.5-2.1 14.3-5.6l-6.6-5.6C29.6 34.5 26.9 35.5 24 35.5c-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.9 39.8 16.4 44 24 44z"/>
+      <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.4-2.4 4.4-4.5 5.8l6.6 5.6C40.3 36.5 44 30.9 44 24c0-1.3-.1-2.7-.4-3.5z"/>
+    </svg>
+  );
+}
+
+/* Five-star row for the Google score (Google uses stars, not "bubbles") */
+function StarRow({ rating, size = 20 }: { rating: number; size?: number }) {
+  return (
+    <div className="flex items-center gap-1">
+      {Array.from({ length: 5 }, (_, i) => {
+        const filled = i < Math.round(rating);
+        return (
+          <svg key={i} width={size} height={size} viewBox="0 0 24 24" fill={filled ? "#FBBC05" : "rgba(251,188,5,0.2)"} aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        );
+      })}
+    </div>
+  );
+}
+
+/* Companion card to TripAdvisor — reuses the already-built
+   /api/google-business bridge (no new credentials are configured here).
+   Shows live rating + real review snippets once the client connects
+   Google Business; a safe, honest placeholder until then. */
+function GoogleReviewsCard() {
+  const { t } = useLanguage();
+  const [data, setData] = useState<GoogleBusinessData | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/google-business")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: GoogleBusinessData | null) => { if (!cancelled) setData(d); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const live = data?.source === "google" && typeof data.rating === "number";
+
+  return (
+    <div
+      className="reveal rounded-3xl p-8 md:p-12 mt-6"
+      style={{
+        background: "linear-gradient(135deg, rgba(22,22,26,0.95) 0%, rgba(14,14,17,0.98) 100%)",
+        border: "1px solid rgba(255,255,255,0.10)",
+        boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+        backdropFilter: "blur(20px)",
+      }}
+    >
+      <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-16">
+
+        {/* Left — rating block */}
+        <div className="flex flex-col items-center md:items-start gap-5 flex-shrink-0">
+          <GoogleGIcon size={44} />
+
+          {live ? (
+            <>
+              <div className="text-center md:text-left">
+                <div
+                  className="font-display font-black leading-none text-white"
+                  style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}
+                >
+                  {data!.rating!.toFixed(1)}
+                </div>
+                <div className="text-white/40 text-sm mt-1">{t.googleReviews.outOf5}</div>
+              </div>
+              <StarRow rating={data!.rating!} />
+              {typeof data!.totalRatings === "number" && (
+                <p className="text-white/70 text-sm font-medium">
+                  {data!.totalRatings} {t.googleReviews.reviewsSuffix}
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="font-display text-white text-2xl">{t.googleReviews.title}</p>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="hidden md:block w-px self-stretch" style={{ background: "linear-gradient(180deg, transparent, rgba(255,255,255,0.15), transparent)" }} />
+        <div className="md:hidden h-px w-full" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)" }} />
+
+        {/* Right — real snippets (live) or safe placeholder + CTA */}
+        <div className="flex-1">
+          {live && data!.reviews && data!.reviews.length > 0 ? (
+            <div className="flex flex-col gap-4 mb-7">
+              {data!.reviews.slice(0, 2).map((r, i) => (
+                <div key={i}>
+                  <p className="text-white/60 text-sm md:text-base leading-relaxed">&ldquo;{r.text}&rdquo;</p>
+                  <p className="text-white/30 text-xs mt-1">— {r.author}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-white/50 text-sm md:text-base leading-relaxed mb-7 max-w-lg">
+              {t.googleReviews.comingSoonBody}
+            </p>
+          )}
+
+          <a
+            href={GOOGLE_PROFILE_SEARCH}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2.5 font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105"
+            style={{ background: "white", color: "#1a1a1a", boxShadow: "0 6px 28px rgba(255,255,255,0.15)" }}
+          >
+            <GoogleGIcon size={18} />
+            {live ? t.googleReviews.ctaLive : t.googleReviews.cta}
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
@@ -149,7 +278,6 @@ export default function TripAdvisorSection() {
 
               <div className="text-center md:text-left">
                 <p className="text-white/70 text-sm font-medium">{t.tripadvisor.reviews}</p>
-                <p className="text-white/35 text-xs mt-0.5">{t.tripadvisor.ranking}</p>
               </div>
             </div>
 
@@ -227,6 +355,9 @@ export default function TripAdvisorSection() {
             </div>
           </div>
         </div>
+
+        {/* Google Reviews — companion card, balanced alongside TripAdvisor */}
+        <GoogleReviewsCard />
 
         {/* Phone number strip */}
         <div className="reveal mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-center">

@@ -14,10 +14,10 @@ NEXT_PUBLIC_GOOGLE_PLACE_ID=...  # Same ID — used for the "write a review" lin
 
 # ── Instagram feed ────────────────────────────────────────
 NEXT_PUBLIC_INSTAGRAM_FEED_URL=https://feeds.behold.so/XXXXXXXX
-
-# ── Jungle Tribe Google Form ──────────────────────────────
-NEXT_PUBLIC_TRIBE_FORM_URL=https://docs.google.com/forms/d/e/XXXX/viewform
 ```
+
+The Jungle Tribe form (`/tribe`) is a native form built into the site — see §3.
+It needs no env var; it needs a submission-storage backend, described below.
 
 ---
 
@@ -26,10 +26,15 @@ NEXT_PUBLIC_TRIBE_FORM_URL=https://docs.google.com/forms/d/e/XXXX/viewform
 **What was built** — `app/api/google-business/route.ts`:
 - With the two env vars set, it calls the **Places API (New)** (`places/{id}` with a
   field mask of `rating,userRatingCount,regularOpeningHours,reviews`), cached for
-  **6 hours** (`revalidate = 21600`), and the Contact section's hours table +
-  Google rating chip update automatically. The static hours in
+  **6 hours** (`revalidate = 21600`). Two components consume it: the Contact
+  section (hours table + a small rating chip) and the **Google Reviews card**
+  next to TripAdvisor (`components/TripAdvisorSection.tsx` →
+  `GoogleReviewsCard`), which shows the live rating, star row, and up to two
+  real review snippets once configured. The static hours in
   `lib/business-info.ts` remain the fallback and feed the JSON-LD.
-- Without them, the route returns the static hours — nothing breaks.
+- Without the env vars, every consumer falls back to safe placeholder UI —
+  the Google Reviews card shows a "find us on Google" CTA instead of
+  fabricated numbers or reviews, and nothing breaks.
 
 **Trade-offs considered**:
 
@@ -62,12 +67,40 @@ official embeds (one post only, heavy iframes).
 **To finish setup**: client signs up at behold.so (free), connects the Instagram
 account, copies the feed URL into the env var.
 
-## 3. Jungle Tribe — Google Form
+## 3. Jungle Tribe — native registration form
 
-`/tribe` embeds the client's Google Form (`?embedded=true`) inside a brand-styled
-frame. **The form URL was not included in the delivered materials** — until
-`NEXT_PUBLIC_TRIBE_FORM_URL` is set, the page shows a WhatsApp join fallback, so
-it is fully functional either way.
+**What was built** (2026-07-18, replacing the earlier Google Form iframe embed):
+`components/tribe/TribeForm.tsx` is a fully native, brand-styled form living
+directly on `/tribe`, with the exact same fields, options, and terms text as
+the client's official Google Form
+(`forms.gle/SvDZicthTz2Dj6av7` → title *"Registro oficial- Tribu The Jungle Wey"*):
+
+1. Nombre completo (text) · 2. Fecha de cumpleaños (date) · 3. Telefono (text) ·
+4. Correo electronico (text) · 5. Instagram (text) · 6. Dirección (text) ·
+7. ¿Cómo prefieres recibir noticias, eventos y beneficios? (Whatsapp / Email /
+Instagram / Todas las anteriores) · 8. ¿Que es The Jungle Wey para ti? (paragraph)
+· plus the "Confirmación" terms section and its required
+"He leído y acepto las condiciones" checkbox — all reproduced verbatim.
+
+Client-side validation is complete (required fields, email/phone format, terms
+checkbox) and a success state shows after submitting.
+
+**What is NOT built yet — submission storage.** `lib/tribe-form.ts` →
+`submitTribeForm()` currently just resolves locally; **no data is sent or saved
+anywhere.** This was intentional per instruction (no backend/credentials without
+explicit approval). To finish, replace the body of that one function with a
+network call. Options, cheapest first:
+
+| Approach | Cost | Effort | Notes |
+|---|---|---|---|
+| **Google Sheets via Apps Script Web App** ✅ | Free | Low — paste a short Apps Script, deploy as Web App, `fetch()` its URL | Rows land straight in a Sheet the client already knows how to use; no new account needed beyond their existing Google account |
+| Serverless function + Google Sheets API | Free tier | Medium — service account, OAuth setup | More "correct" engineering, unnecessary for this volume |
+| Formspree / Getform / similar form-backend service | Free tier (~50 submissions/mo), paid beyond | Low | Fastest to wire, but a third-party dependency and monthly limit |
+| Airtable | Free tier | Low–Medium | Nicer views than Sheets, another account to manage |
+
+**Recommendation**: Google Sheets via Apps Script — free, and the client already
+lives in Google (Forms, Business Profile, Maps). Needs the client's approval to
+create the Sheet + Apps Script deployment before wiring it up.
 
 ## 4. Known data discrepancies in client PDFs (flagged, chose the safer value)
 

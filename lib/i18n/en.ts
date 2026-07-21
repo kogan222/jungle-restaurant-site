@@ -13,6 +13,7 @@ export const en = {
     tribe:         "Jungle Tribe",
     reserve:       "Reserve Now",
     reserveMobile: "Reserve via WhatsApp",
+    waFloatCta:    "Book • Order • Ask",
   },
 
   hero: {
@@ -164,7 +165,6 @@ export const en = {
     headlineB:  " by Our Guests",
     quote:      "“An easy-going tropical paradise with food that surprises you every time. The cocktails, the atmosphere, the music — it all hits differently here.”",
     reviews:    "23 reviews",
-    ranking:    "#23 of 102 restaurants in Mahahual",
     cta1:       "Read All Reviews",
     cta2:       "✒ Leave a Review",
     callLabel:  "+52 983 101 1061",
@@ -182,8 +182,8 @@ export const en = {
 
   contact: {
     eyebrow:       "Encúéntranos",
-    headlineA:     "Come Find ",
-    headlineB:     "Your Jungle",
+    headlineA:     "See You at ",
+    headlineB:     "the Jungle",
     sub:           "Deep in the garden, under the trees, past the hammocks — we’ll be the ones serving great food.",
     addressTitle:  "Address",
     hoursTitle:    "Hours",
@@ -208,15 +208,29 @@ export const en = {
     },
   },
 
+  googleReviews: {
+    title:          "Google Reviews",
+    outOf5:         "out of 5",
+    reviewsSuffix:  "Google reviews",
+    comingSoonBody: "Live ratings and reviews will appear here once connected to our Google Business profile.",
+    cta:            "Find Us on Google",
+    ctaLive:        "Read All Google Reviews",
+  },
+
   tribe: {
     eyebrow:     "Join the tribe, share the flow",
     headlineA:   "The Jungle ",
     headlineB:   "Tribe",
     sub:         "Be the first to hear about live music nights, secret menus, and jungle happenings. Sign up and become part of the family.",
-    formTitle:   "Jungle Tribe registration form",
-    fallbackTitle: "The form is taking a siesta",
-    fallbackBody:  "Registration opens soon. Meanwhile, say hi on WhatsApp and we'll add you to the tribe personally.",
-    fallbackCta:   "Join via WhatsApp",
+    submit:      "Join the Tribe",
+    submitting:  "Sending…",
+    successTitle: "Welcome to the Tribe!",
+    successBody:  "Thanks for signing up — swing by and we'll get your official wristband ready.",
+    errorRequired:      "This field is required.",
+    errorPhone:         "Please enter a valid phone number.",
+    errorEmail:         "Please enter a valid email address.",
+    errorTerms:         "Please accept the conditions to continue.",
+    errorFormIncomplete:"Please complete all required fields before submitting.",
     perks: {
       p1: { title: "First to Know",   body: "Live music, pop-up dinners, and special nights — straight to you." },
       p2: { title: "Tribe Treats",    body: "Members-only tastings and little surprises from El Wey." },
