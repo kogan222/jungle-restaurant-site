@@ -215,6 +215,8 @@ export const es: T = {
     outOf5:         "de 5",
     reviewsSuffix:  "reseñas de Google",
     comingSoonBody: "Las calificaciones y reseñas en vivo aparecerán aquí una vez conectado nuestro perfil de Google Business.",
+    loading:        "Cargando reseñas de Google…",
+    emptyReviews:   "Aún no hay reseñas escritas — ¡sé el primero!",
     cta:            "Encuéntranos en Google",
     ctaLive:        "Ver Todas las Reseñas de Google",
     ctaWrite:       "Dejar una Reseña en Google",

@@ -8,57 +8,120 @@ Create a `.env.local` (or set the vars in Vercel → Project → Settings → En
 
 ```bash
 # ── Google Business (hours + reviews) ─────────────────────
-GOOGLE_PLACES_API_KEY=...   # Places API (New) key, billing enabled — the ONLY
-                             # var needed now; Place ID is already known (below)
+GOOGLE_PLACES_API_KEY=...                    # Places API (New) key, billing enabled
+GOOGLE_PLACE_ID=ChIJAV5TM8snW48RhSLmezfw1ME  # The Jungle Wey — verified 2026-07-20
 
 # ── Instagram feed ────────────────────────────────────────
 NEXT_PUBLIC_INSTAGRAM_FEED_URL=https://feeds.behold.so/XXXXXXXX
 ```
+
+Both Google vars are **server-only** (no `NEXT_PUBLIC_` prefix) — set them in
+Vercel → Project → Settings → **Environment Variables**, not in any
+client-reachable config. Neither is hardcoded anywhere in the source.
 
 The Jungle Tribe form (`/tribe`) is a native form built into the site — see §3.
 It needs no env var; it needs a submission-storage backend, described below.
 
 ---
 
-## 1. Google Business — opening hours & reviews
+## 1. Google Business — opening hours & reviews (Places API (New))
 
-**Place ID — resolved (2026-07-20).** `GOOGLE_PLACE_ID = "ChIJAV5TM8snW48RhSLmezfw1ME"`
-is hardcoded in `lib/business-info.ts`. It was found via a live Places API
-"Find Place" lookup and verified by matching the exact business name
-("THE JUNGLE WEY"), exact address (Av. P.º del Puerto 1127, Mahahual), and
-rating (4.9 / 133 reviews) against the live Google Maps listing. A Place ID
-is a public, non-secret identifier — same treatment as `PHONE`/`INSTAGRAM`/
-`GOOGLE_MAPS` in `lib/contact.ts` — so it no longer needs an env var. It also
-now powers real, working links: the "Read on Google" and "Leave a Google
-Review" buttons in the Google Reviews card, and the write-review deep link
-(`GOOGLE_REVIEW_URL`).
+**Architecture — server-only, env-only, no hardcoded secrets or IDs.**
+`app/api/google-business/route.ts` is a Next.js Route Handler (App Router).
+Route Handlers run exclusively on the server and are never bundled into
+client JS, so this is the only place either Google value is read:
 
-**What's still needed — only the API key.** `app/api/google-business/route.ts`
-uses `GOOGLE_PLACE_ID` as its default automatically; the moment
-`GOOGLE_PLACES_API_KEY` is set, it calls the **Places API (New)**
-(`places/{id}` with a field mask of
-`rating,userRatingCount,regularOpeningHours,reviews`), cached for **6 hours**
-(`revalidate = 21600`). Two components consume it: the Contact section (hours
-table + a small rating chip) and the **Google Reviews card** next to
-TripAdvisor (`components/TripAdvisorSection.tsx` → `GoogleReviewsCard`),
-which then shows the live rating, star row, and up to two real review
-snippets. The static hours in `lib/business-info.ts` remain the fallback and
-feed the JSON-LD.
-- Without the API key, every consumer falls back to safe placeholder UI —
-  the Google Reviews card shows a "find us on Google" CTA (now a precise,
-  working link) instead of fabricated numbers or reviews, and nothing breaks.
+```ts
+const key     = process.env.GOOGLE_PLACES_API_KEY;
+const placeId = process.env.GOOGLE_PLACE_ID;
+```
+
+Neither value appears anywhere else in the source. The real Place ID
+(`ChIJAV5TM8snW48RhSLmezfw1ME`) was found via a live Places API "Find Place"
+lookup and verified by matching the exact business name ("THE JUNGLE WEY"),
+exact address (Av. P.º del Puerto 1127, Mahahual), and rating (4.9 / 133
+reviews) against the live Google Maps listing (2026-07-20) — see §"Exact
+values to set" below.
+
+**Field mask — precise, no wildcards.** Only the fields the UI renders are
+requested:
+`rating,userRatingCount,googleMapsUri,regularOpeningHours,reviews.rating,reviews.text,reviews.relativePublishTimeDescription,reviews.authorAttribution`
+— covers the aggregate rating/count, the official Google Maps link (for
+"Read All Reviews"), opening hours, and per-review rating/text/relative
+time/author name+avatar. Nothing else is fetched.
+
+**Caching — 7 days, shared across all visitors.** `export const revalidate =
+604800` (route segment config) plus a matching `next: { revalidate: 604800
+}` on the `fetch()` call both key into the **Next.js Data Cache**: the first
+request after the cache is empty/expired fetches from Google and the
+response is cached on the server; every other visitor for the next 7 days
+reads that one cached entry — no per-request or per-visitor calls to Google,
+no polling. This needs no extra infrastructure (no Redis, no database, no
+cron) — it's Next.js's built-in fetch cache, already part of the framework.
+
+**Failure handling.** A single `try/catch/finally` covers every failure
+mode:
+- **Missing key or Place ID** → returns the static fallback immediately, no
+  network call attempted.
+- **Timeout** — an `AbortController` cancels the request after 8 seconds;
+  the abort is caught like any other error.
+- **Invalid key / invalid Place ID / billing errors / rate limits** — all
+  surface as a non-2xx HTTP status, which throws before the body is parsed.
+- **Malformed JSON / unexpected shape** — `res.json()` and all field access
+  are inside the same `try`, and every field read is optional-chained with a
+  safe default.
+- **Empty reviews array** — handled in the UI (§ below), not treated as an
+  error.
+
+In every failure case the route returns the same shape as success
+(`GoogleBusinessData`) with `source: "fallback"`, so the calling components
+never need special-case error branches — they already branch on `source`.
+
+**UI states (`components/TripAdvisorSection.tsx` → `GoogleReviewsCard`).**
+The card distinguishes four states without any layout/style changes:
+1. **Loading** — before the client-side fetch to `/api/google-business`
+   resolves: a "Loading Google reviews…" message.
+2. **Live with reviews** — real rating, star row, review count, and up to
+   two real review snippets, each with its own star rating, reviewer name,
+   avatar (`referrerPolicy="no-referrer"` `<img>`, only rendered when Google
+   returns one), and relative publish time.
+3. **Live with zero reviews** — rating/count still shown; a "No written
+   reviews yet — be the first!" message instead of fabricating content.
+4. **Not configured / Google unavailable** — the original "Live ratings
+   will appear here once connected" message.
+
+**Buttons always work.** "Read All Reviews" uses Google's own
+`googleMapsUri` when live, "Leave a Review" uses
+`https://search.google.com/local/writereview?placeid={GOOGLE_PLACE_ID}` —
+both are built server-side in the route (whenever `GOOGLE_PLACE_ID` is set,
+independent of whether the API key/live call succeeds) and sent to the
+client as plain URLs in the JSON response. If `GOOGLE_PLACE_ID` itself isn't
+set yet, both buttons fall back to the existing general Google Maps search
+link already used elsewhere on the site (`GOOGLE_MAPS` in `lib/contact.ts`)
+— never a dead link.
 
 **Trade-offs considered**:
 
 | Approach | Cost | Effort | Notes |
 |---|---|---|---|
-| **Places API (New) + 6 h cache** ✅ | Free at this volume (1 req / 6 h ≪ free tier) | One env var (Place ID already resolved) | Hours managed in one place: the Google Business profile |
-| Google My Business API | Free | High — OAuth, verification, review process | Overkill for read-only hours |
+| **Places API (New) + 7-day cache** ✅ | Free at this volume (1 req / 7 days ≪ free tier) | Two env vars | Hours + reviews managed in one place: the Google Business profile |
+| Google My Business API | Free | High — OAuth, verification, review process | Overkill for read-only data |
 | Third-party widgets (Elfsight, etc.) | $5–10/mo | Low | External script, slower page, monthly fee |
-| Manual static hours | Free | None | Falls out of sync — this stays as the fallback |
+| Manual static hours | Free | None | Falls out of sync — this stays as the ultimate fallback |
 
-**To finish setup**: create an API key restricted to Places API (New) with
-billing enabled, set `GOOGLE_PLACES_API_KEY`. Nothing else is required.
+**Exact values to set** (Vercel → Project → Settings → Environment
+Variables, Production + Preview):
+
+| Variable | Value |
+|---|---|
+| `GOOGLE_PLACE_ID` | `ChIJAV5TM8snW48RhSLmezfw1ME` |
+| `GOOGLE_PLACES_API_KEY` | *(create in Google Cloud Console — see below)* |
+
+To finish setup: in Google Cloud Console, enable **Places API (New)** on a
+project with billing enabled, create an API key, and restrict it to the
+Places API (New) only (API restrictions), ideally also IP-restricted to
+Vercel's outbound ranges or left unrestricted-by-referrer since it's called
+server-side only. Set both env vars above, then redeploy.
 
 ## 2. Instagram feed
 

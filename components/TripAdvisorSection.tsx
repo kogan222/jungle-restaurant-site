@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { WHATSAPP_RESERVE_URL, PHONE, GOOGLE_MAPS, TEL_URL } from "@/lib/contact";
-import { GOOGLE_PLACE_URL, GOOGLE_REVIEW_URL, type GoogleBusinessData } from "@/lib/business-info";
+import type { GoogleBusinessData } from "@/lib/business-info";
 import { useLanguage } from "@/lib/i18n";
 
 /* ════════════════════════════════════════════════════════
@@ -120,7 +120,11 @@ function GoogleReviewsCard() {
     return () => { cancelled = true; };
   }, []);
 
+  const loading = data === null;
   const live = data?.source === "google" && typeof data.rating === "number";
+  const hasReviews = live && !!data?.reviews && data.reviews.length > 0;
+  const mapsHref = data?.mapsUri || GOOGLE_MAPS;
+  const reviewHref = data?.writeReviewUrl || GOOGLE_MAPS;
 
   return (
     <div
@@ -165,26 +169,45 @@ function GoogleReviewsCard() {
         <div className="hidden md:block w-px self-stretch" style={{ background: "linear-gradient(180deg, transparent, rgba(255,255,255,0.15), transparent)" }} />
         <div className="md:hidden h-px w-full" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)" }} />
 
-        {/* Right — real snippets (live) or safe placeholder + CTA */}
+        {/* Right — real snippets (live), loading/empty/fallback message, + CTA */}
         <div className="flex-1">
-          {live && data!.reviews && data!.reviews.length > 0 ? (
+          {hasReviews ? (
             <div className="flex flex-col gap-4 mb-7">
-              {data!.reviews.slice(0, 2).map((r, i) => (
+              {data!.reviews!.slice(0, 2).map((r, i) => (
                 <div key={i}>
-                  <p className="text-white/60 text-sm md:text-base leading-relaxed">&ldquo;{r.text}&rdquo;</p>
-                  <p className="text-white/30 text-xs mt-1">— {r.author}</p>
+                  <StarRow rating={r.rating} size={13} />
+                  <p className="text-white/60 text-sm md:text-base leading-relaxed mt-1">&ldquo;{r.text}&rdquo;</p>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    {r.authorPhotoUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element -- external Google CDN avatar
+                      <img
+                        src={r.authorPhotoUrl}
+                        alt=""
+                        referrerPolicy="no-referrer"
+                        loading="lazy"
+                        className="w-6 h-6 rounded-full object-cover flex-shrink-0"
+                      />
+                    )}
+                    <p className="text-white/30 text-xs">
+                      — {r.author}{r.relativeTime ? ` · ${r.relativeTime}` : ""}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
           ) : (
             <p className="text-white/50 text-sm md:text-base leading-relaxed mb-7 max-w-lg">
-              {t.googleReviews.comingSoonBody}
+              {loading
+                ? t.googleReviews.loading
+                : live
+                ? t.googleReviews.emptyReviews
+                : t.googleReviews.comingSoonBody}
             </p>
           )}
 
           <div className="flex flex-col sm:flex-row gap-3">
             <a
-              href={GOOGLE_PLACE_URL}
+              href={mapsHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2.5 font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105"
@@ -194,7 +217,7 @@ function GoogleReviewsCard() {
               {live ? t.googleReviews.ctaLive : t.googleReviews.cta}
             </a>
             <a
-              href={GOOGLE_REVIEW_URL}
+              href={reviewHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:bg-white/10"

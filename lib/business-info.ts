@@ -41,21 +41,19 @@ export function formatHours(h: DayHours): string | null {
   return `${fmt(h.opens)} – ${fmt(h.closes)}`;
 }
 
-/* Google Business Profile — verified Place ID.
-   Found via the Places API "Find Place" lookup and matched by exact
-   name ("THE JUNGLE WEY"), exact address (Av. P.º del Puerto 1127,
-   Mahahual), and rating (4.9 / 133) against the live Google Maps
-   listing (2026-07-20). A Place ID is a public, non-secret identifier
-   — safe to hardcode, same as PHONE/INSTAGRAM/GOOGLE_MAPS in
-   lib/contact.ts. The billing-gated live-data route
-   (/api/google-business) still lets GOOGLE_PLACE_ID be overridden via
-   env if the client ever migrates to a different listing. */
-export const GOOGLE_PLACE_ID = "ChIJAV5TM8snW48RhSLmezfw1ME";
+/* Google Business Profile — the Place ID lives ONLY in the
+   GOOGLE_PLACE_ID environment variable (read server-side in
+   app/api/google-business/route.ts), never hardcoded in source.
+   See docs/INTEGRATIONS.md for the exact value to set. */
 
-export const GOOGLE_REVIEW_URL =
-  `https://search.google.com/local/writereview?placeid=${GOOGLE_PLACE_ID}`;
-export const GOOGLE_PLACE_URL =
-  `https://www.google.com/maps/place/?q=place_id:${GOOGLE_PLACE_ID}`;
+/** One review as shaped for the UI by /api/google-business. */
+export type GoogleReview = {
+  author: string;
+  authorPhotoUrl?: string;
+  rating: number;
+  text: string;
+  relativeTime?: string;
+};
 
 /* Shape served by /api/google-business */
 export type GoogleBusinessData = {
@@ -63,5 +61,11 @@ export type GoogleBusinessData = {
   rating?: number;
   totalRatings?: number;
   hours?: DayHours[];
-  reviews?: { author: string; rating: number; text: string; time: string }[];
+  reviews?: GoogleReview[];
+  /** "Read All Reviews" — Google's own googleMapsUri when live, else a
+      generic profile link built server-side from the configured Place ID. */
+  mapsUri?: string;
+  /** "Leave a Review" deep link, built server-side from the configured
+      Place ID. Present whenever GOOGLE_PLACE_ID is set, live or not. */
+  writeReviewUrl?: string;
 };

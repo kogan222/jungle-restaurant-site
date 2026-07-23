@@ -213,6 +213,8 @@ export const en = {
     outOf5:         "out of 5",
     reviewsSuffix:  "Google reviews",
     comingSoonBody: "Live ratings and reviews will appear here once connected to our Google Business profile.",
+    loading:        "Loading Google reviews…",
+    emptyReviews:   "No written reviews yet — be the first!",
     cta:            "Find Us on Google",
     ctaLive:        "Read All Google Reviews",
     ctaWrite:       "Leave a Google Review",
