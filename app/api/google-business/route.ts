@@ -1,17 +1,21 @@
 import { NextResponse } from "next/server";
-import { HOURS, type DayHours, type GoogleBusinessData } from "@/lib/business-info";
+import { HOURS, GOOGLE_PLACE_ID, type DayHours, type GoogleBusinessData } from "@/lib/business-info";
 
 /*
   Lightweight Google Business bridge.
 
-  With env vars set (see docs/INTEGRATIONS.md):
+  The Place ID is already known (GOOGLE_PLACE_ID, verified 2026-07-20 —
+  see lib/business-info.ts) and needs no configuration. The only
+  remaining requirement is:
     GOOGLE_PLACES_API_KEY — Places API (New) key, billing enabled
-    GOOGLE_PLACE_ID       — the restaurant's Place ID
-  this returns live opening hours + rating + reviews from the
-  Google Business Profile, cached for 6 hours.
+  set that one env var (see docs/INTEGRATIONS.md) and this route starts
+  returning live opening hours + rating + reviews from the Google
+  Business Profile, cached for 6 hours.
 
-  Without them it returns the static fallback from lib/business-info,
+  Without it, this returns the static fallback from lib/business-info,
   so the site never breaks and needs zero configuration to run.
+  GOOGLE_PLACE_ID can still be overridden via env if the listing ever
+  changes.
 */
 
 export const revalidate = 21600; // 6 h — hours/reviews rarely change faster
@@ -22,11 +26,11 @@ const DAY_NAMES: DayHours["day"][] = [
 
 export async function GET() {
   const key = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = process.env.GOOGLE_PLACE_ID;
+  const placeId = process.env.GOOGLE_PLACE_ID || GOOGLE_PLACE_ID;
 
   const fallback: GoogleBusinessData = { source: "fallback", hours: HOURS };
 
-  if (!key || !placeId) {
+  if (!key) {
     return NextResponse.json(fallback);
   }
 

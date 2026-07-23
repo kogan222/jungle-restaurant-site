@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { WHATSAPP_RESERVE_URL, PHONE, GOOGLE_MAPS, TEL_URL } from "@/lib/contact";
-import { GOOGLE_PROFILE_SEARCH, type GoogleBusinessData } from "@/lib/business-info";
+import { GOOGLE_PLACE_URL, GOOGLE_REVIEW_URL, type GoogleBusinessData } from "@/lib/business-info";
 import { useLanguage } from "@/lib/i18n";
 
 /* ════════════════════════════════════════════════════════
    TRIPADVISOR + GOOGLE REVIEWS SECTION
    TripAdvisor: static rating (5.0 / 5 · 23 reviews).
-   Google: live via /api/google-business when GOOGLE_PLACES_API_KEY
-   + GOOGLE_PLACE_ID are configured (see docs/INTEGRATIONS.md);
+   Google: live via /api/google-business once GOOGLE_PLACES_API_KEY is
+   configured (Place ID is already known — see docs/INTEGRATIONS.md);
    otherwise a safe "find us on Google" card — never fake reviews.
    Placed between Video and Contact sections.
 ════════════════════════════════════════════════════════ */
@@ -182,16 +182,31 @@ function GoogleReviewsCard() {
             </p>
           )}
 
-          <a
-            href={GOOGLE_PROFILE_SEARCH}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105"
-            style={{ background: "white", color: "#1a1a1a", boxShadow: "0 6px 28px rgba(255,255,255,0.15)" }}
-          >
-            <GoogleGIcon size={18} />
-            {live ? t.googleReviews.ctaLive : t.googleReviews.cta}
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href={GOOGLE_PLACE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2.5 font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105"
+              style={{ background: "white", color: "#1a1a1a", boxShadow: "0 6px 28px rgba(255,255,255,0.15)" }}
+            >
+              <GoogleGIcon size={18} />
+              {live ? t.googleReviews.ctaLive : t.googleReviews.cta}
+            </a>
+            <a
+              href={GOOGLE_REVIEW_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 font-semibold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:bg-white/10"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.20)",
+                color: "rgba(255,255,255,0.80)",
+              }}
+            >
+              {t.googleReviews.ctaWrite}
+            </a>
+          </div>
         </div>
       </div>
     </div>

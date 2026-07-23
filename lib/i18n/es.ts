@@ -217,6 +217,7 @@ export const es: T = {
     comingSoonBody: "Las calificaciones y reseñas en vivo aparecerán aquí una vez conectado nuestro perfil de Google Business.",
     cta:            "Encuéntranos en Google",
     ctaLive:        "Ver Todas las Reseñas de Google",
+    ctaWrite:       "Dejar una Reseña en Google",
   },
 
   tribe: {

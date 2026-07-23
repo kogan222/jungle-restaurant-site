@@ -41,12 +41,21 @@ export function formatHours(h: DayHours): string | null {
   return `${fmt(h.opens)} – ${fmt(h.closes)}`;
 }
 
-/* Google Business Profile — public links (no API needed) */
+/* Google Business Profile — verified Place ID.
+   Found via the Places API "Find Place" lookup and matched by exact
+   name ("THE JUNGLE WEY"), exact address (Av. P.º del Puerto 1127,
+   Mahahual), and rating (4.9 / 133) against the live Google Maps
+   listing (2026-07-20). A Place ID is a public, non-secret identifier
+   — safe to hardcode, same as PHONE/INSTAGRAM/GOOGLE_MAPS in
+   lib/contact.ts. The billing-gated live-data route
+   (/api/google-business) still lets GOOGLE_PLACE_ID be overridden via
+   env if the client ever migrates to a different listing. */
+export const GOOGLE_PLACE_ID = "ChIJAV5TM8snW48RhSLmezfw1ME";
+
 export const GOOGLE_REVIEW_URL =
-  "https://search.google.com/local/writereview?placeid=" +
-  (process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ?? "");
-export const GOOGLE_PROFILE_SEARCH =
-  "https://www.google.com/maps/search/The+Jungle+Wey+Avenida+Paseo+del+Puerto+1127+Mahahual+Quintana+Roo";
+  `https://search.google.com/local/writereview?placeid=${GOOGLE_PLACE_ID}`;
+export const GOOGLE_PLACE_URL =
+  `https://www.google.com/maps/place/?q=place_id:${GOOGLE_PLACE_ID}`;
 
 /* Shape served by /api/google-business */
 export type GoogleBusinessData = {

@@ -8,9 +8,8 @@ Create a `.env.local` (or set the vars in Vercel → Project → Settings → En
 
 ```bash
 # ── Google Business (hours + reviews) ─────────────────────
-GOOGLE_PLACES_API_KEY=...        # Places API (New) key, billing enabled
-GOOGLE_PLACE_ID=...              # The restaurant's Place ID
-NEXT_PUBLIC_GOOGLE_PLACE_ID=...  # Same ID — used for the "write a review" link
+GOOGLE_PLACES_API_KEY=...   # Places API (New) key, billing enabled — the ONLY
+                             # var needed now; Place ID is already known (below)
 
 # ── Instagram feed ────────────────────────────────────────
 NEXT_PUBLIC_INSTAGRAM_FEED_URL=https://feeds.behold.so/XXXXXXXX
@@ -23,31 +22,43 @@ It needs no env var; it needs a submission-storage backend, described below.
 
 ## 1. Google Business — opening hours & reviews
 
-**What was built** — `app/api/google-business/route.ts`:
-- With the two env vars set, it calls the **Places API (New)** (`places/{id}` with a
-  field mask of `rating,userRatingCount,regularOpeningHours,reviews`), cached for
-  **6 hours** (`revalidate = 21600`). Two components consume it: the Contact
-  section (hours table + a small rating chip) and the **Google Reviews card**
-  next to TripAdvisor (`components/TripAdvisorSection.tsx` →
-  `GoogleReviewsCard`), which shows the live rating, star row, and up to two
-  real review snippets once configured. The static hours in
-  `lib/business-info.ts` remain the fallback and feed the JSON-LD.
-- Without the env vars, every consumer falls back to safe placeholder UI —
-  the Google Reviews card shows a "find us on Google" CTA instead of
-  fabricated numbers or reviews, and nothing breaks.
+**Place ID — resolved (2026-07-20).** `GOOGLE_PLACE_ID = "ChIJAV5TM8snW48RhSLmezfw1ME"`
+is hardcoded in `lib/business-info.ts`. It was found via a live Places API
+"Find Place" lookup and verified by matching the exact business name
+("THE JUNGLE WEY"), exact address (Av. P.º del Puerto 1127, Mahahual), and
+rating (4.9 / 133 reviews) against the live Google Maps listing. A Place ID
+is a public, non-secret identifier — same treatment as `PHONE`/`INSTAGRAM`/
+`GOOGLE_MAPS` in `lib/contact.ts` — so it no longer needs an env var. It also
+now powers real, working links: the "Read on Google" and "Leave a Google
+Review" buttons in the Google Reviews card, and the write-review deep link
+(`GOOGLE_REVIEW_URL`).
+
+**What's still needed — only the API key.** `app/api/google-business/route.ts`
+uses `GOOGLE_PLACE_ID` as its default automatically; the moment
+`GOOGLE_PLACES_API_KEY` is set, it calls the **Places API (New)**
+(`places/{id}` with a field mask of
+`rating,userRatingCount,regularOpeningHours,reviews`), cached for **6 hours**
+(`revalidate = 21600`). Two components consume it: the Contact section (hours
+table + a small rating chip) and the **Google Reviews card** next to
+TripAdvisor (`components/TripAdvisorSection.tsx` → `GoogleReviewsCard`),
+which then shows the live rating, star row, and up to two real review
+snippets. The static hours in `lib/business-info.ts` remain the fallback and
+feed the JSON-LD.
+- Without the API key, every consumer falls back to safe placeholder UI —
+  the Google Reviews card shows a "find us on Google" CTA (now a precise,
+  working link) instead of fabricated numbers or reviews, and nothing breaks.
 
 **Trade-offs considered**:
 
 | Approach | Cost | Effort | Notes |
 |---|---|---|---|
-| **Places API (New) + 6 h cache** ✅ | Free at this volume (1 req / 6 h ≪ free tier) | One env var + Place ID | Hours managed in one place: the Google Business profile |
+| **Places API (New) + 6 h cache** ✅ | Free at this volume (1 req / 6 h ≪ free tier) | One env var (Place ID already resolved) | Hours managed in one place: the Google Business profile |
 | Google My Business API | Free | High — OAuth, verification, review process | Overkill for read-only hours |
 | Third-party widgets (Elfsight, etc.) | $5–10/mo | Low | External script, slower page, monthly fee |
 | Manual static hours | Free | None | Falls out of sync — this stays as the fallback |
 
-**To finish setup**: find the Place ID at
-<https://developers.google.com/maps/documentation/places/web-service/place-id>,
-create an API key restricted to Places API, set the env vars.
+**To finish setup**: create an API key restricted to Places API (New) with
+billing enabled, set `GOOGLE_PLACES_API_KEY`. Nothing else is required.
 
 ## 2. Instagram feed
 

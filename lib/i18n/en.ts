@@ -215,6 +215,7 @@ export const en = {
     comingSoonBody: "Live ratings and reviews will appear here once connected to our Google Business profile.",
     cta:            "Find Us on Google",
     ctaLive:        "Read All Google Reviews",
+    ctaWrite:       "Leave a Google Review",
   },
 
   tribe: {
