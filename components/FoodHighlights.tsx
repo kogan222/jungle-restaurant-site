@@ -5,6 +5,7 @@ import Image from "next/image";
 import { SideVine } from "./JungleVines";
 import { useTilt } from "./useTilt";
 import { useLanguage } from "@/lib/i18n";
+import { dishWhatsAppUrl } from "@/lib/contact";
 
 /* Real signature dishes — names and recipes from the client's PM menu (Marzo 26) */
 const HIGHLIGHTS = [
@@ -134,7 +135,9 @@ function HighlightCard({ item, index, featured, tagLabel, cardCta }: { item: typ
 
   return (
     <a
-      href="/menu"
+      href={dishWhatsAppUrl(item.name)}
+      target="_blank"
+      rel="noopener noreferrer"
       aria-label={`${item.name} — ${cardCta}`}
       className={`reveal menu-card-jungle relative rounded-2xl overflow-hidden cursor-pointer block ${featured ? "sm:col-span-1" : ""}`}
       style={{ transitionDelay: `${index * 0.08}s` }}

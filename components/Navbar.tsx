@@ -51,7 +51,8 @@ function LangToggle({ large = false }: { large?: boolean }) {
 export default function Navbar() {
   const { t } = useLanguage();
   const pathname = usePathname();
-  const onMenuPage = pathname === "/menu";
+  const onMenuPage  = pathname === "/menu";
+  const onTribePage = pathname === "/tribe";
   const [scrolled,       setScrolled]       = useState(false);
   const [open,           setOpen]           = useState(false);
   const [activeSection,  setActiveSection]  = useState("hero");
@@ -63,6 +64,7 @@ export default function Navbar() {
     { key: "drinks",  label: t.nav.drinks,  href: "/#drinks"  },
     { key: "gallery", label: t.nav.gallery, href: "/#gallery" },
     { key: "contact", label: t.nav.findUs,  href: "/#contact" },
+    { key: "tribe",   label: t.nav.tribe,   href: "/tribe"    },
   ];
 
   useEffect(() => {
@@ -117,7 +119,10 @@ export default function Navbar() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
           {links.map((l) => {
-            const isActive = l.key === "menu" ? onMenuPage : !onMenuPage && activeSection === l.key;
+            const isActive =
+              l.key === "menu"  ? onMenuPage :
+              l.key === "tribe" ? onTribePage :
+              !onMenuPage && !onTribePage && activeSection === l.key;
             return (
               <a
                 key={l.key}

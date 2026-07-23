@@ -30,3 +30,15 @@ export const WHATSAPP_CHAT_URL =
   `https://wa.me/${PHONE_RAW}`;
 
 export const TEL_URL = `tel:+${PHONE_RAW}`;
+
+/** Per-dish WhatsApp deep link — used by the homepage food gallery cards,
+    so a tap on a dish opens a chat ready to order it or ask about the
+    full menu, instead of leading nowhere. */
+export function dishWhatsAppUrl(dishName: string): string {
+  const message = [
+    `Hi! I'd like to order: *${dishName}* 🌿`,
+    "",
+    "Could you tell me more about it, or send me the full menu?",
+  ].join("\n");
+  return `https://wa.me/${PHONE_RAW}?text=${encodeURIComponent(message)}`;
+}

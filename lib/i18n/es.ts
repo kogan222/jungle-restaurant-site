@@ -70,7 +70,7 @@ export const es: T = {
     headlineA:  "Puro Antojo, ",
     headlineB:  "Bien Hecho",
     cta:        "Ver menú completo →",
-    cardCta:    "Verlo en el menú",
+    cardCta:    "Pedir por WhatsApp",
     tags: {
       fanFav:    "Favorito del Público",
       mustTry:   "Imperdible",

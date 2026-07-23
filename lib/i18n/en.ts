@@ -67,7 +67,7 @@ export const en = {
     eyebrow:    "Signature Dishes",
     headlineA:  "Cravings Done ",
     headlineB:  "the Jungle Wey",
-    cardCta:    "See it on the menu",
+    cardCta:    "Order via WhatsApp",
     cta:        "See full menu →",
     tags: {
       fanFav:    "Fan Favourite",
