@@ -159,7 +159,7 @@ export const en = {
   },
 
   tripadvisor: {
-    eyebrow:    "As seen on TripAdvisor",
+    eyebrow:    "Hear It From the Jungle Tribe",
     headlineA:  "Rated ",
     excellent:  "Excellent",
     headlineB:  " by Our Guests",
@@ -181,7 +181,7 @@ export const en = {
   },
 
   contact: {
-    eyebrow:       "Encúéntranos",
+    eyebrow:       "Find Us",
     headlineA:     "See You at ",
     headlineB:     "the Jungle",
     sub:           "Deep in the garden, under the trees, past the hammocks — we’ll be the ones serving great food.",
@@ -189,11 +189,13 @@ export const en = {
     hoursTitle:    "Hours",
     today:         "Today",
     closed:        "Closed",
-    openMaps:      "Open in Maps →",
     waTitle:       "WhatsApp",
     waDesc:        "Reserve a table",
     igTitle:       "Instagram",
     igDesc:        "@thejunglewey",
+    fbTitle:       "Facebook",
+    fbDesc:        "The Jungle Wey",
+    socialsTitle:  "Follow Us on Socials",
     walkinsTitle:  "Walk-ins Welcome",
     walkinsSub:    "No reservation needed — though a quick WhatsApp message on busy nights is always appreciated.",
     openGMaps:     "\u{1F4CD} Open in Google Maps",

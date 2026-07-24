@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, type Lang } from "@/lib/i18n";
 import {
   EMPTY_TRIBE_FORM,
   CONTACT_PREFERENCE_OPTIONS,
@@ -9,32 +9,102 @@ import {
   isTribeFormValid,
   submitTribeForm,
   type TribeFormData,
+  type ContactPreference,
 } from "@/lib/tribe-form";
 
 /* ────────────────────────────────────────────────────────
-   Field labels, options, and the terms text below are reproduced
-   VERBATIM from the client's official Google Form
-   (forms.gle/SvDZicthTz2Dj6av7) — per instruction these are not
-   translated, invented, or rewritten. Everything else around the
-   form (buttons, validation hints, success state) follows the
-   site's existing bilingual system via useLanguage().
+   Field set, options, and terms are reproduced faithfully from the
+   client's official Google Form (forms.gle/SvDZicthTz2Dj6av7) — same
+   questions, same options, same meaning. Both languages are
+   professionally translated so the form respects the site's language
+   toggle; the underlying stored VALUE for contactPreference stays the
+   original Spanish option (ContactPreference type) so submissions are
+   consistent regardless of which language a visitor filled it in —
+   only the on-screen label is translated.
 ──────────────────────────────────────────────────────── */
-const FORM_DESCRIPTION =
-  "Forma parte de nuestra comunidad y recibe tu pulsera oficial. Para aplicar para este beneficio, tienes que tener una dirección válida en Mahahual. Tendrás acceso a beneficios, eventos especiales y experiencias exclusivas.";
+const FORM_DESCRIPTION: Record<Lang, string> = {
+  en: "Be part of our community and get your official wristband. To apply for this benefit, you need a valid address in Mahahual. You'll get access to benefits, special events, and exclusive experiences.",
+  es: "Forma parte de nuestra comunidad y recibe tu pulsera oficial. Para aplicar para este beneficio, tienes que tener una dirección válida en Mahahual. Tendrás acceso a beneficios, eventos especiales y experiencias exclusivas.",
+};
 
-const TERMS_INTRO =
-  "Al registrarte y recibir tu pulsera, confirmas que formas parte de la Tribu Jungle Wey y aceptas las siguientes condiciones:";
-const TERMS_ITEMS = [
-  "Tu pulsera te otorga un 10% de descuento en tu consumo",
-  "Este beneficio es personal e intransferible",
-  "No es acumulable con otras promociones",
-  "La pulsera debe presentarse al ordenar",
-  "No aplica en eventos especiales o experiencias especiales",
-  "La vigencia del beneficio es de 1 año a partir de su entrega",
-];
-const TERMS_PRIVACY =
-  "Asimismo, aceptas que la información proporcionada será utilizada exclusivamente por Jungle Wey para el envío de información, invitaciones, beneficios y comunicaciones relacionadas con la Tribu Jungle Wey. Tus datos no serán compartidos con terceros.";
-const TERMS_CHECKBOX_LABEL = "He leído y acepto las condiciones";
+const FIELD_LABELS: Record<Lang, {
+  fullName: string; birthday: string; phone: string; email: string;
+  instagram: string; address: string; contactPreference: string; aboutJungleWey: string;
+  phonePlaceholder: string; instagramPlaceholder: string;
+}> = {
+  en: {
+    fullName: "Full name",
+    birthday: "Date of birth",
+    phone: "Phone",
+    email: "Email",
+    instagram: "Instagram",
+    address: "Address",
+    contactPreference: "How do you prefer to receive news, events, and benefits?",
+    aboutJungleWey: "What does The Jungle Wey mean to you?",
+    phonePlaceholder: "+52 983 000 0000",
+    instagramPlaceholder: "@yourusername",
+  },
+  es: {
+    fullName: "Nombre completo",
+    birthday: "Fecha de cumpleaños",
+    phone: "Telefono",
+    email: "Correo electronico",
+    instagram: "Instagram",
+    address: "Dirección",
+    contactPreference: "¿Cómo prefieres recibir noticias, eventos y beneficios?",
+    aboutJungleWey: "¿Que es The Jungle Wey para ti?",
+    phonePlaceholder: "+52 983 000 0000",
+    instagramPlaceholder: "@tuusuario",
+  },
+};
+
+const CONTACT_PREFERENCE_LABELS: Record<Lang, Record<ContactPreference, string>> = {
+  en: {
+    Whatsapp: "WhatsApp",
+    Email: "Email",
+    Instagram: "Instagram",
+    "Todas las anteriores": "All of the above",
+  },
+  es: {
+    Whatsapp: "Whatsapp",
+    Email: "Email",
+    Instagram: "Instagram",
+    "Todas las anteriores": "Todas las anteriores",
+  },
+};
+
+const TERMS: Record<Lang, {
+  title: string; intro: string; items: string[]; privacy: string; checkboxLabel: string;
+}> = {
+  en: {
+    title: "Confirmation",
+    intro: "By registering and receiving your wristband, you confirm that you're part of the Jungle Tribe and accept the following conditions:",
+    items: [
+      "Your wristband gives you a 10% discount on your bill",
+      "This benefit is personal and non-transferable",
+      "It cannot be combined with other promotions",
+      "The wristband must be shown when ordering",
+      "It does not apply to special events or experiences",
+      "The benefit is valid for 1 year from the date it's issued",
+    ],
+    privacy: "You also agree that the information provided will be used exclusively by Jungle Wey to send information, invitations, benefits, and communications related to the Jungle Tribe. Your data will not be shared with third parties.",
+    checkboxLabel: "I have read and accept the conditions",
+  },
+  es: {
+    title: "Confirmación",
+    intro: "Al registrarte y recibir tu pulsera, confirmas que formas parte de la Tribu Jungle Wey y aceptas las siguientes condiciones:",
+    items: [
+      "Tu pulsera te otorga un 10% de descuento en tu consumo",
+      "Este beneficio es personal e intransferible",
+      "No es acumulable con otras promociones",
+      "La pulsera debe presentarse al ordenar",
+      "No aplica en eventos especiales o experiencias especiales",
+      "La vigencia del beneficio es de 1 año a partir de su entrega",
+    ],
+    privacy: "Asimismo, aceptas que la información proporcionada será utilizada exclusivamente por Jungle Wey para el envío de información, invitaciones, beneficios y comunicaciones relacionadas con la Tribu Jungle Wey. Tus datos no serán compartidos con terceros.",
+    checkboxLabel: "He leído y acepto las condiciones",
+  },
+};
 
 function fieldStyle(hasError: boolean) {
   return {
@@ -58,7 +128,9 @@ function FieldError({ children }: { children: ReactNode }) {
 }
 
 export default function TribeForm() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const fl = FIELD_LABELS[lang];
+  const terms = TERMS[lang];
   const [data, setData] = useState<TribeFormData>(EMPTY_TRIBE_FORM);
   const [touched, setTouched] = useState<Partial<Record<keyof TribeFormData, boolean>>>({});
   const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -107,12 +179,12 @@ export default function TribeForm() {
         className="text-white/55 text-sm leading-relaxed mb-8 pb-6"
         style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
       >
-        {FORM_DESCRIPTION}
+        {FORM_DESCRIPTION[lang]}
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
         <div>
-          <Label>Nombre completo</Label>
+          <Label>{fl.fullName}</Label>
           <input
             type="text"
             value={data.fullName}
@@ -125,7 +197,7 @@ export default function TribeForm() {
         </div>
 
         <div>
-          <Label>Fecha de cumpleaños</Label>
+          <Label>{fl.birthday}</Label>
           <input
             type="date"
             value={data.birthday}
@@ -138,13 +210,13 @@ export default function TribeForm() {
         </div>
 
         <div>
-          <Label>Telefono</Label>
+          <Label>{fl.phone}</Label>
           <input
             type="tel"
             value={data.phone}
             onChange={(e) => set("phone", e.target.value)}
             onBlur={() => touch("phone")}
-            placeholder="+52 983 000 0000"
+            placeholder={fl.phonePlaceholder}
             className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors placeholder:text-white/25"
             style={fieldStyle(!!showError("phone"))}
           />
@@ -152,7 +224,7 @@ export default function TribeForm() {
         </div>
 
         <div>
-          <Label>Correo electronico</Label>
+          <Label>{fl.email}</Label>
           <input
             type="email"
             value={data.email}
@@ -165,13 +237,13 @@ export default function TribeForm() {
         </div>
 
         <div>
-          <Label>Instagram</Label>
+          <Label>{fl.instagram}</Label>
           <input
             type="text"
             value={data.instagram}
             onChange={(e) => set("instagram", e.target.value)}
             onBlur={() => touch("instagram")}
-            placeholder="@tuusuario"
+            placeholder={fl.instagramPlaceholder}
             className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors placeholder:text-white/25"
             style={fieldStyle(!!showError("instagram"))}
           />
@@ -179,7 +251,7 @@ export default function TribeForm() {
         </div>
 
         <div>
-          <Label>Dirección</Label>
+          <Label>{fl.address}</Label>
           <input
             type="text"
             value={data.address}
@@ -194,7 +266,7 @@ export default function TribeForm() {
 
       {/* Contact preference */}
       <div className="mt-6">
-        <Label>¿Cómo prefieres recibir noticias, eventos y beneficios?</Label>
+        <Label>{fl.contactPreference}</Label>
         <div className="flex flex-wrap gap-3" role="radiogroup">
           {CONTACT_PREFERENCE_OPTIONS.map((opt) => {
             const checked = data.contactPreference === opt;
@@ -216,7 +288,7 @@ export default function TribeForm() {
                   onChange={() => { set("contactPreference", opt); touch("contactPreference"); }}
                   className="sr-only"
                 />
-                {opt}
+                {CONTACT_PREFERENCE_LABELS[lang][opt]}
               </label>
             );
           })}
@@ -226,7 +298,7 @@ export default function TribeForm() {
 
       {/* Open question */}
       <div className="mt-6">
-        <Label>¿Que es The Jungle Wey para ti?</Label>
+        <Label>{fl.aboutJungleWey}</Label>
         <textarea
           value={data.aboutJungleWey}
           onChange={(e) => set("aboutJungleWey", e.target.value)}
@@ -240,17 +312,17 @@ export default function TribeForm() {
 
       {/* Confirmación — terms */}
       <div className="mt-10 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-        <h3 className="font-display text-2xl text-white mb-3">Confirmación</h3>
-        <p className="text-white/55 text-sm leading-relaxed mb-3">{TERMS_INTRO}</p>
+        <h3 className="font-display text-2xl text-white mb-3">{terms.title}</h3>
+        <p className="text-white/55 text-sm leading-relaxed mb-3">{terms.intro}</p>
         <ul className="mb-4 space-y-1.5">
-          {TERMS_ITEMS.map((item) => (
+          {terms.items.map((item) => (
             <li key={item} className="flex gap-2 text-white/50 text-sm leading-relaxed">
               <span style={{ color: "#ce8b4d" }} aria-hidden="true">•</span>
               {item}
             </li>
           ))}
         </ul>
-        <p className="text-white/40 text-xs leading-relaxed mb-6">{TERMS_PRIVACY}</p>
+        <p className="text-white/40 text-xs leading-relaxed mb-6">{terms.privacy}</p>
 
         <label className="flex items-start gap-3 cursor-pointer">
           <input
@@ -260,7 +332,7 @@ export default function TribeForm() {
             className="mt-0.5 w-5 h-5 flex-shrink-0 rounded"
             style={{ accentColor: "#f04e30" }}
           />
-          <span className="text-white/75 text-sm">{TERMS_CHECKBOX_LABEL}</span>
+          <span className="text-white/75 text-sm">{terms.checkboxLabel}</span>
         </label>
         {showError("acceptedTerms") && <FieldError>{t.tribe.errorTerms}</FieldError>}
       </div>

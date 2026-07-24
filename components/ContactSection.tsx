@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
-import { WHATSAPP_RESERVE_URL } from "@/lib/contact";
+import { WHATSAPP_RESERVE_URL, INSTAGRAM, FACEBOOK } from "@/lib/contact";
 import { useLanguage } from "@/lib/i18n";
 import {
   HOURS as FALLBACK_HOURS,
@@ -77,29 +77,64 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-          {/* Left: info cards */}
+          {/* Left: Address + Map (grouped in one card) + Hours */}
           <div className="flex flex-col gap-6">
 
-            {/* Address */}
-            <div className="reveal glass-dark rounded-2xl p-6 md:p-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#f04e30]/20 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
-                  &#128205;
+            {/* Address + Map — grouped together per client feedback */}
+            <div className="reveal glass-dark rounded-2xl overflow-hidden">
+              <div className="p-6 md:p-8 pb-0">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-[#f04e30]/20 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                    &#128205;
+                  </div>
+                  <div>
+                    <h3 className="font-display text-white font-bold text-xl mb-1">{t.contact.addressTitle}</h3>
+                    <p className="text-white/60 text-sm leading-relaxed">
+                      Av. Paseo del Puerto 1127<br />
+                      Mahahual, Quintana Roo<br />
+                      M&eacute;xico 77976
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-display text-white font-bold text-xl mb-1">{t.contact.addressTitle}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed">
-                    Av. Paseo del Puerto 1127<br />
-                    Mahahual, Quintana Roo<br />
-                    M&eacute;xico 77976
-                  </p>
+              </div>
+
+              {/* Map illustration — now inside the same card as the address */}
+              <div className="relative min-h-[220px] mx-6 md:mx-8 mb-6 md:mb-8 mt-5 rounded-xl overflow-hidden bg-[#1e3a1e]">
+                <svg viewBox="0 0 600 400" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="600" height="400" fill="#1a3a1a" />
+                  {/* Streets */}
+                  <rect x="0" y="180" width="600" height="18" fill="#2d5a2d" opacity="0.5" />
+                  <rect x="0" y="280" width="600" height="14" fill="#2d5a2d" opacity="0.4" />
+                  <rect x="120" y="0" width="14" height="400" fill="#2d5a2d" opacity="0.4" />
+                  <rect x="320" y="0" width="18" height="400" fill="#2d5a2d" opacity="0.5" />
+                  <rect x="480" y="0" width="12" height="400" fill="#2d5a2d" opacity="0.3" />
+                  {/* City blocks */}
+                  <rect x="140" y="200" width="170" height="74" rx="4" fill="#245824" opacity="0.4" />
+                  <rect x="340" y="200" width="130" height="74" rx="4" fill="#245824" opacity="0.35" />
+                  <rect x="140" y="50" width="170" height="120" rx="4" fill="#245824" opacity="0.35" />
+                  <rect x="340" y="50" width="130" height="120" rx="4" fill="#245824" opacity="0.3" />
+                  {/* Ocean */}
+                  <rect x="0" y="300" width="100" height="100" fill="#1a4a5a" opacity="0.6" />
+                  <rect x="0" y="300" width="600" height="100" fill="#1a4a5a" opacity="0.2" />
+                  {/* Map pin */}
+                  <circle cx="230" cy="240" r="28" fill="#f04e30" opacity="0.2" />
+                  <circle cx="230" cy="240" r="20" fill="#f04e30" opacity="0.9" />
+                  <circle cx="230" cy="240" r="10" fill="white" opacity="0.9" />
+                  <line x1="230" y1="260" x2="230" y2="278" stroke="#f04e30" strokeWidth="3" />
+                  {/* Label */}
+                  <rect x="148" y="202" width="142" height="28" rx="4" fill="#f04e30" opacity="0.9" />
+                  <text x="219" y="221" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="Poppins, sans-serif">The Jungle Wey</text>
+                </svg>
+
+                {/* Open Maps CTA */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
                   <a
-                    href="https://www.google.com/maps/place/The+Jungle+Wey/@18.7074,-87.7063,17z/data=!3m1!4b1!4m6!3m5!1s0x8f5b99d1b1c2e4f5:0x1!8m2!3d18.7074!4d-87.7063!16s%2Fg%2F11x1234567?hl=en&entry=ttu"
+                    href="https://www.google.com/maps/search/The+Jungle+Wey+Avenida+Paseo+del+Puerto+1127+Mahahual+Quintana+Roo"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 mt-3 text-[#62a062] text-sm font-medium hover:text-white transition-colors"
+                    className="flex items-center gap-2 bg-white text-[#0c1f0c] text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg hover:scale-105 transition-transform"
                   >
-                    {t.contact.openMaps}
+                    {t.contact.openGMaps}
                   </a>
                 </div>
               </div>
@@ -144,83 +179,10 @@ export default function ContactSection() {
                 </div>
               )}
             </div>
-
-            {/* Social / Contact buttons */}
-            <div className="reveal flex flex-col sm:flex-row gap-4">
-              <a
-                href={WHATSAPP_RESERVE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1aad54] text-white font-semibold px-6 py-4 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(37,211,102,0.4)]"
-              >
-                <span className="text-2xl">&#128172;</span>
-                <div className="text-left">
-                  <div className="text-sm font-bold">{t.contact.waTitle}</div>
-                  <div className="text-xs opacity-80">{t.contact.waDesc}</div>
-                </div>
-              </a>
-              <a
-                href="https://instagram.com/thejunglewey"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-3 text-white font-semibold px-6 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
-                style={{
-                  background: "linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)",
-                  boxShadow: "0 4px 20px rgba(253,29,29,0.3)",
-                }}
-              >
-                <span className="text-2xl">&#128247;</span>
-                <div className="text-left">
-                  <div className="text-sm font-bold">{t.contact.igTitle}</div>
-                  <div className="text-xs opacity-80">{t.contact.igDesc}</div>
-                </div>
-              </a>
-            </div>
           </div>
 
-          {/* Right: map + walk-in card */}
-          <div className="reveal flex flex-col gap-5">
-
-            {/* Map illustration */}
-            <div className="flex-1 rounded-2xl overflow-hidden min-h-[280px] relative bg-[#1e3a1e]">
-              <svg viewBox="0 0 600 400" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="600" height="400" fill="#1a3a1a" />
-                {/* Streets */}
-                <rect x="0" y="180" width="600" height="18" fill="#2d5a2d" opacity="0.5" />
-                <rect x="0" y="280" width="600" height="14" fill="#2d5a2d" opacity="0.4" />
-                <rect x="120" y="0" width="14" height="400" fill="#2d5a2d" opacity="0.4" />
-                <rect x="320" y="0" width="18" height="400" fill="#2d5a2d" opacity="0.5" />
-                <rect x="480" y="0" width="12" height="400" fill="#2d5a2d" opacity="0.3" />
-                {/* City blocks */}
-                <rect x="140" y="200" width="170" height="74" rx="4" fill="#245824" opacity="0.4" />
-                <rect x="340" y="200" width="130" height="74" rx="4" fill="#245824" opacity="0.35" />
-                <rect x="140" y="50" width="170" height="120" rx="4" fill="#245824" opacity="0.35" />
-                <rect x="340" y="50" width="130" height="120" rx="4" fill="#245824" opacity="0.3" />
-                {/* Ocean */}
-                <rect x="0" y="300" width="100" height="100" fill="#1a4a5a" opacity="0.6" />
-                <rect x="0" y="300" width="600" height="100" fill="#1a4a5a" opacity="0.2" />
-                {/* Map pin */}
-                <circle cx="230" cy="240" r="28" fill="#f04e30" opacity="0.2" />
-                <circle cx="230" cy="240" r="20" fill="#f04e30" opacity="0.9" />
-                <circle cx="230" cy="240" r="10" fill="white" opacity="0.9" />
-                <line x1="230" y1="260" x2="230" y2="278" stroke="#f04e30" strokeWidth="3" />
-                {/* Label */}
-                <rect x="148" y="202" width="142" height="28" rx="4" fill="#f04e30" opacity="0.9" />
-                <text x="219" y="221" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="Poppins, sans-serif">The Jungle Wey</text>
-              </svg>
-
-              {/* Open Maps CTA */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                <a
-                  href="https://www.google.com/maps/search/The+Jungle+Wey+Avenida+Paseo+del+Puerto+1127+Mahahual+Quintana+Roo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-white text-[#0c1f0c] text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg hover:scale-105 transition-transform"
-                >
-                  {t.contact.openGMaps}
-                </a>
-              </div>
-            </div>
+          {/* Right: Walk-ins, WhatsApp, Follow Us on Socials */}
+          <div className="reveal flex flex-col gap-6">
 
             {/* Walk-ins card */}
             <div
@@ -233,6 +195,61 @@ export default function ContactSection() {
                 <p className="text-white/55 text-sm mt-1 leading-relaxed">
                   {t.contact.walkinsSub}
                 </p>
+              </div>
+            </div>
+
+            {/* WhatsApp — standalone CTA */}
+            <a
+              href={WHATSAPP_RESERVE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1aad54] text-white font-semibold px-6 py-4 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(37,211,102,0.4)]"
+            >
+              <span className="text-2xl">&#128172;</span>
+              <div className="text-left">
+                <div className="text-sm font-bold">{t.contact.waTitle}</div>
+                <div className="text-xs opacity-80">{t.contact.waDesc}</div>
+              </div>
+            </a>
+
+            {/* Follow Us on Socials — new card grouping Instagram + Facebook */}
+            <div className="glass-dark rounded-2xl p-6 md:p-8">
+              <h3 className="font-display text-white font-bold text-xl mb-5">{t.contact.socialsTitle}</h3>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href={INSTAGRAM}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-3 text-white font-semibold px-6 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: "linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)",
+                    boxShadow: "0 4px 20px rgba(253,29,29,0.3)",
+                  }}
+                >
+                  <span className="text-2xl">&#128247;</span>
+                  <div className="text-left">
+                    <div className="text-sm font-bold">{t.contact.igTitle}</div>
+                    <div className="text-xs opacity-80">{t.contact.igDesc}</div>
+                  </div>
+                </a>
+                <a
+                  href={FACEBOOK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-3 text-white font-semibold px-6 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: "#1877F2",
+                    boxShadow: "0 4px 20px rgba(24,119,242,0.3)",
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.522 1.492-3.916 3.777-3.916 1.094 0 2.238.197 2.238.197v2.476h-1.26c-1.243 0-1.63.775-1.63 1.57v1.888h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z" />
+                  </svg>
+                  <div className="text-left">
+                    <div className="text-sm font-bold">{t.contact.fbTitle}</div>
+                    <div className="text-xs opacity-80">{t.contact.fbDesc}</div>
+                  </div>
+                </a>
               </div>
             </div>
           </div>

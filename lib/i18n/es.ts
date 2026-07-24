@@ -161,7 +161,7 @@ export const es: T = {
   },
 
   tripadvisor: {
-    eyebrow:    "Como aparece en TripAdvisor",
+    eyebrow:    "Lo Que Dice Nuestra Tribu",
     headlineA:  "Calificados como ",
     excellent:  "Excelente",
     headlineB:  " por Nuestros Huéspedes",
@@ -191,11 +191,13 @@ export const es: T = {
     hoursTitle:    "Horarios",
     today:         "Hoy",
     closed:        "Cerrado",
-    openMaps:      "Abrir en Maps →",
     waTitle:       "WhatsApp",
     waDesc:        "Reservar una mesa",
     igTitle:       "Instagram",
     igDesc:        "@thejunglewey",
+    fbTitle:       "Facebook",
+    fbDesc:        "The Jungle Wey",
+    socialsTitle:  "Síguenos en Redes",
     walkinsTitle:  "Bienvenidos Sin Reserva",
     walkinsSub:    "No se necesita reservación — aunque un WhatsApp en noches concurridas siempre se agradece.",
     openGMaps:     "\u{1F4CD} Abrir en Google Maps",
