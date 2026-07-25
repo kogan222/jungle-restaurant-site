@@ -29,7 +29,7 @@ export const en = {
     cta1:        "Explore the Menu",
     cta2:        "Book via WhatsApp",
     stat1v:      "100%",
-    stat1l:      "Al Aire Libre",
+    stat1l:      "Outdoor",
     stat2v:      "Fresh",
     stat2l:      "Daily Ingredients",
     stat3v:      "Wild",
@@ -38,7 +38,7 @@ export const en = {
   },
 
   vibe: {
-    eyebrow:       "La Experiencia",
+    eyebrow:       "The Experience",
     headlineA:     "This is not",
     headlineB:     "just a",
     headlineC:     "restaurant.",
@@ -80,7 +80,7 @@ export const en = {
   },
 
   menu: {
-    eyebrow:     "Menú Comida",
+    eyebrow:     "Food Menu",
     headlineA:   "The Full ",
     headlineB:   "Jungle Menu",
     sub:         "Without labels. Without rules. Without limits.",
@@ -137,7 +137,7 @@ export const en = {
   },
 
   gallery: {
-    eyebrow:    "La Experiencia",
+    eyebrow:    "The Experience",
     headlineA:  "The Jungle ",
     headlineB:  "Up Close",
     sub:        "Every corner is made to be felt. Step in, look around, and find your favorite spot under the trees.",
@@ -164,7 +164,7 @@ export const en = {
     excellent:  "Excellent",
     headlineB:  " by Our Guests",
     quote:      "“An easy-going tropical paradise with food that surprises you every time. The cocktails, the atmosphere, the music — it all hits differently here.”",
-    reviews:    "23 reviews",
+    reviews:    "Reviews",
     cta1:       "Read All Reviews",
     cta2:       "✒ Leave a Review",
     callLabel:  "+52 983 101 1061",
