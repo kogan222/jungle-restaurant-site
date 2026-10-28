@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow:  ["/_next/", "/api/"],
       },
     ],
-    sitemap: "https://thejunglewey.com/sitemap.xml",
+    sitemap: "https://www.thejunglewey.com/sitemap.xml",
   };
 }

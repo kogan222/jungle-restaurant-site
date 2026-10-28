@@ -5,7 +5,7 @@ import type { MetadataRoute } from "next";
   /book, /stories and /events are intentionally excluded — they are
   hidden future pages (noindex) until the client launches them.
 */
-const BASE_URL = "https://thejunglewey.com";
+const BASE_URL = "https://www.thejunglewey.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

@@ -25,7 +25,9 @@ const poppins = Poppins({
 /* ═══════════════════════════════════════════════════════
    CONSTANTS
 ═══════════════════════════════════════════════════════ */
-const SITE_URL  = "https://thejunglewey.com";
+/* www is the primary host (thejunglewey.com 308-redirects to it on Vercel),
+   so every canonical / sitemap / structured-data URL must use it too. */
+const SITE_URL  = "https://www.thejunglewey.com";
 const SITE_NAME = "The Jungle Wey";
 const OG_IMAGE  = `${SITE_URL}/images/og-cover.jpg`;
 
@@ -72,14 +74,11 @@ export const metadata: Metadata = {
     "Caribbean coast restaurant Mexico",
   ],
 
-  /* ── Canonical + hreflang ───────────────────────────── */
+  /* ── Canonical ──────────────────────────────────────────
+     No hreflang: both languages share one URL (client-side toggle),
+     so there are no distinct language alternates to declare. */
   alternates: {
     canonical: SITE_URL,
-    languages: {
-      "en":    SITE_URL,
-      "es":    SITE_URL,
-      "x-default": SITE_URL,
-    },
   },
 
   /* ── Open Graph ─────────────────────────────────────── */
@@ -139,10 +138,12 @@ export const metadata: Metadata = {
     ],
   },
 
-  /* ── Verification (uncomment when deploying) ────────── */
-  // verification: {
-  //   google: "YOUR_GOOGLE_SEARCH_CONSOLE_TOKEN",
-  // },
+  /* ── Search Console verification ────────────────────────
+     Set GOOGLE_SITE_VERIFICATION in Vercel to the token Search Console
+     gives for the "HTML tag" method; the tag is rendered automatically. */
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 /* ═══════════════════════════════════════════════════════
@@ -219,25 +220,9 @@ const jsonLd = {
         `${SITE_URL}/images/food-burger.jpg`,
         `${SITE_URL}/images/drink-espresso-martini.jpg`,
       ],
-      aggregateRating: {
-        "@type":      "AggregateRating",
-        ratingValue:  "5.0",
-        bestRating:   "5",
-        worstRating:  "1",
-        reviewCount:  "23",
-        ratingCount:  "23",
-      },
-      review: {
-        "@type":  "Review",
-        author:   { "@type": "Person", name: "TripAdvisor Guest" },
-        reviewRating: {
-          "@type":      "Rating",
-          ratingValue:  "5",
-          bestRating:   "5",
-        },
-        reviewBody:
-          "An easy-going tropical paradise with food that surprises you every time. The cocktails, the atmosphere, the music — it all hits differently here.",
-      },
+      /* No aggregateRating / review here on purpose: ratings are shown live
+         from Google on the page, and hard-coded, out-of-date values in
+         structured data are treated by Google as misleading markup. */
     },
 
     /* ── WebSite (enables Google Sitelinks search box) ── */
