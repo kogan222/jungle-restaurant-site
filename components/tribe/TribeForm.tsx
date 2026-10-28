@@ -134,7 +134,8 @@ export default function TribeForm() {
   const [data, setData] = useState<TribeFormData>(EMPTY_TRIBE_FORM);
   const [touched, setTouched] = useState<Partial<Record<keyof TribeFormData, boolean>>>({});
   const [submitAttempted, setSubmitAttempted] = useState(false);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [website, setWebsite] = useState(""); // honeypot — humans never fill it
 
   const errors = validateTribeForm(data);
   const showError = (field: keyof TribeFormData) => (touched[field] || submitAttempted) && errors[field];
@@ -147,8 +148,8 @@ export default function TribeForm() {
     setSubmitAttempted(true);
     if (!isTribeFormValid(errors)) return;
     setStatus("submitting");
-    const res = await submitTribeForm(data);
-    setStatus(res.ok ? "success" : "idle");
+    const res = await submitTribeForm(data, website);
+    setStatus(res.ok ? "success" : "error");
   };
 
   if (status === "success") {
@@ -175,6 +176,17 @@ export default function TribeForm() {
         boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
       }}
     >
+      <input
+        type="text"
+        name="website"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute opacity-0 pointer-events-none h-0 w-0"
+        style={{ left: "-9999px" }}
+      />
       <p
         className="text-white/55 text-sm leading-relaxed mb-8 pb-6"
         style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
@@ -349,6 +361,9 @@ export default function TribeForm() {
         </button>
         {submitAttempted && !isTribeFormValid(errors) && (
           <p className="text-xs text-center" style={{ color: "#f56a4a" }}>{t.tribe.errorFormIncomplete}</p>
+        )}
+        {status === "error" && (
+          <p className="text-xs text-center max-w-md" role="alert" style={{ color: "#f56a4a" }}>{t.tribe.errorSubmit}</p>
         )}
       </div>
     </form>

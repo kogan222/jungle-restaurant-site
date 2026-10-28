@@ -238,6 +238,7 @@ export const es: T = {
     errorEmail:         "Ingresa un correo electrónico válido.",
     errorTerms:         "Debes aceptar las condiciones para continuar.",
     errorFormIncomplete:"Completa todos los campos obligatorios antes de enviar.",
+    errorSubmit:        "Algo salió mal y no pudimos enviar tu registro. Inténtalo de nuevo o escríbenos por WhatsApp.",
     perks: {
       p1: { title: "Entérate Primero", body: "Música en vivo, cenas pop-up y noches especiales — directo a ti." },
       p2: { title: "Mimos de la Tribu", body: "Degustaciones exclusivas y sorpresitas de El Wey." },

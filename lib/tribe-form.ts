@@ -5,11 +5,9 @@
    Form (forms.gle/SvDZicthTz2Dj6av7) — see components/tribe/TribeForm.tsx
    for the exact Spanish labels/options/terms text.
 
-   Submission storage is intentionally NOT wired to a backend yet
-   (see docs/INTEGRATIONS.md §3). Once a storage target exists — a
-   Google Sheets Apps Script Web App, a small serverless function, etc.
-   — only submitTribeForm() below needs to change; the form component
-   doesn't need to know how/where the data ends up.
+   Submissions are emailed to the restaurant by app/api/tribe-register
+   (Resend; env vars RESEND_API_KEY, TRIBE_NOTIFY_TO, optional
+   TRIBE_FROM). To change where data goes, only that route changes.
 ════════════════════════════════════════════════════════ */
 
 export type ContactPreference = "Whatsapp" | "Email" | "Instagram" | "Todas las anteriores";
@@ -70,10 +68,22 @@ export function isTribeFormValid(errors: TribeFormErrors): boolean {
 }
 
 /**
- * Storage stub — see file header. Resolves once validated; never
- * rejects, so the UI only needs a success state for now.
+ * Sends the registration to /api/tribe-register (emails the restaurant).
+ * Never rejects — resolves { ok: false } on any failure so the UI can show
+ * an error instead of a false "welcome". `website` is the honeypot value.
  */
-export async function submitTribeForm(_data: TribeFormData): Promise<{ ok: true }> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  return { ok: true };
+export async function submitTribeForm(
+  data: TribeFormData,
+  website = ""
+): Promise<{ ok: boolean }> {
+  try {
+    const res = await fetch("/api/tribe-register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, website }),
+    });
+    return { ok: res.ok };
+  } catch {
+    return { ok: false };
+  }
 }

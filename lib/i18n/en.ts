@@ -236,6 +236,7 @@ export const en = {
     errorEmail:         "Please enter a valid email address.",
     errorTerms:         "Please accept the conditions to continue.",
     errorFormIncomplete:"Please complete all required fields before submitting.",
+    errorSubmit:        "Something went wrong and we couldn’t send your registration. Please try again, or message us on WhatsApp.",
     perks: {
       p1: { title: "First to Know",   body: "Live music, pop-up dinners, and special nights — straight to you." },
       p2: { title: "Tribe Treats",    body: "Members-only tastings and little surprises from El Wey." },
