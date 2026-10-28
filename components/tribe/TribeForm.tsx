@@ -73,6 +73,20 @@ const CONTACT_PREFERENCE_LABELS: Record<Lang, Record<ContactPreference, string>>
   },
 };
 
+/* Date of birth is three selects instead of <input type="date">: the native
+   picker renders in the visitor's browser/OS language (e.g. Hebrew), which
+   the site can't control. The stored value is still "YYYY-MM-DD". */
+const DATE_LABELS: Record<Lang, { day: string; month: string; year: string; months: string[] }> = {
+  en: {
+    day: "Day", month: "Month", year: "Year",
+    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  },
+  es: {
+    day: "Día", month: "Mes", year: "Año",
+    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+  },
+};
+
 const TERMS: Record<Lang, {
   title: string; intro: string; items: string[]; privacy: string; checkboxLabel: string;
 }> = {
@@ -125,6 +139,59 @@ function Label({ children }: { children: ReactNode }) {
 
 function FieldError({ children }: { children: ReactNode }) {
   return <p className="text-xs mt-1.5" style={{ color: "#f56a4a" }}>{children}</p>;
+}
+
+function BirthdayField({
+  lang,
+  hasError,
+  onChange,
+  onBlur,
+}: {
+  lang: Lang;
+  hasError: boolean;
+  onChange: (iso: string) => void;
+  onBlur: () => void;
+}) {
+  const L = DATE_LABELS[lang];
+  const [parts, setParts] = useState({ d: "", m: "", y: "" });
+  const thisYear = new Date().getFullYear();
+  const years = Array.from({ length: 101 }, (_, i) => thisYear - i);
+
+  const update = (patch: Partial<typeof parts>) => {
+    const n = { ...parts, ...patch };
+    if (n.y && n.m && n.d) {
+      const max = new Date(Number(n.y), Number(n.m), 0).getDate();
+      if (Number(n.d) > max) n.d = String(max);
+    }
+    setParts(n);
+    onChange(n.y && n.m && n.d ? `${n.y}-${n.m.padStart(2, "0")}-${n.d.padStart(2, "0")}` : "");
+  };
+
+  const cls = "w-full rounded-xl px-3 py-3 text-sm outline-none transition-colors";
+  const style = { ...fieldStyle(hasError), colorScheme: "dark" } as const;
+
+  return (
+    <div className="grid gap-2" style={{ gridTemplateColumns: "0.8fr 1.5fr 1fr" }}>
+      <select aria-label={L.day} value={parts.d} onChange={(e) => update({ d: e.target.value })} onBlur={onBlur} className={cls} style={style}>
+        <option value="">{L.day}</option>
+        {Array.from({ length: 31 }, (_, i) => (
+          <option key={i + 1} value={String(i + 1)}>{i + 1}</option>
+        ))}
+      </select>
+      <select aria-label={L.month} value={parts.m} onChange={(e) => update({ m: e.target.value })} onBlur={onBlur} className={cls} style={style}>
+        <option value="">{L.month}</option>
+        {L.months.map((name, i) => (
+          <option key={name} value={String(i + 1)}>{name}</option>
+        ))}
+      </select>
+      <select aria-label={L.year} value={parts.y} onChange={(e) => update({ y: e.target.value })} onBlur={onBlur} className={cls} style={style}>
+        <option value="">{L.year}</option>
+        {years.map((y) => (
+          <option key={y} value={String(y)}>{y}</option>
+        ))}
+      </select>
+    </div>
+  );
 }
 
 export default function TribeForm() {
@@ -210,13 +277,11 @@ export default function TribeForm() {
 
         <div>
           <Label>{fl.birthday}</Label>
-          <input
-            type="date"
-            value={data.birthday}
-            onChange={(e) => set("birthday", e.target.value)}
+          <BirthdayField
+            lang={lang}
+            hasError={!!showError("birthday")}
+            onChange={(iso) => set("birthday", iso)}
             onBlur={() => touch("birthday")}
-            className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors"
-            style={{ ...fieldStyle(!!showError("birthday")), colorScheme: "dark" }}
           />
           {showError("birthday") && <FieldError>{t.tribe.errorRequired}</FieldError>}
         </div>
