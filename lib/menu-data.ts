@@ -67,6 +67,7 @@ export const AM_FOOD: MenuCategory[] = [
         extra: "Pick your protein: egg (2) +$30 · chicken +$50 · slow-cooked picaña barbacoa +$130",
         extraEs: "Elige tu proteína: huevos (2) +$30 · pollo +$50 · barbacoa de picaña +$130",
         badge: "fanFav",
+        img: "/images/food-chilaquiles.jpg",
       },
       {
         name: "Jungle-Style Enchiladas",
@@ -108,6 +109,7 @@ export const AM_FOOD: MenuCategory[] = [
         desc: "Wood-fired picanha barbacoa, slow-cooked for 6 hours, served on handmade blue corn tortillas. (3 pieces)",
         descEs: "De la tierra: barbacoa de picaña sellada a la leña, cocida a fuego lento por 6 horas, servida en tortillas de maíz azul hechas a mano. (3 piezas)",
         badge: "signature",
+        img: "/images/food-land-tacos.jpg",
       },
       {
         name: "Los Señores Tacos — Sea",
@@ -131,12 +133,14 @@ export const AM_FOOD: MenuCategory[] = [
         desc: "Homemade bread topped with avocado, arugula, cherry tomatoes, and a poached egg.",
         descEs: "Pan casero con aguacate, arúgula, tomate cherry y huevo poché.",
         badge: "fanFav",
+        img: "/images/food-avocado-toast.jpg",
       },
       {
         name: "Chicken Crispy",
         price: "$200",
         desc: "Homemade bread stuffed with crispy chicken, bacon, cheddar cheese, and house dressing.",
         descEs: "Pan casero, relleno de pollo crispy, tocino, queso cheddar y aderezo de la casa.",
+        img: "/images/food-chicken-sandwich.jpg",
       },
       {
         name: "Barba Sandwich",
@@ -188,6 +192,7 @@ export const AM_FOOD: MenuCategory[] = [
         desc: "Açaí & banana base topped with strawberries, apple, granola, red fruit coulis, and chia stars.",
         descEs: "Base de plátanos con açaí y topping de fresas, manzana, granola, coulis de frutos rojos y sprinkles de chía.",
         badge: "fanFav",
+        img: "/images/food-acai-bowl.jpg",
       },
       {
         name: "Fresh & Crunchy",
@@ -375,6 +380,7 @@ export const PM_FOOD: MenuCategory[] = [
         desc: "Grilled picanha served over mashed potatoes, sweet potato sticks, and mushroom gravy.",
         descEs: "Picaña a la parrilla en espejo de puré de papa, bastones de camote y gravy de champiñones.",
         badge: "premium",
+        img: "/images/food-picanha-plate.jpg",
       },
       {
         name: "Pollo Olímpico",
@@ -446,6 +452,7 @@ export const PM_FOOD: MenuCategory[] = [
         desc: "Wood-fired picanha barbacoa, slow-cooked for 6 hours, served on handmade blue corn tortillas. (3 pieces) · A caballo: add 2 eggs +$20",
         descEs: "De la tierra: barbacoa de picaña sellada a la leña, cocida a fuego lento por 6 horas, servida en tortillas de maíz azul hechas a mano. (3 piezas) · A caballo: agrégale 2 huevos +$20",
         badge: "signature",
+        img: "/images/food-land-tacos.jpg",
       },
       {
         name: "Los Señores Tacos — Sea",

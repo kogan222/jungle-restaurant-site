@@ -12,17 +12,20 @@ import { HOURS, type DayHours, type GoogleBusinessData, type GoogleReview } from
   Route Handlers are never bundled into client JS, so the API key can
   never reach the browser.
 
-  Caching: `revalidate` below (Next.js Data Cache) + the matching
-  `next: { revalidate }` on the fetch mean ONE shared server-side cache
-  entry is reused for every visitor for 7 days — Google is called at
-  most once per week, never per request/visitor.
+  Caching: the route itself is dynamic, but the Google fetch below uses
+  `next: { revalidate }` (Next.js Data Cache), so ONE shared successful
+  response is reused for every visitor for 7 days — Google is called at
+  most once per week, never per request/visitor. The route output is
+  deliberately NOT cached as a whole: a failed call returns the fallback
+  for that request only, instead of freezing the fallback for a week.
 
   Failure handling: missing key/place id, non-2xx responses, network
   timeouts, and malformed bodies all fall through to the same static
-  fallback below — the site (and this route) never breaks.
+  fallback below — the site (and this route) never breaks. The reason is
+  written to the server logs (never the key).
 */
 
-export const revalidate = 604800; // 7 days
+export const dynamic = "force-dynamic";
 
 const SEVEN_DAYS_SECONDS = 604800;
 const FETCH_TIMEOUT_MS = 8000;
@@ -117,6 +120,9 @@ export async function GET() {
   };
 
   if (!key || !placeId) {
+    console.error(
+      `[google-business] fallback: missing env — GOOGLE_PLACES_API_KEY ${key ? "set" : "MISSING"}, GOOGLE_PLACE_ID ${placeId ? "set" : "MISSING"}`
+    );
     return NextResponse.json(fallback);
   }
 
@@ -134,7 +140,10 @@ export async function GET() {
     });
 
     // Invalid key, invalid place id, billing errors, rate limits — all non-2xx
-    if (!res.ok) throw new Error(`Places API responded ${res.status}`);
+    if (!res.ok) {
+      const body = (await res.text().catch(() => "")).slice(0, 300);
+      throw new Error(`Places API responded ${res.status}: ${body}`);
+    }
 
     const data = (await res.json()) as PlacesApiResponse;
 
@@ -150,9 +159,10 @@ export async function GET() {
       writeReviewUrl,
     };
     return NextResponse.json(payload);
-  } catch {
+  } catch (err) {
     // Timeout (AbortError), network failure, non-2xx, or malformed JSON —
     // never break the page because of a third-party hiccup.
+    console.error("[google-business] fallback:", err instanceof Error ? err.message : err);
     return NextResponse.json(fallback);
   } finally {
     clearTimeout(timeout);
