@@ -246,7 +246,49 @@ export const es: T = {
     },
   },
 
+  privacy: {
+    eyebrow:      "The Jungle Wey",
+    headlineA:    "Aviso de ",
+    headlineB:    "Privacidad",
+    sections: [
+      {
+        title: "Quiénes somos",
+        body: ["THE JUNGLE WEY, Av. Paseo del Puerto 1127, Mahahual, Quintana Roo, México 77976, es responsable de los datos personales que nos compartes. Contacto: thejunglewey@gmail.com"],
+      },
+      {
+        title: "Qué datos recopilamos",
+        body: ["Cuando te unes a la Jungle Tribe recopilamos: nombre completo, fecha de nacimiento, teléfono, correo electrónico, usuario de Instagram, dirección, tu forma preferida de contacto y tu respuesta a nuestra pregunta abierta."],
+      },
+      {
+        title: "Para qué los usamos",
+        body: [
+          "1. Para saber quién eres y administrar tu membresía en la Jungle Tribe (incluido el 10% de descuento para miembros).",
+          "2. Para contactarte sobre el club por el medio que elegiste (WhatsApp, correo electrónico o Instagram).",
+        ],
+      },
+      {
+        title: "Con quién los compartimos",
+        body: ["No vendemos ni compartimos tus datos. Solo son tratados por los servicios que usamos para operar el sitio web y recibir tu registro."],
+      },
+      {
+        title: "Tus derechos",
+        body: [
+          "Puedes solicitar acceder a tus datos, corregirlos o eliminarlos, o salir de la Jungle Tribe en cualquier momento. Escríbenos a thejunglewey@gmail.com.",
+          "Para ejercer cualquiera de estos derechos, envía un correo a thejunglewey@gmail.com con tu nombre completo y lo que solicitas (acceso, corrección, eliminación, o que dejemos de usar tus datos / salir de la Jungle Tribe), y te responderemos por correo. Puedes retirar tu consentimiento en cualquier momento de la misma forma.",
+        ],
+      },
+      {
+        title: "Cambios",
+        body: ["Cualquier actualización de este aviso se publicará en esta página."],
+      },
+    ],
+    lastUpdated:  "Última actualización",
+    updatedDate:  "30 de octubre de 2026",
+    backHome:     "Volver al inicio",
+  },
+
   footer: {
+    privacy:   "Privacidad",
     tagline:   "Puro antojo bien hecho. Salvaje, vibrante, lleno de sorpresas.",
     copyright: (year: number) => `© ${year} The Jungle Wey. Todos los derechos reservados.`,
     location:  "Mahahual, Quintana Roo, México",

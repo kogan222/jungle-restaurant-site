@@ -88,7 +88,7 @@ const DATE_LABELS: Record<Lang, { day: string; month: string; year: string; mont
 };
 
 const TERMS: Record<Lang, {
-  title: string; intro: string; items: string[]; privacy: string; checkboxLabel: string;
+  title: string; intro: string; items: string[]; privacy: string; checkboxLabel: string; privacyLink: string;
 }> = {
   en: {
     title: "Confirmation",
@@ -103,6 +103,7 @@ const TERMS: Record<Lang, {
     ],
     privacy: "You also agree that the information provided will be used exclusively by Jungle Wey to send information, invitations, benefits, and communications related to the Jungle Tribe. Your data will not be shared with third parties.",
     checkboxLabel: "I have read and accept the conditions",
+    privacyLink: "Privacy Notice",
   },
   es: {
     title: "Confirmación",
@@ -117,6 +118,7 @@ const TERMS: Record<Lang, {
     ],
     privacy: "Asimismo, aceptas que la información proporcionada será utilizada exclusivamente por Jungle Wey para el envío de información, invitaciones, beneficios y comunicaciones relacionadas con la Tribu Jungle Wey. Tus datos no serán compartidos con terceros.",
     checkboxLabel: "He leído y acepto las condiciones",
+    privacyLink: "Aviso de Privacidad",
   },
 };
 
@@ -411,6 +413,16 @@ export default function TribeForm() {
           />
           <span className="text-white/75 text-sm">{terms.checkboxLabel}</span>
         </label>
+        {/* New tab so the visitor never loses what they typed in the form */}
+        <a
+          href="/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block mt-2 ml-8 text-sm underline underline-offset-2 hover:text-white transition-colors"
+          style={{ color: "#ce8b4d" }}
+        >
+          {terms.privacyLink}
+        </a>
         {showError("acceptedTerms") && <FieldError>{t.tribe.errorTerms}</FieldError>}
       </div>
 

@@ -244,7 +244,49 @@ export const en = {
     },
   },
 
+  privacy: {
+    eyebrow:      "The Jungle Wey",
+    headlineA:    "Privacy ",
+    headlineB:    "Notice",
+    sections: [
+      {
+        title: "Who we are",
+        body: ["THE JUNGLE WEY, Av. Paseo del Puerto 1127, Mahahual, Quintana Roo, Mexico 77976, is responsible for the personal data you share with us. Contact: thejunglewey@gmail.com"],
+      },
+      {
+        title: "What we collect",
+        body: ["When you join the Jungle Tribe we collect: full name, date of birth, phone, email, Instagram username, address, your preferred way to be contacted, and your answer to our open question."],
+      },
+      {
+        title: "Why we use it",
+        body: [
+          "1. To know who you are and manage your Jungle Tribe membership (including the 10% member discount).",
+          "2. To contact you about the club in the way you chose (WhatsApp, email or Instagram).",
+        ],
+      },
+      {
+        title: "Who we share it with",
+        body: ["We do not sell or share your data. It is only handled by the services we use to run the website and receive your registration."],
+      },
+      {
+        title: "Your rights",
+        body: [
+          "You can ask to see, correct or delete your data, or to leave the Jungle Tribe at any time. Write to thejunglewey@gmail.com.",
+          "To exercise any of these rights, send an email to thejunglewey@gmail.com with your full name and what you are asking for (access, correction, deletion, or to stop using your data / leave the Jungle Tribe), and we will reply by email. You can withdraw your consent at any time the same way.",
+        ],
+      },
+      {
+        title: "Changes",
+        body: ["Any update to this notice will be published on this page."],
+      },
+    ],
+    lastUpdated:  "Last updated",
+    updatedDate:  "October 30, 2026",
+    backHome:     "Back to home",
+  },
+
   footer: {
+    privacy:   "Privacy",
     tagline:   "Puro antojo bien hecho. Wild, vibrant, full of surprises.",
     copyright: (year: number) => `© ${year} The Jungle Wey. All rights reserved.`,
     location:  "Mahahual, Quintana Roo, México",

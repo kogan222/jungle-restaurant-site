@@ -83,6 +83,9 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-white/25 text-xs">
           <span>{t.footer.copyright(new Date().getFullYear())}</span>
+          <a href="/privacy" className="hover:text-white/60 transition-colors">
+            {t.footer.privacy}
+          </a>
           <span>{t.footer.location} &#127796;</span>
         </div>
       </div>
