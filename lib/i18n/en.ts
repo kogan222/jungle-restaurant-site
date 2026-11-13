@@ -16,6 +16,13 @@ export const en = {
     waFloatCta:    "Book • Order • Ask",
   },
 
+  promo: {
+    lead:  "Cruising to Costa Maya?",
+    text:  "Join our Mexican Fiesta: unlimited tacos, margaritas & tequila tasting, a 15-min walk from the port.",
+    short: "Unlimited tacos & margaritas · 15 min from the port",
+    cta:   "Book on Viator",
+  },
+
   hero: {
     eyebrow:     "Mahahual · Quintana Roo · México",
     eat:         "Eat ",

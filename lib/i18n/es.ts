@@ -18,6 +18,13 @@ export const es: T = {
     waFloatCta:    "Reserva • Ordena • Pregunta",
   },
 
+  promo: {
+    lead:  "¿Viajas en crucero a Costa Maya?",
+    text:  "Vive nuestra Fiesta Mexicana: tacos sin límite, margaritas y cata de tequila, a 15 min caminando del puerto.",
+    short: "Tacos sin límite y margaritas · 15 min del puerto",
+    cta:   "Reservar",
+  },
+
   hero: {
     eyebrow:   "Mahahual · Quintana Roo · México",
     eat:       "Come ",

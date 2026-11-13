@@ -276,7 +276,7 @@ export default function Hero() {
       >
         <div
           className="max-w-7xl mx-auto px-5 md:px-10 w-full"
-          style={{ paddingBottom: "clamp(80px, 11vh, 130px)", paddingTop: "7rem" }}
+          style={{ paddingBottom: "clamp(80px, 11vh, 130px)", paddingTop: "8.5rem" }}
         >
 
           {/* Eyebrow */}

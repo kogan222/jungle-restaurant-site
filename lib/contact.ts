@@ -8,6 +8,10 @@ export const PHONE_RAW      = "529831011061";
 export const INSTAGRAM      = "https://instagram.com/thejunglewey";
 export const FACEBOOK       = "https://www.facebook.com/share/19SDufhcy2/?mibextid=wwXIfQ";
 export const TRIPADVISOR    = "https://www.tripadvisor.com/Restaurant_Review-g499450-d33319306-Reviews-The_Jungle_Wey-Mahahual_Costa_Maya_Yucatan_Peninsula.html";
+/* Viator listing for the "Authentic Mexican Fiesta Experience" (booked and paid
+   on Viator). SHOW_FIESTA_BAR switches the announcement bar on/off site-wide. */
+export const VIATOR_FIESTA_URL = "https://www.viator.com/tours/Costa-Maya/Authentic-Mexican-Fiesta-Experience-Near-Cruise-port/d4345-5563879P1";
+export const SHOW_FIESTA_BAR   = true;
 export const GOOGLE_MAPS    = "https://www.google.com/maps/search/The+Jungle+Wey+Avenida+Paseo+del+Puerto+1127+Mahahual+Quintana+Roo";
 
 /* ── Pre-filled WhatsApp reservation message ── */

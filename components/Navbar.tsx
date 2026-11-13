@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { WHATSAPP_RESERVE_URL } from "@/lib/contact";
+import { WHATSAPP_RESERVE_URL, VIATOR_FIESTA_URL, SHOW_FIESTA_BAR } from "@/lib/contact";
 import { useLanguage } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
 
@@ -53,7 +53,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const onMenuPage  = pathname === "/menu";
   const onTribePage = pathname === "/tribe";
-  const [scrolled,       setScrolled]       = useState(false);
+  /* Cruise-visitor announcement: only where visitors browse food, not on the member/legal pages */
+  const showPromo   = SHOW_FIESTA_BAR && (pathname === "/" || pathname === "/menu");
+  const [scrolled,      setScrolled]       = useState(false);
   const [open,           setOpen]           = useState(false);
   const [activeSection,  setActiveSection]  = useState("hero");
 
@@ -99,6 +101,33 @@ export default function Navbar() {
           : {}
       }
     >
+      {/* Announcement bar — the whole strip is the link; booking happens on Viator */}
+      {showPromo && (
+        <a
+          href={VIATOR_FIESTA_URL}
+          target="_blank"
+          rel="noopener"
+          className="group flex items-center justify-center gap-2.5 sm:gap-3 px-4 py-1.5 min-h-[40px] text-center text-white/90 text-[0.72rem] sm:text-[0.8rem] leading-snug"
+          style={{
+            background:   "linear-gradient(90deg, #1D3927, #24472f, #1D3927)",
+            borderBottom: "1px solid rgba(206,139,77,0.28)",
+          }}
+        >
+          <span aria-hidden="true">&#127790;</span>
+          <span className="hidden sm:inline">
+            <strong className="font-semibold" style={{ color: "#ce8b4d" }}>{t.promo.lead}</strong>{" "}
+            {t.promo.text}
+          </span>
+          <span className="sm:hidden">{t.promo.short}</span>
+          <span
+            className="flex-shrink-0 rounded-full px-3 py-1 font-semibold text-white whitespace-nowrap transition-transform duration-200 group-hover:scale-105"
+            style={{ background: "linear-gradient(135deg, #f04e30, #d43e22)" }}
+          >
+            {t.promo.cta} &rarr;
+          </span>
+        </a>
+      )}
+
       <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-20">
 
         {/* Logo — official "El Wey" mascot (Brand Manual single-color version) */}
