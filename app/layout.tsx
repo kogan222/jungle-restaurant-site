@@ -188,8 +188,8 @@ const jsonLd = {
       },
       geo: {
         "@type":    "GeoCoordinates",
-        latitude:   18.7074,
-        longitude:  -87.7063,
+        latitude:   18.7324117,
+        longitude:  -87.7033504,
       },
       /* Hours come from lib/business-info.ts — single source of truth
          shared with the Contact section and /api/google-business.
@@ -308,8 +308,8 @@ export default function RootLayout({
         {/* Local SEO geo tags */}
         <meta name="geo.region"    content="MX-ROO" />
         <meta name="geo.placename" content="Mahahual, Quintana Roo, México" />
-        <meta name="geo.position"  content="18.7074;-87.7063" />
-        <meta name="ICBM"          content="18.7074, -87.7063" />
+        <meta name="geo.position"  content="18.7324117;-87.7033504" />
+        <meta name="ICBM"          content="18.7324117, -87.7033504" />
 
         {/* Business contact */}
         <meta name="contact"  content="info@thejunglewey.com" />
