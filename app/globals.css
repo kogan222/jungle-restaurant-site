@@ -755,3 +755,20 @@ section {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ── Cruise "Fiesta" announcement bar (components/Navbar.tsx) ── */
+@keyframes promoMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes promoPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(240, 78, 48, 0.55), 0 2px 10px rgba(212, 62, 34, 0.45); }
+  70%  { box-shadow: 0 0 0 10px rgba(240, 78, 48, 0), 0 2px 10px rgba(212, 62, 34, 0.45); }
+  100% { box-shadow: 0 0 0 0 rgba(240, 78, 48, 0), 0 2px 10px rgba(212, 62, 34, 0.45); }
+}
+.promo-track { animation: promoMarquee 40s linear infinite; will-change: transform; }
+.promo-bar:hover .promo-track { animation-play-state: paused; }
+.promo-cta { animation: promoPulse 2.2s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .promo-track, .promo-cta { animation: none; }
+}

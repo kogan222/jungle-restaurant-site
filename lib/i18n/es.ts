@@ -22,7 +22,14 @@ export const es: T = {
     lead:  "¿Viajas en crucero a Costa Maya?",
     text:  "Vive nuestra Fiesta Mexicana: tacos sin límite, margaritas y cata de tequila, a 15 min caminando del puerto.",
     short: "Tacos sin límite y margaritas · 15 min del puerto",
-    cta:   "Reservar",
+    items: [
+      "🌮 Tacos sin límite",
+      "🍹 Margaritas y cata de tequila",
+      "📍 A 15 min caminando del puerto",
+      "✅ Cancelación gratuita",
+      "💳 Reserva ahora, paga después",
+    ],
+    cta:   "Reservar en Viator",
   },
 
   hero: {

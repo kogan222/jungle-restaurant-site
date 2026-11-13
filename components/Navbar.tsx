@@ -107,21 +107,53 @@ export default function Navbar() {
           href={VIATOR_FIESTA_URL}
           target="_blank"
           rel="noopener"
-          className="group flex items-center justify-center gap-2.5 sm:gap-3 px-4 py-1.5 min-h-[40px] text-center text-white/90 text-[0.72rem] sm:text-[0.8rem] leading-snug"
+          aria-label={`${t.promo.lead} ${t.promo.text} ${t.promo.cta}`}
+          className="promo-bar group flex items-center gap-3 px-4 md:px-10 py-2 min-h-[44px] text-[#0a1a0a]"
           style={{
-            background:   "linear-gradient(90deg, #1D3927, #24472f, #1D3927)",
-            borderBottom: "1px solid rgba(206,139,77,0.28)",
+            background:   "linear-gradient(90deg, #c98240, #e8a95f 50%, #c98240)",
+            borderBottom: "1px solid rgba(10,26,10,0.18)",
           }}
         >
-          <span aria-hidden="true">&#127790;</span>
-          <span className="hidden sm:inline">
-            <strong className="font-semibold" style={{ color: "#ce8b4d" }}>{t.promo.lead}</strong>{" "}
-            {t.promo.text}
-          </span>
-          <span className="sm:hidden">{t.promo.short}</span>
+          {/* Lead-in chip (desktop) */}
           <span
-            className="flex-shrink-0 rounded-full px-3 py-1 font-semibold text-white whitespace-nowrap transition-transform duration-200 group-hover:scale-105"
-            style={{ background: "linear-gradient(135deg, #f04e30, #d43e22)" }}
+            className="hidden md:inline-flex flex-shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-[0.75rem] font-semibold whitespace-nowrap"
+            style={{ background: "#0a1a0a", color: "#f3c98b" }}
+          >
+            <span aria-hidden="true">&#127881;</span>
+            {t.promo.lead}
+          </span>
+
+          {/* Scrolling selling points — duplicated for a seamless loop (decorative copy hidden from AT) */}
+          <span
+            className="relative flex-1 min-w-0 overflow-hidden motion-reduce:hidden"
+            aria-hidden="true"
+            style={{
+              maskImage:       "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)",
+              WebkitMaskImage: "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)",
+            }}
+          >
+            <span className="promo-track flex w-max">
+              {[0, 1].map((copy) => (
+                <span key={copy} className="flex flex-shrink-0 items-center">
+                  {[...t.promo.items, ...t.promo.items].map((item, i) => (
+                    <span key={i} className="flex items-center whitespace-nowrap text-[0.74rem] sm:text-[0.8rem] font-bold uppercase tracking-[0.07em]">
+                      <span className="px-4 sm:px-6">{item}</span>
+                      <span className="opacity-50">&#10022;</span>
+                    </span>
+                  ))}
+                </span>
+              ))}
+            </span>
+          </span>
+
+          {/* Reduced-motion fallback: static line */}
+          <span className="hidden motion-reduce:block flex-1 text-[0.75rem] font-bold uppercase tracking-[0.06em] leading-snug">
+            {t.promo.short}
+          </span>
+
+          <span
+            className="promo-cta flex-shrink-0 rounded-full px-4 py-1.5 text-[0.78rem] font-bold text-white whitespace-nowrap transition-transform duration-200 group-hover:scale-105"
+            style={{ background: "linear-gradient(135deg, #f04e30, #d43e22)", boxShadow: "0 2px 10px rgba(212,62,34,0.45)" }}
           >
             {t.promo.cta} &rarr;
           </span>

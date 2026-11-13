@@ -20,6 +20,13 @@ export const en = {
     lead:  "Cruising to Costa Maya?",
     text:  "Join our Mexican Fiesta: unlimited tacos, margaritas & tequila tasting, a 15-min walk from the port.",
     short: "Unlimited tacos & margaritas · 15 min from the port",
+    items: [
+      "🌮 Unlimited tacos",
+      "🍹 Margaritas & tequila tasting",
+      "📍 15-min walk from the port",
+      "✅ Free cancellation",
+      "💳 Reserve now, pay later",
+    ],
     cta:   "Book on Viator",
   },
 
