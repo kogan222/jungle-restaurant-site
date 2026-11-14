@@ -11,7 +11,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import JungleAmbience from "@/components/JungleAmbience";
 import FallingLeaves from "@/components/FallingLeaves";
-import ScrollAtmosphere from "@/components/ScrollAtmosphere";
+import AnimationGate from "@/components/AnimationGate";
 import { VineDivider } from "@/components/JungleVines";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 
@@ -28,7 +28,7 @@ export default function Home() {
 
       {/* Global atmosphere layers (decorative — hidden from assistive tech) */}
       <div aria-hidden="true">
-        <ScrollAtmosphere />
+        <AnimationGate />
         <JungleAmbience />
         <FallingLeaves count={20} />
       </div>

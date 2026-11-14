@@ -93,9 +93,9 @@ export default function Navbar() {
       style={
         scrolled
           ? {
-              background:         "rgba(10,26,10,0.88)",
-              backdropFilter:     "blur(20px) saturate(1.5)",
-              WebkitBackdropFilter:"blur(20px) saturate(1.5)",
+              /* Near-opaque instead of backdrop blur: a blurred fixed header
+                 has to be re-rendered on every scroll frame */
+              background:         "rgba(10,26,10,0.95)",
               borderBottom:       "1px solid rgba(61,138,61,0.12)",
             }
           : {}
@@ -256,10 +256,8 @@ export default function Navbar() {
         className="md:hidden absolute inset-x-0 top-full"
         aria-hidden={!open}
         style={{
-          background:           "rgba(10,26,10,0.97)",
-          backdropFilter:       "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderBottom:         "1px solid rgba(61,138,61,0.15)",
+          background:           "rgba(10,26,10,0.98)",
+          borderBottom:        "1px solid rgba(61,138,61,0.15)",
           /* Only animate GPU-composited properties — no layout triggers */
           opacity:              open ? 1 : 0,
           transform:            open ? "translateY(0)" : "translateY(-6px)",

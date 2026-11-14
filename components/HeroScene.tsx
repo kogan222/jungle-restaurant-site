@@ -614,10 +614,26 @@ function LoadingCanvas() {
 export default function HeroScene() {
   const [perf] = useState(() => (typeof window !== "undefined" ? getPerf() : "high"));
 
+  /* Render only while the hero is on screen and the tab is visible —
+     otherwise the bloom pass keeps rendering frames nobody sees. */
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(true);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    let onScreen = true;
+    const sync = () => setActive(onScreen && document.visibilityState === "visible");
+    const io = new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; sync(); });
+    io.observe(el);
+    document.addEventListener("visibilitychange", sync);
+    return () => { io.disconnect(); document.removeEventListener("visibilitychange", sync); };
+  }, []);
+
   return (
-    <div className="absolute inset-0" aria-hidden="true">
+    <div ref={wrapRef} className="absolute inset-0" aria-hidden="true">
       <Suspense fallback={<LoadingCanvas />}>
         <Canvas
+          frameloop={active ? "always" : "never"}
           dpr={perf === "low" ? [0.6, 1.0] : [0.75, 1.5]}
           camera={{ position: [0, 0.5, 11], fov: 82, near: 0.1, far: 60 }}
           gl={{

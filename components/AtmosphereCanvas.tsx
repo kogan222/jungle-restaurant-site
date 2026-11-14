@@ -270,7 +270,8 @@ export default function AtmosphereCanvas({
 
   const draw = useCallback(() => {
     const c = canvasRef.current;
-    if (!c || !visible.current) { rafRef.current = requestAnimationFrame(draw); return; }
+    /* Off screen: stop the loop entirely; the observer below restarts it */
+    if (!c || !visible.current) { rafRef.current = 0; return; }
     const ctx = c.getContext("2d");
     if (!ctx) return;
 
@@ -288,7 +289,10 @@ export default function AtmosphereCanvas({
 
   useEffect(() => {
     resize();
-    const observer = new IntersectionObserver(([e]) => { visible.current = e.isIntersecting; }, { threshold: 0 });
+    const observer = new IntersectionObserver(([e]) => {
+      visible.current = e.isIntersecting;
+      if (e.isIntersecting && !rafRef.current) rafRef.current = requestAnimationFrame(draw);
+    }, { threshold: 0 });
     const ro = new ResizeObserver(resize);
     if (canvasRef.current?.parentElement) {
       observer.observe(canvasRef.current.parentElement);

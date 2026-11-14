@@ -229,12 +229,12 @@ export default function Hero() {
           animation:"fogDriftRight 24s ease-in-out infinite alternate" }} />
         <div style={{ position:"absolute", bottom:"26%", left:"-30%", right:"-12%", height:"20%",
           background:"radial-gradient(ellipse 80% 65% at 28% 58%, rgba(120,185,145,0.050) 0%, transparent 68%)",
-          animation:"fogDriftLeft 30s ease-in-out infinite alternate", filter:"blur(35px)" }} />
+          animation:"fogDriftLeft 30s ease-in-out infinite alternate" }} />
         <div style={{ position:"absolute", top:0, left:0, right:0, height:"38%",
           background:"linear-gradient(180deg, rgba(2,12,6,0.58) 0%, rgba(2,14,7,0.24) 50%, transparent 100%)" }} />
         <div style={{ position:"absolute", top:"26%", left:0, right:0, height:"26%",
           background:"radial-gradient(ellipse 100% 80% at 50% 50%, rgba(10,28,16,0.12) 0%, transparent 70%)",
-          filter:"blur(22px)", animation:"fogDriftLeft 40s ease-in-out 4s infinite alternate" }} />
+          animation:"fogDriftLeft 40s ease-in-out 4s infinite alternate" }} />
       </div>
 
       {/* Film grain */}
